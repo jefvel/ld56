@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsqg420twq1ea"
-path="res://.godot/imported/creatura.png-75b24244f3c03e3b6dd6ea57e4d5b7a0.ctex"
+uid="uid://pgupbj4314re"
+path="res://.godot/imported/creatura.png-6c9b40730b92e3bfebfb9b2d730d7618.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://creatura.png"
-dest_files=["res://.godot/imported/creatura.png-75b24244f3c03e3b6dd6ea57e4d5b7a0.ctex"]
+source_file="res://creatures/creatura.png"
+dest_files=["res://.godot/imported/creatura.png-6c9b40730b92e3bfebfb9b2d730d7618.ctex"]
 
 [params]
 
