@@ -1,0 +1,157 @@
+[gd_scene load_steps=9 format=3 uid="uid://cymahh0uiiltn"]
+
+[ext_resource type="Texture2D" uid="uid://mrqaoiny38mi" path="res://items/meat.png" id="1_7wuch"]
+[ext_resource type="Script" path="res://items/meat.gd" id="1_xy25e"]
+[ext_resource type="Texture2D" uid="uid://yuw00ygg8rth" path="res://items/shadow_small.png" id="3_36ers"]
+
+[sub_resource type="Animation" id="Animation_q6ira"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShadowSmall:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.372549)]
+}
+
+[sub_resource type="Animation" id="Animation_lvhu4"]
+resource_name = "spawn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.0581348, 0.0666667, 0.0914681, 0.133333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -5), Vector2(0, -5), Vector2(0, -13), Vector2(0, -13), Vector2(0, -20)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.266667, 0.333333, 0.4, 0.466667, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, true, false, true, false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShadowSmall:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.210818, 0.266667, 0.319295, 0.333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.372549), Color(1, 1, 1, 0.372549), Color(1, 1, 1, 0.168627), Color(1, 1, 1, 0.137255), Color(1, 1, 1, 0.0313726), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_2ojlm"]
+resource_name = "bounce"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.166667, 0.266667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -7), Vector2(0, -3), Vector2(0, -5), Vector2(0, -4)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wk8kg"]
+_data = {
+&"bounce": SubResource("Animation_2ojlm"),
+&"RESET": SubResource("Animation_q6ira"),
+&"spawn": SubResource("Animation_lvhu4")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g4hkg"]
+radius = 8.0
+
+[node name="Meat" type="Area2D"]
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("1_xy25e")
+
+[node name="ShadowSmall" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.372549)
+z_index = -1
+texture_filter = 1
+position = Vector2(0, 0.25)
+scale = Vector2(1, 1.1)
+texture = ExtResource("3_36ers")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -5)
+texture = ExtResource("1_7wuch")
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": true,
+"player": "",
+"slice": "",
+"source": "res://items/meat.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "40daac1104542618bb1578b29646c92b"
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"output_section": true,
+"slice_section": true
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_wk8kg")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("CircleShape2D_g4hkg")
+metadata/_edit_lock_ = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]

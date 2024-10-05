@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://yug8ko00mj8s"]
+
+[ext_resource type="Script" path="res://creatures/friendly/friendly.gd" id="1_hvtbp"]
+[ext_resource type="Texture2D" uid="uid://pgupbj4314re" path="res://creatures/friendly/creatura.png" id="1_mt5k5"]
+[ext_resource type="Script" path="res://components/life_component.gd" id="1_oiidv"]
+[ext_resource type="PackedScene" uid="uid://bqua2j1eo345d" path="res://creatures/shadow.tscn" id="2_cs0ba"]
+[ext_resource type="Script" path="res://components/hitbox.gd" id="3_qt2ja"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j35ff"]
+size = Vector2(10, 8)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cm8ox"]
+radius = 7.0
+
+[node name="Creature" type="RigidBody2D" groups=["Friendlies"]]
+collision_layer = 2
+collision_mask = 2
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("1_hvtbp")
+
+[node name="LifeComponent" type="Node" parent="."]
+script = ExtResource("1_oiidv")
+max_health = 1
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_mt5k5")
+offset = Vector2(2, -16)
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": true,
+"player": "",
+"slice": "",
+"source": "res://creatures/creatura.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "c60cb3630fd652c23c19b974d3f5c7a9"
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true
+}
+
+[node name="Hitbox" type="Area2D" parent="Sprite" node_paths=PackedStringArray("life")]
+script = ExtResource("3_qt2ja")
+life = NodePath("../../LifeComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Hitbox"]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_j35ff")
+
+[node name="Shadow" parent="." instance=ExtResource("2_cs0ba")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("CircleShape2D_cm8ox")
+
+[connection signal="on_died" from="LifeComponent" to="." method="_on_life_component_on_died"]

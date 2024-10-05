@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqua2j1eo345d"]
+
+[ext_resource type="Texture2D" uid="uid://dffj636m1wvtc" path="res://creatures/friendly/shadow.png" id="1_ws5k1"]
+
+[node name="Shadow" type="Sprite2D"]
+modulate = Color(1, 1, 1, 0.454902)
+z_index = -1
+texture_filter = 1
+texture = ExtResource("1_ws5k1")
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"slice": "",
+"source": "res://creatures/shadow.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "30a528882f15277929e80a9662425a50"

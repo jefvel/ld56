@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://wix2wfnu8irf"]
+
+[ext_resource type="PackedScene" uid="uid://c1u01ibmha2qn" path="res://creatures/evil/enemy.tscn" id="1_26yy7"]
+[ext_resource type="Texture2D" uid="uid://bp8x6tb10b05x" path="res://creatures/evil/big_evil.png" id="2_7vhv1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cuqnm"]
+size = Vector2(38, 20)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_82kel"]
+radius = 14.1421
+
+[node name="BigEvil" instance=ExtResource("1_26yy7")]
+
+[node name="LifeComponent" parent="." index="0"]
+max_health = 5
+
+[node name="Sprite" parent="." index="2"]
+position = Vector2(0, -17)
+texture = ExtResource("2_7vhv1")
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://creatures/evil/big_evil.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "8ecf4c49c0a09bb0656b5a2272904ab1"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Hitbox" index="0"]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_cuqnm")
+
+[node name="Shadow" parent="." index="4"]
+scale = Vector2(1.75, 0.75)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="5"]
+position = Vector2(0, -2)
+rotation = -1.57079
+shape = SubResource("CircleShape2D_82kel")

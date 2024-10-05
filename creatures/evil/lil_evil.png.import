@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pgupbj4314re"
-path="res://.godot/imported/creatura.png-6c9b40730b92e3bfebfb9b2d730d7618.ctex"
+uid="uid://c7wj8k3mscwd5"
+path="res://.godot/imported/lil_evil.png-10962be78940e2a0654bdfd0f38f5d41.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://creatures/creatura.png"
-dest_files=["res://.godot/imported/creatura.png-6c9b40730b92e3bfebfb9b2d730d7618.ctex"]
+source_file="res://creatures/evil/lil_evil.png"
+dest_files=["res://.godot/imported/lil_evil.png-10962be78940e2a0654bdfd0f38f5d41.ctex"]
 
 [params]
 

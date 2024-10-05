@@ -1,13 +1,139 @@
-[gd_scene load_steps=3 format=3 uid="uid://d3l567heoxfa4"]
+[gd_scene load_steps=10 format=3 uid="uid://d3l567heoxfa4"]
 
-[ext_resource type="PackedScene" uid="uid://ksjmb1ab6vq8" path="res://creatures/creature.tscn" id="1_dcljv"]
-[ext_resource type="PackedScene" uid="uid://qnstd2uc60y1" path="res://items/sword.tscn" id="2_unyij"]
+[ext_resource type="PackedScene" uid="uid://yug8ko00mj8s" path="res://creatures/friendly/creature.tscn" id="1_dcljv"]
+[ext_resource type="Script" path="res://handlers/wave_spawner.gd" id="1_gduc8"]
+[ext_resource type="PackedScene" uid="uid://3cjnfl08b7sy" path="res://items/sword.tscn" id="2_unyij"]
+[ext_resource type="Shader" path="res://shader/retro.gdshader" id="4_n7cbo"]
+[ext_resource type="FontFile" uid="uid://dwhlu5b31ggjn" path="res://fonts/ChevyRay - Magic Book.ttf" id="6_qujij"]
+[ext_resource type="Script" path="res://ui.gd" id="6_vv5b1"]
+[ext_resource type="FontFile" uid="uid://dymwvvl70vs3e" path="res://fonts/FutilePro.ttf" id="7_shc5a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_16lfl"]
+size = Vector2(512, 310)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qw32a"]
+shader = ExtResource("4_n7cbo")
+shader_parameter/resolution = Vector2(512, 310)
+shader_parameter/scan_line_amount = 0.0
+shader_parameter/warp_amount = 0.0
+shader_parameter/noise_amount = 0.018
+shader_parameter/interference_amount = 0.0
+shader_parameter/grille_amount = 0.0
+shader_parameter/grille_size = 1.0
+shader_parameter/vignette_amount = 0.0
+shader_parameter/vignette_intensity = 0.0
+shader_parameter/aberation_amount = 0.0
+shader_parameter/roll_line_amount = 0.0
+shader_parameter/roll_speed = 3.8e-07
+shader_parameter/scan_line_strength = -1.0
+shader_parameter/pixel_strength = 0.0
 
 [node name="Game" type="Node2D"]
 
-[node name="World" type="Node2D" parent="."]
+[node name="WaveSpawner" type="Node" parent="."]
+script = ExtResource("1_gduc8")
 
-[node name="Creature" parent="World" instance=ExtResource("1_dcljv")]
-position = Vector2(151, 115)
+[node name="World" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Creature4" parent="World" instance=ExtResource("1_dcljv")]
+position = Vector2(256, 155)
+
+[node name="Boundaries" type="Area2D" parent="World"]
+collision_layer = 0
+collision_mask = 0
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Boundaries"]
+position = Vector2(256, 155)
+shape = SubResource("RectangleShape2D_16lfl")
 
 [node name="Sword" parent="." instance=ExtResource("2_unyij")]
+position = Vector2(352, 175)
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_vv5b1")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 32
+
+[node name="TopTexts" type="Control" parent="UILayer/UI/MarginContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="UILayer/UI/MarginContainer/TopTexts"]
+texture_filter = 1
+layout_mode = 1
+offset_right = 25.0
+offset_bottom = 12.0
+theme_override_fonts/font = ExtResource("6_qujij")
+theme_override_font_sizes/font_size = 12
+text = "MEAT"
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="UILayer/UI/MarginContainer/TopTexts/Label2"]
+modulate = Color(0.162353, 0.162353, 0.162353, 1)
+z_index = -1
+texture_filter = 1
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 26.0
+offset_bottom = 13.0
+theme_override_fonts/font = ExtResource("6_qujij")
+theme_override_font_sizes/font_size = 12
+text = "MEAT"
+
+[node name="Meat Text" type="Label" parent="UILayer/UI/MarginContainer/TopTexts"]
+texture_filter = 1
+layout_mode = 0
+offset_top = 12.0
+offset_right = 40.0
+offset_bottom = 26.0
+theme_override_fonts/font = ExtResource("7_shc5a")
+theme_override_font_sizes/font_size = 16
+text = "0"
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="UILayer/UI/MarginContainer/TopTexts/Meat Text"]
+modulate = Color(0.162353, 0.162353, 0.162353, 1)
+z_index = -1
+texture_filter = 1
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 26.0
+offset_bottom = 13.0
+theme_override_fonts/font = ExtResource("7_shc5a")
+theme_override_font_sizes/font_size = 16
+text = "0"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Control" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_qw32a")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
