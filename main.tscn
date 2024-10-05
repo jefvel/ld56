@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3l567heoxfa4"]
+
+[ext_resource type="Texture2D" uid="uid://dsqg420twq1ea" path="res://creatura.png" id="1_7i6js"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(108, 92)
+texture = ExtResource("1_7i6js")
+offset = Vector2(2, -16)
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": true,
+"player": "",
+"slice": "",
+"source": "res://creatures/creatura.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "30a4039c332ff153a9601f4758b64f20"
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true
+}

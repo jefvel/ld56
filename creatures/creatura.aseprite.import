@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dlg2pn7s03o73"
+path="res://.godot/imported/creatura.aseprite-f4f9f92bfb38226ad015cb701a1b6dad.res"
+
+[deps]
+
+source_file="res://creatures/creatura.aseprite"
+dest_files=["res://.godot/imported/creatura.aseprite-f4f9f92bfb38226ad015cb701a1b6dad.res"]
+
+[params]
+

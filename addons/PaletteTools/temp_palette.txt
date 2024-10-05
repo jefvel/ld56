@@ -1,0 +1,1 @@
+{"name":"Hidden Library","author":"Pixel Hoo","colors":["100b2a","2a213a","314743","65856d","adca9a","ecfeca","582d27","974133","d67654","5d3441","a3685b","ffb379","ffe6a9","ffffff"]}
