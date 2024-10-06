@@ -45,6 +45,9 @@ func flash():
 	if hit_flash: hit_flash.material = flash_material;
 	flash_t = .1;
 
+func make_invulnerable(duration: float = 0.4):
+	_invuln_time = duration;
+
 # Returns true when hurt hits
 func hurt(amount: int = 1, hurter: Node2D = null) -> bool:
 	if _invuln_time > 0: return false;

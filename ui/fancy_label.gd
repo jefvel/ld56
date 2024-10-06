@@ -16,6 +16,7 @@ func _set(property: StringName, value: Variant) -> bool:
 func init():
 	bg.horizontal_alignment = horizontal_alignment;
 	bg.vertical_alignment = vertical_alignment;
+	bg.autowrap_mode = autowrap_mode;
 	bg.set("theme_override_fonts/font", get("theme_override_fonts/font"))
 	bg.set("theme_override_font_sizes/font_size", get("theme_override_font_sizes/font_size"))
 	pass

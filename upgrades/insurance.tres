@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeResource" load_steps=2 format=3 uid="uid://dj5yrdqdrgsji"]
+
+[ext_resource type="Script" path="res://upgrades/upgrade.gd" id="1_qj4xf"]
+
+[resource]
+script = ExtResource("1_qj4xf")
+id = "insurance"
+name = "Insurance"
+desc = "Get some meat from your friends even if your sword breaks"
+costs = Array[int]([25])
+values = []

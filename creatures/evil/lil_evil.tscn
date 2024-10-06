@@ -48,8 +48,10 @@ metadata/_aseprite_wizard_source_file_hash_ = "094885f30a5f4e85a5d330c7dcf9ba40"
 [node name="AttackPos" parent="Sprite" index="0"]
 position = Vector2(3, -10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Hitbox" index="0"]
+[node name="Hitbox" parent="Sprite" index="1"]
 position = Vector2(0, -10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Hitbox" index="0"]
 shape = SubResource("RectangleShape2D_rxomn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="5"]

@@ -80,12 +80,19 @@ func process_game(_delta: float):
 	enemies = new_enemies;
 	
 	if enemies.size() == 0:
-		on_wave_cleared.emit()
-		wave_spawner.spawn_wave();
+		on_wave_clear()
 	
 	if new_friendlies.size() == 0:
 		out_of_friendlies()
 
+func on_wave_clear():
+	for f in friendlies:
+		if is_instance_valid(f):
+			f.lvlup()
+	on_wave_cleared.emit()
+	wave_spawner.spawn_wave();
+
+	pass
 
 func _on_store_on_closed() -> void:
 	reset();

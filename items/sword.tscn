@@ -18,7 +18,7 @@
 size = Vector2(6.42086, 5.70644)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q7scf"]
-radius = 5.09902
+radius = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ek7jp"]
 radius = 6.0
@@ -42,48 +42,6 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yy1vx"]
 _data = {
 &"default": SubResource("Animation_5mdk5")
-}
-
-[sub_resource type="Animation" id="Animation_737b3"]
-resource_name = "stab"
-length = 0.300003
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Holder:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.0868803, 0.1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(3, 3), Vector2(-13, -12), Vector2(-13, -12), Vector2(-7, -7), Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Holder:rotation")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.166667, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [0.158274, -0.136136, -0.136136, 0.0349066, 0.0]
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("swipe_sfx")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [0.0],
-"method": &"play"
-}]
 }
 
 [sub_resource type="Animation" id="Animation_p41r7"]
@@ -189,10 +147,52 @@ tracks/2/keys = {
 "values": [0.0, 0.226893, 0.0]
 }
 
+[sub_resource type="Animation" id="Animation_737b3"]
+resource_name = "stab"
+length = 0.300003
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Holder:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.0868803, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(3, 3), Vector2(-13, -12), Vector2(-13, -12), Vector2(-7, -7), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Holder:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.166667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.158274, -0.136136, -0.136136, 0.0349066, 0.0]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("swipe_sfx")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xfr3r"]
 _data = {
-&"ready": SubResource("Animation_8s2ww"),
 &"RESET": SubResource("Animation_p41r7"),
+&"ready": SubResource("Animation_8s2ww"),
 &"stab": SubResource("Animation_737b3")
 }
 
@@ -284,8 +284,9 @@ texture = ExtResource("3_12ybh")
 collision_layer = 16
 collision_mask = 16
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Holder/PickUpper"]
+[node name="PickUpRad" type="CollisionShape2D" parent="Holder/PickUpper"]
 position = Vector2(2, 2)
+scale = Vector2(5, 5)
 shape = SubResource("CircleShape2D_q7scf")
 
 [node name="Hitbox" type="Area2D" parent="Holder" node_paths=PackedStringArray("life")]
@@ -338,6 +339,7 @@ stream = ExtResource("12_tw0qp")
 
 [node name="crack_sfx" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_s7nog")
+volume_db = 5.424
 
 [connection signal="on_weapon_ready" from="." to="." method="_on_on_weapon_ready"]
 [connection signal="on_died" from="LifeComponent" to="." method="_on_life_component_on_died"]

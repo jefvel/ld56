@@ -8,7 +8,9 @@ extends Node
 const CREATURE = preload("res://creatures/friendly/creature.tscn")
 
 func init() -> void:
-	for i in range(GameData.initial_friendlies):
+	var amounts = [1, 2, 3, 5, 7, 10, 12]
+	var initial = amounts[GameData.get_upgrade_level("initial_friends")]
+	for i in range(initial):
 		spawn_friendly()
 	pass
 

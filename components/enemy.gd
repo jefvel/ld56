@@ -1,6 +1,8 @@
 extends Node2D
 class_name Enemy
 
+@onready var hitbox: Hitbox = $Sprite/Hitbox
+
 @onready var walker_component: WalkerComponent = $WalkerComponent
 @export var life: LifeComponent;
 @export_range(1, 100) var points: int = 1;
@@ -16,5 +18,10 @@ func _ready() -> void:
 func died():
 	if GameData.game:
 		GameData.game.on_enemy_die.emit(self);
+	if get_parent():
+		var explo = EXPLOSION.instantiate()
+		explo.global_position = hitbox.global_position;
+		get_parent().add_child(explo)
 	queue_free();
 	
+const EXPLOSION = preload("res://items/explosion.tscn")

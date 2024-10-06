@@ -31,12 +31,17 @@ func _physics_process(delta: float) -> void:
 	pass
 
 
+var has_hit = false;
 func _on_attack_on_hit(h: Hitbox) -> void:
+	if has_hit: return;
 	if vel < 2:
 		return;
-	if is_instance_valid(attack.attackee):
-		h.hit(1, attack.attackee)
-	else: 
-		h.hit(1, null)
 	
+	var res = false
+	if is_instance_valid(attack.attackee):
+		res = h.hit(1, attack.attackee)
+	else: 
+		res = h.hit(1, null)
+	if res:
+		has_hit = true;
 	pass # Replace with function body.

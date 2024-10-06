@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeResource" load_steps=2 format=3 uid="uid://caphuh8qrfx2m"]
+
+[ext_resource type="Script" path="res://upgrades/upgrade.gd" id="1_4d5uu"]
+
+[resource]
+script = ExtResource("1_4d5uu")
+id = "initial_friends"
+name = "Friends"
+desc = "Start with more pals"
+costs = Array[int]([1, 20, 100, 300, 500])
+values = []

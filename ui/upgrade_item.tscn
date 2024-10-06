@@ -1,0 +1,104 @@
+[gd_scene load_steps=5 format=3 uid="uid://bckl10padhsp6"]
+
+[ext_resource type="Script" path="res://ui/upgrade_item.gd" id="1_ssvd2"]
+[ext_resource type="Resource" uid="uid://yn0grmcr5ih" path="res://upgrades/pierce.tres" id="2_5w0x7"]
+[ext_resource type="PackedScene" uid="uid://b8dg18ml7hxym" path="res://ui/fancy_label.tscn" id="2_6lrh6"]
+[ext_resource type="FontFile" uid="uid://dwhlu5b31ggjn" path="res://fonts/ChevyRay - Magic Book.ttf" id="3_la68f"]
+
+[node name="UpgradeItem" type="Control"]
+layout_mode = 3
+anchor_right = 0.159
+anchor_bottom = 0.108
+offset_right = -0.0960083
+offset_bottom = 0.191998
+mouse_default_cursor_shape = 2
+script = ExtResource("1_ssvd2")
+upgrade = ExtResource("2_5w0x7")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.592157, 0.254902, 0.2, 1)
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
+offset_right = 0.280014
+offset_bottom = 2.688
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.345098, 0.176471, 0.152941, 1)
+
+[node name="Name" parent="." instance=ExtResource("2_6lrh6")]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 1.0
+offset_bottom = 24.0
+mouse_filter = 1
+text = "Pierce"
+horizontal_alignment = 0
+
+[node name="LvlText" parent="." instance=ExtResource("2_6lrh6")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -45.72
+offset_top = 2.0
+offset_right = -7.71997
+offset_bottom = 25.0
+grow_horizontal = 0
+mouse_filter = 1
+text = "Lvl 1"
+horizontal_alignment = 2
+
+[node name="Description" parent="." instance=ExtResource("2_6lrh6")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.361
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = -3.02164
+offset_right = -5.71999
+offset_bottom = -10.312
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("3_la68f")
+theme_override_font_sizes/font_size = 12
+text = "Amount of targets you can hit per swing"
+horizontal_alignment = 0
+vertical_alignment = 0
+autowrap_mode = 2
+
+[node name="Cost" parent="." instance=ExtResource("2_6lrh6")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -50.72
+offset_top = -15.312
+offset_right = -4.71999
+offset_bottom = -3.312
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("3_la68f")
+theme_override_font_sizes/font_size = 12
+text = "100"
+horizontal_alignment = 2
+vertical_alignment = 0
+autowrap_mode = 2
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

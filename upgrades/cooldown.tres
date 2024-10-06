@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeResource" load_steps=2 format=3 uid="uid://b6qwplkyxrl8v"]
+
+[ext_resource type="Script" path="res://upgrades/upgrade.gd" id="1_ry8y0"]
+
+[resource]
+script = ExtResource("1_ry8y0")
+id = "attack_speed"
+name = "Atk Speed"
+desc = "Reduce cooldown between swings"
+costs = Array[int]([20, 100, 200, 500])
+values = []

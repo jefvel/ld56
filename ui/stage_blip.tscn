@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgud3no7pdagh"]
+
+[ext_resource type="Texture2D" uid="uid://gxm8vt2h0jhy" path="res://ui/stageblip.png" id="1_1eiup"]
+
+[node name="StageBlip" type="Sprite2D"]
+texture_filter = 1
+texture = ExtResource("1_1eiup")
+hframes = 2
+vframes = 2

@@ -1,7 +1,7 @@
 [remap]
 
-importer="aseprite_wizard.plugin.noop"
-type="PackedDataContainer"
+importer="aseprite_wizard.plugin"
+type="SpriteFrames"
 uid="uid://b5ans0h1r23vb"
 path="res://.godot/imported/stageblip.aseprite-ce8a6618c5035407f0a08a7e8611b153.res"
 
@@ -12,3 +12,7 @@ dest_files=["res://.godot/imported/stageblip.aseprite-ce8a6618c5035407f0a08a7e86
 
 [params]
 
+split_layers=false
+exclude_layers_pattern=""
+only_visible_layers=true
+sheet_type="Packed"

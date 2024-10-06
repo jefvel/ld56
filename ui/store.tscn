@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://f6owbn2h37lf"]
+[gd_scene load_steps=19 format=3 uid="uid://f6owbn2h37lf"]
 
 [ext_resource type="Script" path="res://ui/store.gd" id="1_r1xyf"]
 [ext_resource type="Texture2D" uid="uid://ud2icaivdue" path="res://ui/bg_gradient.tres" id="2_71cel"]
@@ -6,6 +6,14 @@
 [ext_resource type="FontFile" uid="uid://dwhlu5b31ggjn" path="res://fonts/ChevyRay - Magic Book.ttf" id="4_3jxgh"]
 [ext_resource type="Texture2D" uid="uid://mrqaoiny38mi" path="res://items/meat.png" id="5_wbf18"]
 [ext_resource type="AudioStream" uid="uid://dxgau6ok3bu6u" path="res://music/shop.ogg" id="5_wio0f"]
+[ext_resource type="PackedScene" uid="uid://bckl10padhsp6" path="res://ui/upgrade_item.tscn" id="6_0bc5r"]
+[ext_resource type="Resource" uid="uid://bm1lsdgim0dsp" path="res://upgrades/move_speed.tres" id="7_r38l2"]
+[ext_resource type="Resource" uid="uid://bjrdp34u66w54" path="res://upgrades/damage.tres" id="8_8l3no"]
+[ext_resource type="Resource" uid="uid://caphuh8qrfx2m" path="res://upgrades/initial_friends.tres" id="9_s3lmy"]
+[ext_resource type="Resource" uid="uid://dj5yrdqdrgsji" path="res://upgrades/insurance.tres" id="10_p1i2o"]
+[ext_resource type="Resource" uid="uid://bllmftlfyhs31" path="res://upgrades/pickup_radius.tres" id="10_sbbda"]
+[ext_resource type="Resource" uid="uid://b6qwplkyxrl8v" path="res://upgrades/cooldown.tres" id="11_vc3ae"]
+[ext_resource type="Texture2D" uid="uid://bsu000pcn7ogk" path="res://ui/retry.png" id="12_jm4g6"]
 
 [sub_resource type="Animation" id="Animation_lao1y"]
 length = 0.001
@@ -44,64 +52,6 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
-}
-
-[sub_resource type="Animation" id="Animation_jl3aj"]
-resource_name = "show"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.333333),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 666), Vector2(0, 0)]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.3, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"deposit"
-}, {
-"args": [],
-"method": &"_on_open_ready"
-}]
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("music")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.366667),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [0.0],
-"method": &"play"
-}]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = false
-tracks/3/path = NodePath("music:volume_db")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.366667),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-3.0]
 }
 
 [sub_resource type="Animation" id="Animation_itkul"]
@@ -171,6 +121,64 @@ tracks/4/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_jl3aj"]
+resource_name = "show"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 666), Vector2(0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"deposit"
+}, {
+"args": [],
+"method": &"_on_open_ready"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("music")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.366667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/path = NodePath("music:volume_db")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.366667),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-3.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0nygd"]
 _data = {
 &"RESET": SubResource("Animation_lao1y"),
@@ -211,7 +219,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 32
+theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 32
 
@@ -230,30 +238,149 @@ text = "MEAT MARKET"
 modulate = Color(0, 0, 0, 1)
 texture_filter = 1
 layout_mode = 0
-offset_left = -15.0
-offset_top = 4.0
-offset_right = 25.0
-offset_bottom = 44.0
+offset_left = 335.0
+offset_top = -14.0
+offset_right = 375.0
+offset_bottom = 26.0
 texture = ExtResource("5_wbf18")
 
 [node name="MeatTex" type="TextureRect" parent="Content/Control"]
 texture_filter = 1
 layout_mode = 0
-offset_left = -15.0
-offset_top = 2.0
-offset_right = 25.0
-offset_bottom = 42.0
+offset_left = 335.0
+offset_top = -16.0
+offset_right = 375.0
+offset_bottom = 24.0
 texture = ExtResource("5_wbf18")
 
 [node name="Meat Text" parent="Content/Control" instance=ExtResource("3_jagy8")]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 15.0
-offset_right = 90.0
-offset_bottom = 38.0
+offset_left = 368.0
+offset_top = -3.0
+offset_right = 440.0
+offset_bottom = 20.0
 text = "0"
 horizontal_alignment = 0
 vertical_alignment = 0
 
+[node name="Control" type="Control" parent="Content/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UpgradeItem" parent="Content/Control/Control" instance=ExtResource("6_0bc5r")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = -19.0
+offset_right = 110.0
+offset_bottom = 57.0
+
+[node name="UpgradeItem2" parent="Content/Control/Control" instance=ExtResource("6_0bc5r")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 116.0
+offset_top = -19.0
+offset_right = 276.0
+offset_bottom = 57.0
+upgrade = ExtResource("7_r38l2")
+
+[node name="UpgradeItem3" parent="Content/Control/Control" instance=ExtResource("6_0bc5r")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 282.0
+offset_top = -19.0
+offset_right = 440.0
+offset_bottom = 57.0
+upgrade = ExtResource("8_8l3no")
+
+[node name="UpgradeItem4" parent="Content/Control/Control" instance=ExtResource("6_0bc5r")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 64.0
+offset_right = 110.0
+offset_bottom = 140.0
+upgrade = ExtResource("9_s3lmy")
+
+[node name="UpgradeItem5" parent="Content/Control/Control" instance=ExtResource("6_0bc5r")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 116.0
+offset_top = 64.0
+offset_right = 276.0
+offset_bottom = 140.0
+upgrade = ExtResource("10_p1i2o")
+
+[node name="UpgradeItem6" parent="Content/Control/Control" instance=ExtResource("6_0bc5r")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 282.0
+offset_top = 64.0
+offset_right = 440.0
+offset_bottom = 140.0
+upgrade = ExtResource("10_sbbda")
+
+[node name="UpgradeItem7" parent="Content/Control/Control" instance=ExtResource("6_0bc5r")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 146.0
+offset_right = 110.0
+offset_bottom = 222.0
+
+[node name="UpgradeItem8" parent="Content/Control/Control" instance=ExtResource("6_0bc5r")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 116.0
+offset_top = 146.0
+offset_right = 276.0
+offset_bottom = 222.0
+upgrade = ExtResource("11_vc3ae")
+
+[node name="Control" type="Control" parent="Content/Control/Control"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 324.0
+offset_top = 159.0
+offset_right = 395.0
+offset_bottom = 214.0
+mouse_default_cursor_shape = 2
+
+[node name="TextureRect" type="TextureRect" parent="Content/Control/Control/Control"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_jm4g6")
+
 [node name="music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_wio0f")
+
+[connection signal="gui_input" from="Content/Control/Control/Control" to="." method="_on_control_gui_input"]

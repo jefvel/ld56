@@ -3,6 +3,10 @@ extends Control
 @onready var anim: AnimationPlayer = $anim
 @onready var meat_text: Label = $"Content/Control/Meat Text"
 
+var upg_resources: Array[UpgradeResource] = [
+	preload("res://upgrades/pierce.tres"),
+]
+
 var is_open: bool = false;
 
 signal on_open;
@@ -20,6 +24,16 @@ func _on_closed():
 func _ready() -> void:
 	visible = true;
 	position.y = 666;
+	
+	#show_store()
+
+func refresh():
+	
+	pass
+
+func show_items():
+	
+	pass
 	
 func deposit():
 	GameData.meat_bank += GameData.meat;
@@ -47,3 +61,8 @@ func hide_store():
 	on_close.emit();
 	anim.play("hide");
 	
+
+
+func _on_control_gui_input(event: InputEvent) -> void:
+	if event.is_action_pressed("attack"):
+		hide_store();

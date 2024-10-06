@@ -23,8 +23,12 @@ signal on_weapon_ready();
 var attack_time = 0.0;
 var attacking: bool = false;
 
+var cur_damage = 1;
+
 var max_pierce = GameData.weapon_pierce;
 var cur_pierce = 0;
+
+var max_speed = GameData.weapon_max_speed;
 
 var cooling_down = false;
 var attack_cooldown: float = 0.0;
@@ -34,7 +38,21 @@ var attack_press_coyote_time = 0.0;
 signal on_died_complete;
 var dcomplete = false;
 
+@onready var pick_up_rad: CollisionShape2D = $Holder/PickUpper/PickUpRad
+
+var pierce_levels = [1,2,3,4,5,6,7,8]
+var damage_levels = [1,2,3,4,5,6]
+var max_speeds = [5.0, 8.0, 12.0, 20.0, 35.0];
+var cooldown_speeds = [1.5, 1.2, 0.9, 0.7, 0.4];
+var pu_rads = [5.0, 10.0, 15.0, 25.0]
 func _ready():
+	max_pierce = pierce_levels[GameData.get_upgrade_level("pierce")]
+	cur_damage = damage_levels[GameData.get_upgrade_level("damage")]
+	max_speed = max_speeds[GameData.get_upgrade_level("speed")]
+	attack_cooldown_duration = cooldown_speeds[GameData.get_upgrade_level("attack_speed")]
+	var rad = pu_rads[GameData.get_upgrade_level("pickup_radius")]
+	pick_up_rad.scale = Vector2(rad, rad)
+	print("set pierce: ", max_pierce, ", dmg: ", cur_damage, ", rad: ", rad)
 	pass
 
 func _physics_process(_delta: float) -> void:
@@ -57,10 +75,12 @@ func _physics_process(_delta: float) -> void:
 		var pos = unclamped_pos.clamp(Vector2(p,p), Vector2(512 - p, 320 - p))
 		var d = (pos - position);
 		
+		d = d.limit_length(max_speed)
+		
 		position += d * 0.5
 		dx += d.x * 0.03;
 		dx *= 0.4;
-		is_away_from_cursor = unclamped_pos.distance_to(pos) > 3
+		is_away_from_cursor = unclamped_pos.distance_to(position) > 3
 		
 	sprite.rotation = dx;
 	var max_rotation = 0.5;
@@ -102,22 +122,30 @@ func process_attack(_d: float):
 				hit_target(b)
 	pass
 
-func attack(): 
+func attack():
 	if attacking or cooling_down: 
 		attack_press_coyote_time = 0.2;
 		return
 	
+	life.make_invulnerable(0.2)
+	
+	hit_targets = [];
 	attack_cooldown = attack_cooldown_duration;
 	
 	cur_pierce = 0;
 	attacking = true;
 	attack_time = 0.0;
 	attack_animations.play("stab", 0, 1, false)
-@onready var hit_sfx: AudioStreamPlayer = $hit_sfx
 
+@onready var hit_sfx: AudioStreamPlayer = $hit_sfx
+var hit_targets: Array[Hitbox] = [];
 func hit_target(e: Hitbox):
 	if !attacking: return
-	e.hit(1, self)
+	if hit_targets.has(e): return;
+	
+	hit_targets.push_back(e)
+	
+	e.hit(cur_damage, self)
 	cur_pierce += 1;
 	TimeFreeze.freeze(3);
 	hit_sfx.play()
@@ -161,14 +189,16 @@ func _on_life_component_on_died() -> void:
 	TimeFreeze.freeze(60);
 	on_died.emit();
 	sprite.visible = false;
-	active = false;
+	
 	modulate = Color.BLACK;
-	z_index = 2;
+	z_index = 3;
 	
 	c1.visible = true;
 	c2.visible = true;
 	
 	c1.activate();
 	c2.activate();
-	$crack_sfx.play()
+	if active:
+		$crack_sfx.play()
+	active = false;
 	pass # Replace with function body.
