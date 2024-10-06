@@ -80,25 +80,23 @@ horizontal_alignment = 0
 vertical_alignment = 0
 autowrap_mode = 2
 
-[node name="Cost" parent="." instance=ExtResource("2_6lrh6")]
+[node name="Cost" type="Label" parent="."]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -50.72
-offset_top = -15.312
+offset_left = -51.72
+offset_top = -16.312
 offset_right = -4.71999
-offset_bottom = -3.312
+offset_bottom = -4.312
 grow_horizontal = 0
 grow_vertical = 0
-mouse_filter = 1
 theme_override_fonts/font = ExtResource("3_la68f")
 theme_override_font_sizes/font_size = 12
-text = "100"
+text = "123"
 horizontal_alignment = 2
-vertical_alignment = 0
-autowrap_mode = 2
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

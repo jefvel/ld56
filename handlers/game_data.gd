@@ -29,6 +29,17 @@ var upgrade_levels = {
 	"life": 0,
 }
 
+var upgrade_costs = {
+	"pierce": [5, 20, 50, 60, 100],
+	"speed": [2, 10, 30, 50],
+	"damage": [20, 30, 40, 50],
+	"initial_friends": [1, 10, 20, 40, 50],
+	"pickup_radius": [20, 50, 60],
+	"attack_speed": [15, 25, 30, 40],
+	"insurance":[10],
+	"life": [20, 75, 100],
+}
+
 func get_upgrade_level(id: String):
 	if !upgrade_levels.has(id): return 0
 	return upgrade_levels.get(id)
@@ -36,10 +47,11 @@ func get_upgrade_level(id: String):
 
 func request_upgrade(up: UpgradeResource):
 	var curLevel = upgrade_levels.get(up.id)
-	if curLevel == null: return false;
-	if curLevel >= up.costs.size():
+	#if curLevel == null: return false;
+	var levels = upgrade_costs.get(up.id)
+	if curLevel >= levels.size():
 		return false;
-	var cost = up.costs[curLevel]
+	var cost = levels[curLevel]
 	if meat_bank >= cost:
 		meat_bank -= cost;
 		upgrade_levels.set(up.id, curLevel + 1)

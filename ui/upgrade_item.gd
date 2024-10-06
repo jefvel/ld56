@@ -26,13 +26,18 @@ func _test_upgrade(up: UpgradeResource, level: int):
 func refresh():
 	if GameData != null and GameData.upgrade_levels:
 		level = GameData.upgrade_levels.get(upgrade.id)
+	# print(level);
+	# print(upgrade.id);
 	costtxt.text = "";
-	if level != null and level < upgrade.costs.size():
-		var c = upgrade.costs[level];
-		costtxt.text = "%s" % c
+	var costs = GameData.upgrade_costs.get(upgrade.id);
+	# print("SS", costs.size())
+	if level < costs.size():
+		var c = costs[level];
+		print(c);
+		costtxt.text = str(c);
 	if level == 0 or level == null:
 		lvl_text.text = "-"
-	elif level == upgrade.costs.size():
+	elif level == costs.size():
 		lvl_text.text = "MAX"
 		costtxt.text = "";
 	else:
