@@ -3,10 +3,15 @@ extends Node
 var enemies: Array[Enemy] = [];
 var friendlies: Array[Friendly] = [];
 
+signal on_wave_spawned;
+
 @onready var sp: Path2D = $SpawnPath
 
 var wave: int = 0;
-var max_waves = 30;
+var max_waves = 20;
+
+var lil_spawns = 3;
+var big_spawns = 0;
 
 @onready var world: Node2D = $"../World/Things"
 
@@ -18,19 +23,36 @@ func _ready() -> void:
 
 func reset():
 	wave = 0;
-	
+
+func init():
+	reset();
+	spawn_wave();
+
 func _physics_process(_delta: float) -> void:
-	
 	pass
 
+@onready var l = sp.curve.get_baked_length()
+func get_rand_p():
+	return sp.curve.sample_baked(randf() * l)
+
+func spawn_enemy(e: PackedScene, pos: Vector2):
+	var b = e.instantiate()
+	b.position = pos;
+	world.add_child(b)
+
 func spawn_wave():
-	var l = sp.curve.get_baked_length()
-	for i in range(5):
-		var type = LIL_EVIL;
-		if randf() > 0.5: type = BIG_EVIL; 
-		var p = sp.curve.sample_baked(randf() * l)
-		var b = type.instantiate()
-		b.position = p;
-		world.add_child(b)
-		pass
-	pass
+	wave += 1;
+	
+	for i in range(lil_spawns):
+		spawn_enemy(LIL_EVIL, get_rand_p())
+	for i in range(big_spawns):
+		spawn_enemy(BIG_EVIL, get_rand_p())
+	
+	print("running wave ", wave)
+	
+	if wave < 5:
+		lil_spawns += 2;
+	if wave > 5 and wave % 2 == 0:
+		big_spawns += 1;
+		
+	on_wave_spawned.emit();

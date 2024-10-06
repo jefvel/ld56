@@ -5,6 +5,9 @@ var vel: Vector2;
 var dx: float = 0.0;
 var ax: float = 0.0;
 
+@export var life: LifeComponent;
+@export var hitbox: Hitbox;
+
 @export var active: bool = true;
 @onready var sprite: Sprite2D =  $Holder/Sprite
 
@@ -16,6 +19,7 @@ var ax: float = 0.0;
 signal on_weapon_ready();
 
 @export var attack_duration = 0.25;
+
 var attack_time = 0.0;
 var attacking: bool = false;
 
@@ -27,6 +31,8 @@ var attack_cooldown: float = 0.0;
 var attack_cooldown_duration = 1.5;
 
 var attack_press_coyote_time = 0.0;
+signal on_died_complete;
+var dcomplete = false;
 
 func _ready():
 	pass
@@ -37,7 +43,12 @@ func _physics_process(_delta: float) -> void:
 		return
 	else:
 		attack_animations.speed_scale = 1.0;
-	
+		if life.dead and !dcomplete:
+			$dead_sfx.play()
+			modulate = Color.WHITE
+			dcomplete = true;
+			on_died_complete.emit();
+			GameData.game.flash.visible = false;
 	var is_away_from_cursor = false;
 	if active:
 		var vp = get_viewport()
@@ -106,7 +117,7 @@ func attack():
 
 func hit_target(e: Hitbox):
 	if !attacking: return
-	e.hit(1)
+	e.hit(1, self)
 	cur_pierce += 1;
 	TimeFreeze.freeze(3);
 	hit_sfx.play()
@@ -134,4 +145,30 @@ func _on_store_on_open() -> void:
 
 func _on_store_on_close() -> void:
 	# active = true;
+	pass # Replace with function body.
+
+
+func _on_life_component_on_hurt(damage: int) -> void:
+	TimeFreeze.freeze(20)
+
+@onready var death_crack: Node2D = $DeathCrack
+
+@onready var c1: Sprite2D = $DeathCrack/Sprite2D
+@onready var c2: Sprite2D = $DeathCrack/Sprite2D2
+
+signal on_died;
+func _on_life_component_on_died() -> void:
+	TimeFreeze.freeze(60);
+	on_died.emit();
+	sprite.visible = false;
+	active = false;
+	modulate = Color.BLACK;
+	z_index = 2;
+	
+	c1.visible = true;
+	c2.visible = true;
+	
+	c1.activate();
+	c2.activate();
+	$crack_sfx.play()
 	pass # Replace with function body.

@@ -24,6 +24,7 @@ texture_filter = 1
 position = Vector2(0, -1)
 texture = ExtResource("2_5iy4a")
 offset = Vector2(0, -15)
+hframes = 2
 metadata/_aseprite_wizard_config_ = {
 "i_mode": -1,
 "keep_anim_length": true,
@@ -42,7 +43,10 @@ metadata/_aseprite_wizard_interface_config_ = {
 "output_section": false,
 "slice_section": true
 }
-metadata/_aseprite_wizard_source_file_hash_ = "11b7e20fdad860e32b9ec1e9266c6013"
+metadata/_aseprite_wizard_source_file_hash_ = "094885f30a5f4e85a5d330c7dcf9ba40"
+
+[node name="AttackPos" parent="Sprite" index="0"]
+position = Vector2(3, -10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Hitbox" index="0"]
 position = Vector2(0, -10)

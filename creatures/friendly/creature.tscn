@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://yug8ko00mj8s"]
+[gd_scene load_steps=15 format=3 uid="uid://yug8ko00mj8s"]
 
 [ext_resource type="Script" path="res://creatures/friendly/friendly.gd" id="1_hvtbp"]
 [ext_resource type="Texture2D" uid="uid://pgupbj4314re" path="res://creatures/friendly/creatura.png" id="1_mt5k5"]
@@ -11,16 +11,89 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j35ff"]
 size = Vector2(10, 8)
 
+[sub_resource type="Animation" id="Animation_2sdh0"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ap7eh"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_jbyu3"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_kju6l"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rapne"]
+_data = {
+&"a": SubResource("Animation_2sdh0"),
+&"b": SubResource("Animation_ap7eh"),
+&"d": SubResource("Animation_kju6l"),
+&"c": SubResource("Animation_jbyu3")
+}
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_cm8ox"]
 radius = 7.0
 
-[node name="Creature" type="RigidBody2D" groups=["Friendlies"]]
+[node name="Creature" type="RigidBody2D" node_paths=PackedStringArray("hitbox") groups=["Friendlies"]]
 collision_layer = 2
 collision_mask = 2
 gravity_scale = 0.0
 lock_rotation = true
 linear_damp = 10.0
 script = ExtResource("1_hvtbp")
+hitbox = NodePath("Sprite/Hitbox")
 
 [node name="LifeComponent" type="Node" parent="." node_paths=PackedStringArray("hit_flash")]
 script = ExtResource("1_oiidv")
@@ -44,30 +117,39 @@ texture_filter = 1
 position = Vector2(0, -1)
 texture = ExtResource("1_mt5k5")
 offset = Vector2(0, -15)
+hframes = 2
+vframes = 2
 metadata/_aseprite_wizard_config_ = {
-"i_mode": 1,
+"i_mode": 0,
 "keep_anim_length": false,
 "layer": "",
 "o_ex_p": "",
 "o_folder": "",
 "o_name": "",
 "only_visible": true,
-"player": "",
+"player": "Sprite/AnimationPlayer",
 "slice": "",
 "source": "res://creatures/creatura.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "0da38c94cd51cdc86ac050ee1f3775c8"
+metadata/_aseprite_wizard_source_file_hash_ = "d470c2c3c432b9ccbc26d3dadab77f6c"
 metadata/_aseprite_wizard_interface_config_ = {
-"layer_section": true
+"layer_section": true,
+"output_section": true,
+"slice_section": false
 }
 
 [node name="Hitbox" type="Area2D" parent="Sprite" node_paths=PackedStringArray("life")]
+position = Vector2(0, -6)
 script = ExtResource("3_qt2ja")
 life = NodePath("../../LifeComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Hitbox"]
-position = Vector2(0, -7)
 shape = SubResource("RectangleShape2D_j35ff")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
+libraries = {
+&"": SubResource("AnimationLibrary_rapne")
+}
 
 [node name="Shadow" parent="." instance=ExtResource("2_cs0ba")]
 

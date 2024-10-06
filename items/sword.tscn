@@ -1,12 +1,18 @@
-[gd_scene load_steps=19 format=3 uid="uid://3cjnfl08b7sy"]
+[gd_scene load_steps=25 format=3 uid="uid://3cjnfl08b7sy"]
 
 [ext_resource type="Script" path="res://items/sword.gd" id="1_y3nuo"]
+[ext_resource type="Script" path="res://components/life_component.gd" id="2_o1lhk"]
 [ext_resource type="Texture2D" uid="uid://duiw1d6ae2y0i" path="res://shader/whitesquare.png" id="3_12ybh"]
 [ext_resource type="Texture2D" uid="uid://ux2b5mxf1vel" path="res://items/sword.png" id="3_qv6ly"]
 [ext_resource type="Script" path="res://components/hitbox.gd" id="4_5mk3s"]
 [ext_resource type="AudioStream" uid="uid://b122wy05jhw8o" path="res://sfx/swipe.wav" id="5_aaacn"]
 [ext_resource type="AudioStream" uid="uid://damg1ep6busqs" path="res://sfx/hit.wav" id="5_veeqw"]
 [ext_resource type="AudioStream" uid="uid://b2ijt7a4a8448" path="res://sfx/swipe2.wav" id="6_y4mi2"]
+[ext_resource type="Texture2D" uid="uid://1861ld0fphb2" path="res://items/sword_break1.png" id="9_4f44n"]
+[ext_resource type="Texture2D" uid="uid://bwpoopddu1sbh" path="res://items/sword_break2.png" id="10_ki4h4"]
+[ext_resource type="Script" path="res://items/debris.gd" id="10_ura4q"]
+[ext_resource type="AudioStream" uid="uid://cwl30471ux1xb" path="res://sfx/gameover.wav" id="12_tw0qp"]
+[ext_resource type="AudioStream" uid="uid://bnau7ffgwgscn" path="res://sfx/crackk.wav" id="13_s7nog"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5sqb6"]
 size = Vector2(6.42086, 5.70644)
@@ -15,7 +21,7 @@ size = Vector2(6.42086, 5.70644)
 radius = 5.09902
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ek7jp"]
-radius = 4.0
+radius = 6.0
 
 [sub_resource type="Animation" id="Animation_5mdk5"]
 length = 0.1
@@ -78,46 +84,6 @@ tracks/2/keys = {
 "args": [0.0],
 "method": &"play"
 }]
-}
-
-[sub_resource type="Animation" id="Animation_8s2ww"]
-resource_name = "ready"
-length = 0.100003
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Holder/Sprite:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1.125, 1.125), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Holder/Sprite:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(20, 20), Vector2(20.375, 20.375), Vector2(20, 20)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Holder/Sprite:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.0, 0.226893, 0.0]
 }
 
 [sub_resource type="Animation" id="Animation_p41r7"]
@@ -183,11 +149,51 @@ tracks/4/keys = {
 "values": [0.0]
 }
 
+[sub_resource type="Animation" id="Animation_8s2ww"]
+resource_name = "ready"
+length = 0.100003
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Holder/Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.125, 1.125), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Holder/Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(20, 20), Vector2(20.375, 20.375), Vector2(20, 20)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Holder/Sprite:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.226893, 0.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xfr3r"]
 _data = {
-&"stab": SubResource("Animation_737b3"),
+&"ready": SubResource("Animation_8s2ww"),
 &"RESET": SubResource("Animation_p41r7"),
-&"ready": SubResource("Animation_8s2ww")
+&"stab": SubResource("Animation_737b3")
 }
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rs56g"]
@@ -203,8 +209,16 @@ random_pitch = 1.02
 streams_count = 1
 stream_0/stream = ExtResource("5_veeqw")
 
-[node name="Sword" type="Node2D"]
+[node name="Sword" type="Node2D" node_paths=PackedStringArray("life", "hitbox")]
 script = ExtResource("1_y3nuo")
+life = NodePath("LifeComponent")
+hitbox = NodePath("Holder/Hitbox")
+
+[node name="LifeComponent" type="Node" parent="." node_paths=PackedStringArray("hit_flash")]
+script = ExtResource("2_o1lhk")
+max_health = 1
+invulnerability_time = 1.0
+hit_flash = NodePath("../Holder/Sprite")
 
 [node name="Holder" type="Node2D" parent="."]
 metadata/_edit_group_ = true
@@ -274,9 +288,10 @@ collision_mask = 16
 position = Vector2(2, 2)
 shape = SubResource("CircleShape2D_q7scf")
 
-[node name="Hitbox" type="Area2D" parent="Holder"]
+[node name="Hitbox" type="Area2D" parent="Holder" node_paths=PackedStringArray("life")]
 position = Vector2(10, 10)
 script = ExtResource("4_5mk3s")
+life = NodePath("../../LifeComponent")
 friendly_immune = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Holder/Hitbox"]
@@ -300,5 +315,31 @@ volume_db = 2.0
 stream = SubResource("AudioStreamRandomizer_udfo8")
 volume_db = 3.0
 
+[node name="DeathCrack" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="DeathCrack"]
+visible = false
+texture_filter = 1
+position = Vector2(3, 4)
+texture = ExtResource("9_4f44n")
+offset = Vector2(11, 11)
+script = ExtResource("10_ura4q")
+
+[node name="Sprite2D2" type="Sprite2D" parent="DeathCrack"]
+visible = false
+texture_filter = 1
+position = Vector2(18, 16)
+texture = ExtResource("10_ki4h4")
+offset = Vector2(-1, -1)
+script = ExtResource("10_ura4q")
+
+[node name="dead_sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_tw0qp")
+
+[node name="crack_sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_s7nog")
+
 [connection signal="on_weapon_ready" from="." to="." method="_on_on_weapon_ready"]
+[connection signal="on_died" from="LifeComponent" to="." method="_on_life_component_on_died"]
+[connection signal="on_hurt" from="LifeComponent" to="." method="_on_life_component_on_hurt"]
 [connection signal="area_entered" from="Holder/Sprite/Area2D" to="." method="_on_area_2d_area_entered"]

@@ -22,3 +22,13 @@ func spawn_friendly():
 	c.global_position = rand_point;
 	things.add_child(c)
 	pass
+
+
+func _on_wave_spawner_on_wave_spawned() -> void:
+	
+	pass # Replace with function body.
+
+
+func _on_game_on_wave_cleared() -> void:
+	spawn_friendly()
+	pass # Replace with function body.

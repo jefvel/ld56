@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bw16ipi41lsp3"
+path="res://.godot/imported/lil_evil_fix.aseprite-e6a28429212d80d7e3803f6ced1989e8.res"
+
+[deps]
+
+source_file="res://creatures/lil_evil_fix.aseprite"
+dest_files=["res://.godot/imported/lil_evil_fix.aseprite-e6a28429212d80d7e3803f6ced1989e8.res"]
+
+[params]
+

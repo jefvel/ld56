@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxyak3novvjyf"]
+
+[ext_resource type="Script" path="res://creatures/attacks/attack.gd" id="1_kc0vb"]
+
+[node name="Attack" type="Node2D"]
+z_index = 1
+script = ExtResource("1_kc0vb")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="HitArea" type="Area2D" parent="Sprite"]
+
+[connection signal="area_entered" from="Sprite/HitArea" to="." method="_on_hit_area_area_entered"]

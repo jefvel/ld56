@@ -6,8 +6,13 @@ class_name Hitbox
 @export var friendly_immune: bool = false;
 @export var enemy_immune: bool = false;
 
-func hit(damage: int) -> bool:
-	if life: return life.hurt(damage)
+signal on_hit(damage: int, attacker: Node2D);
+
+func hit(damage: int, attacker: Node2D) -> bool:
+	if attacker is Enemy and enemy_immune: return false;
+	on_hit.emit(damage, attacker)
+	if life: return life.hurt(damage, attacker)
+	
 	return false;
 
 var enabled: bool:

@@ -10,6 +10,8 @@ signal on_enemy_spawn(enemy: Enemy);
 var game_over: bool = false;
 
 signal on_friendlies_dead();
+signal on_sword_exploded;
+signal on_wave_cleared;
 
 @onready var things: Node2D = $World/Things
 @onready var wave_spawner: Node = $WaveSpawner
@@ -19,18 +21,24 @@ signal on_friendlies_dead();
 @onready var sword: Sword = $Sword
 
 var friendlies: Array[Friendly] = [];
+var enemies: Array[Enemy] = []
+
 
 func _ready() -> void:
 	GameData.game = self;
 	start()
 	
+@onready var flash: Sprite2D = $Flash
+func _on_sword_on_died() -> void:
+	flash.visible = true;
+	if game_over: return;
+	do_game_over();
+
 func out_of_friendlies():
-	if game_over:return
-	game_over = true
+	if game_over: return
 	on_friendlies_dead.emit()
 	do_game_over()
-	pass
-	
+
 func do_game_over():
 	game_over = true;
 	
@@ -41,7 +49,7 @@ func do_game_over():
 
 func start():
 	friendlies = []
-	wave_spawner.spawn_wave();
+	wave_spawner.init();
 	friendly_spawner.init()
 	ambiance_sfx.play(randf() * 5.0)
 	pass
@@ -59,16 +67,21 @@ func _physics_process(_delta: float) -> void:
 
 func process_game(_delta: float):
 	var objects = things.get_children();
-	var enemies: Array[Enemy] = []
+	var new_enemies: Array[Enemy] = []
 	var new_friendlies: Array[Friendly] = [];
 	
 	for o in objects:
 		if o is Enemy:
-			enemies.push_back(o)
-		if o is Friendly:
+			new_enemies.push_back(o)
+		if o is Friendly and !o.life.dead:
 			new_friendlies.push_back(o)
 	
 	friendlies = new_friendlies;
+	enemies = new_enemies;
+	
+	if enemies.size() == 0:
+		on_wave_cleared.emit()
+		wave_spawner.spawn_wave();
 	
 	if new_friendlies.size() == 0:
 		out_of_friendlies()
@@ -82,4 +95,9 @@ func _on_store_on_closed() -> void:
 func _on_store_on_open() -> void:
 	var tw = get_tree().create_tween().tween_property(ambiance_sfx, "volume_db", -80, 2.0)
 	
+	pass # Replace with function body.
+
+
+func _on_sword_on_died_complete() -> void:
+	on_sword_exploded.emit();
 	pass # Replace with function body.

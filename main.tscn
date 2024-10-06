@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://d3l567heoxfa4"]
+[gd_scene load_steps=28 format=3 uid="uid://d3l567heoxfa4"]
 
 [ext_resource type="Script" path="res://handlers/wave_spawner.gd" id="1_gduc8"]
 [ext_resource type="Script" path="res://game.gd" id="1_wrl8j"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b8dg18ml7hxym" path="res://ui/fancy_label.tscn" id="9_2xtet"]
 [ext_resource type="PackedScene" uid="uid://f6owbn2h37lf" path="res://ui/store.tscn" id="10_p05hj"]
 [ext_resource type="Texture2D" uid="uid://duiw1d6ae2y0i" path="res://shader/whitesquare.png" id="11_5i4fi"]
+[ext_resource type="AudioStream" uid="uid://biwdir42v4rao" path="res://sfx/gameoverending.wav" id="12_0v3cn"]
 [ext_resource type="AudioStream" uid="uid://dwtey8msqmwfm" path="res://sfx/ambiance.wav" id="13_exmnp"]
 
 [sub_resource type="Curve2D" id="Curve2D_dn8b0"]
@@ -58,8 +59,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pyris"]
 _data = {
-&"show_top": SubResource("Animation_1fvpb"),
-&"RESET": SubResource("Animation_ki42j")
+&"RESET": SubResource("Animation_ki42j"),
+&"show_top": SubResource("Animation_1fvpb")
 }
 
 [sub_resource type="Animation" id="Animation_o5ffe"]
@@ -104,6 +105,20 @@ tracks/1/keys = {
 "values": [{
 "args": [],
 "method": &"show_store"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("dead_sfx2")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
 }]
 }
 
@@ -169,8 +184,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5jbh6"]
 _data = {
-&"fadein": SubResource("Animation_5308r"),
-&"RESET": SubResource("Animation_xlk2m")
+&"RESET": SubResource("Animation_xlk2m"),
+&"fadein": SubResource("Animation_5308r")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qw32a"]
@@ -342,6 +357,13 @@ position = Vector2(468, 367)
 [node name="Tree20" parent="World/Things" instance=ExtResource("4_px8yo")]
 position = Vector2(512, 353)
 
+[node name="Flash" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(258, 170)
+rotation = 0.00081617
+scale = Vector2(100, 100)
+texture = ExtResource("11_5i4fi")
+
 [node name="Sword" parent="." instance=ExtResource("2_unyij")]
 position = Vector2(352, 175)
 
@@ -444,6 +466,10 @@ libraries = {
 &"": SubResource("AnimationLibrary_jnk2a")
 }
 
+[node name="dead_sfx2" type="AudioStreamPlayer" parent="UILayer/UI/MarginContainer/GameOver"]
+stream = ExtResource("12_0v3cn")
+volume_db = 5.424
+
 [node name="Store" parent="UILayer/UI" instance=ExtResource("10_p05hj")]
 visible = false
 layout_mode = 1
@@ -480,6 +506,11 @@ grow_vertical = 2
 stream = ExtResource("13_exmnp")
 
 [connection signal="on_friendlies_dead" from="." to="UILayer/UI" method="_on_game_on_friendlies_dead"]
+[connection signal="on_sword_exploded" from="." to="UILayer/UI" method="_on_game_on_sword_exploded"]
+[connection signal="on_wave_cleared" from="." to="FriendlySpawner" method="_on_game_on_wave_cleared"]
+[connection signal="on_wave_spawned" from="WaveSpawner" to="FriendlySpawner" method="_on_wave_spawner_on_wave_spawned"]
+[connection signal="on_died" from="Sword" to="." method="_on_sword_on_died"]
+[connection signal="on_died_complete" from="Sword" to="." method="_on_sword_on_died_complete"]
 [connection signal="on_close" from="UILayer/UI/Store" to="Sword" method="_on_store_on_close"]
 [connection signal="on_closed" from="UILayer/UI/Store" to="." method="_on_store_on_closed"]
 [connection signal="on_open" from="UILayer/UI/Store" to="." method="_on_store_on_open"]

@@ -11,6 +11,7 @@ var top_shown = false;
 func _ready() -> void:
 	uianim.play("fadein")
 	pass
+@onready var lbl: Label = $MarginContainer/GameOver/Control/OutOfFriendlies
 
 func _physics_process(_delta: float) -> void:
 	if !top_shown and GameData.meat > 0:
@@ -22,11 +23,21 @@ func _physics_process(_delta: float) -> void:
 	control.rotation = sin(d) * 0.02
 	control.scale.x = cos(d) * 0.02 + 1
 	control.scale.y = control.scale.x
-	
-func show_gameover():
+
+var gover = false;	
+func show_gameover(txt: String):
+	if gover: return;
+	gover = true;
+	lbl.text = txt;
 	gameoveranim.play("show");
+	
 	pass
 
 func _on_game_on_friendlies_dead() -> void:
-	show_gameover()
+	show_gameover("OUT OF FRIENDS")
+	pass # Replace with function body.
+
+
+func _on_game_on_sword_exploded() -> void:
+	show_gameover("SWORD EXPLODED")
 	pass # Replace with function body.

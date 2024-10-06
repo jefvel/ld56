@@ -44,6 +44,9 @@ metadata/_aseprite_wizard_interface_config_ = {
 "slice_section": true
 }
 
+[node name="AttackPos" parent="Sprite" index="0"]
+position = Vector2(13, -2)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Hitbox" index="0"]
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_cuqnm")

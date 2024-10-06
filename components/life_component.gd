@@ -17,6 +17,8 @@ var dead: bool = false;
 signal on_died();
 signal on_hurt(damage: int);
 
+var last_hitter: Node2D
+
 var start_material;
 var flash_material = preload("res://creatures/evil/hurt_material.tres")
 var flash_t = 0.0;
@@ -44,11 +46,11 @@ func flash():
 	flash_t = .1;
 
 # Returns true when hurt hits
-func hurt(amount: int = 1) -> bool:
+func hurt(amount: int = 1, hurter: Node2D = null) -> bool:
 	if _invuln_time > 0: return false;
 	
 	_invuln_time = invulnerability_time;
-	
+	last_hitter = hurter;
 	health -= amount;
 	if health > 0:
 		on_hurt.emit(amount)
