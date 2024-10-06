@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://nm7xmdpxh4gg"]
+
+[ext_resource type="PackedScene" uid="uid://c1u01ibmha2qn" path="res://creatures/evil/enemy.tscn" id="1_wmsbv"]
+[ext_resource type="Texture2D" uid="uid://p8u62mgg0v6h" path="res://creatures/evil/fast_evil.png" id="2_h7whj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rxomn"]
+size = Vector2(18, 15)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_goihv"]
+radius = 6.0
+
+[node name="Enemy" instance=ExtResource("1_wmsbv")]
+
+[node name="LifeComponent" parent="." index="0"]
+max_health = 4
+
+[node name="AttackComponent" parent="." index="1"]
+attack_prepare_time = 0.507
+
+[node name="WalkerComponent" parent="." index="2"]
+max_speed = 42.469
+step_interval = 0.395
+step_duration = 0.3
+
+[node name="Sprite" parent="." index="3"]
+texture_filter = 1
+position = Vector2(0, -1)
+texture = ExtResource("2_h7whj")
+offset = Vector2(0, -15)
+hframes = 2
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": true,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": true,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://creatures/evil/fast_evil.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": true,
+"layer_section": true,
+"output_section": false,
+"slice_section": true
+}
+metadata/_aseprite_wizard_source_file_hash_ = "b5b19870feb2aa8b3e33f35b09bca9e5"
+
+[node name="AttackPos" parent="Sprite" index="0"]
+position = Vector2(9, -19)
+
+[node name="Hitbox" parent="Sprite" index="1"]
+position = Vector2(0, -7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Hitbox" index="0"]
+position = Vector2(0, -3.5)
+shape = SubResource("RectangleShape2D_rxomn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="5"]
+shape = SubResource("CircleShape2D_goihv")

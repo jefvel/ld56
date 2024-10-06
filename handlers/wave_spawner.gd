@@ -10,13 +10,16 @@ signal on_wave_spawned;
 var wave: int = 0;
 var max_waves = 20;
 
-var lil_spawns = 3;
+var lil_spawns = 2;
+var fast_spawns = 0;
 var big_spawns = 0;
 
 @onready var world: Node2D = $"../World/Things"
 
 const BIG_EVIL = preload("res://creatures/evil/big_evil.tscn")
 const LIL_EVIL = preload("res://creatures/evil/lil_evil.tscn")
+const FAST_EVIL = preload("res://creatures/evil/fast_evil.tscn")
+
 
 func _ready() -> void:
 	pass
@@ -47,12 +50,19 @@ func spawn_wave():
 		spawn_enemy(LIL_EVIL, get_rand_p())
 	for i in range(big_spawns):
 		spawn_enemy(BIG_EVIL, get_rand_p())
-	
+	for i in range(fast_spawns):
+		spawn_enemy(FAST_EVIL, get_rand_p())
+
 	print("running wave ", wave)
 	
 	if wave < 5:
 		lil_spawns += 2;
-	if wave > 5 and wave % 2 == 0:
+	else:
+		lil_spawns += 1;
+	if wave == 5 or (wave > 5 and wave % 2 == 0):
 		big_spawns += 1;
+		
+	if wave >= 8 && wave % 4 == 0:
+		fast_spawns += 2;
 		
 	on_wave_spawned.emit();

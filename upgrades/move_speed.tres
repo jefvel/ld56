@@ -7,5 +7,5 @@ script = ExtResource("1_sde8v")
 id = "speed"
 name = "Move Speed"
 desc = "Makes you faster"
-costs = Array[int]([2, 10, 50, 100])
+costs = Array[int]([2, 10, 30, 50])
 values = []

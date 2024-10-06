@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bkcautgwysllm"
+path="res://.godot/imported/fast_evil.aseprite-25ba68c178fec74087306ce69e2fb0c6.res"
+
+[deps]
+
+source_file="res://creatures/evil/fast_evil.aseprite"
+dest_files=["res://.godot/imported/fast_evil.aseprite-25ba68c178fec74087306ce69e2fb0c6.res"]
+
+[params]
+

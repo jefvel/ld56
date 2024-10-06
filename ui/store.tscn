@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://f6owbn2h37lf"]
+[gd_scene load_steps=20 format=3 uid="uid://f6owbn2h37lf"]
 
 [ext_resource type="Script" path="res://ui/store.gd" id="1_r1xyf"]
 [ext_resource type="Texture2D" uid="uid://ud2icaivdue" path="res://ui/bg_gradient.tres" id="2_71cel"]
@@ -13,6 +13,7 @@
 [ext_resource type="Resource" uid="uid://dj5yrdqdrgsji" path="res://upgrades/insurance.tres" id="10_p1i2o"]
 [ext_resource type="Resource" uid="uid://bllmftlfyhs31" path="res://upgrades/pickup_radius.tres" id="10_sbbda"]
 [ext_resource type="Resource" uid="uid://b6qwplkyxrl8v" path="res://upgrades/cooldown.tres" id="11_vc3ae"]
+[ext_resource type="Resource" uid="uid://rbk8lxxmmc53" path="res://upgrades/life.tres" id="12_fts1x"]
 [ext_resource type="Texture2D" uid="uid://bsu000pcn7ogk" path="res://ui/retry.png" id="12_jm4g6"]
 
 [sub_resource type="Animation" id="Animation_lao1y"]
@@ -278,8 +279,9 @@ anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_top = -19.0
-offset_right = 110.0
+offset_right = 112.0
 offset_bottom = 57.0
+upgrade = ExtResource("9_s3lmy")
 
 [node name="UpgradeItem2" parent="Content/Control/Control" instance=ExtResource("6_0bc5r")]
 layout_mode = 1
@@ -288,7 +290,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 116.0
 offset_top = -19.0
-offset_right = 276.0
+offset_right = 278.0
 offset_bottom = 57.0
 upgrade = ExtResource("7_r38l2")
 
@@ -309,9 +311,8 @@ anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_top = 64.0
-offset_right = 110.0
+offset_right = 112.0
 offset_bottom = 140.0
-upgrade = ExtResource("9_s3lmy")
 
 [node name="UpgradeItem5" parent="Content/Control/Control" instance=ExtResource("6_0bc5r")]
 layout_mode = 1
@@ -320,7 +321,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 116.0
 offset_top = 64.0
-offset_right = 276.0
+offset_right = 278.0
 offset_bottom = 140.0
 upgrade = ExtResource("10_p1i2o")
 
@@ -341,8 +342,9 @@ anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_top = 146.0
-offset_right = 110.0
+offset_right = 112.0
 offset_bottom = 222.0
+upgrade = ExtResource("12_fts1x")
 
 [node name="UpgradeItem8" parent="Content/Control/Control" instance=ExtResource("6_0bc5r")]
 layout_mode = 1
@@ -351,7 +353,18 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 116.0
 offset_top = 146.0
-offset_right = 276.0
+offset_right = 278.0
+offset_bottom = 222.0
+upgrade = ExtResource("11_vc3ae")
+
+[node name="UpgradeItem9" parent="Content/Control/Control" instance=ExtResource("6_0bc5r")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 116.0
+offset_top = 146.0
+offset_right = 278.0
 offset_bottom = 222.0
 upgrade = ExtResource("11_vc3ae")
 

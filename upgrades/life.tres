@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeResource" load_steps=2 format=3 uid="uid://rbk8lxxmmc53"]
+
+[ext_resource type="Script" path="res://upgrades/upgrade.gd" id="1_hyeh7"]
+
+[resource]
+script = ExtResource("1_hyeh7")
+id = "life"
+name = "Life"
+desc = "Grants some protection"
+costs = Array[int]([20, 50])
+values = [2, 3, 4, 5, 6]

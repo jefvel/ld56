@@ -45,11 +45,16 @@ var damage_levels = [1,2,3,4,5,6]
 var max_speeds = [5.0, 8.0, 12.0, 20.0, 35.0];
 var cooldown_speeds = [1.5, 1.2, 0.9, 0.7, 0.4];
 var pu_rads = [5.0, 10.0, 15.0, 25.0]
+var lives = [1, 2, 3];
 func _ready():
 	max_pierce = pierce_levels[GameData.get_upgrade_level("pierce")]
 	cur_damage = damage_levels[GameData.get_upgrade_level("damage")]
 	max_speed = max_speeds[GameData.get_upgrade_level("speed")]
 	attack_cooldown_duration = cooldown_speeds[GameData.get_upgrade_level("attack_speed")]
+	
+	life.max_health = lives[GameData.get_upgrade_level("life")]
+	life.health = life.max_health
+	
 	var rad = pu_rads[GameData.get_upgrade_level("pickup_radius")]
 	pick_up_rad.scale = Vector2(rad, rad)
 	print("set pierce: ", max_pierce, ", dmg: ", cur_damage, ", rad: ", rad)
@@ -127,7 +132,7 @@ func attack():
 		attack_press_coyote_time = 0.2;
 		return
 	
-	life.make_invulnerable(0.2)
+	life.make_invulnerable(0.4)
 	
 	hit_targets = [];
 	attack_cooldown = attack_cooldown_duration;

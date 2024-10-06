@@ -25,9 +25,13 @@ func check_pickup():
 	if hovered:
 		if until_can_pick_up > 0: return;
 		pickup_sfx.play()
-		picked_up = true;
-		animation_player.play("spawn")
-		GameData.meat += 1;
+		force_pickup()
+	pass
+
+func force_pickup():
+	picked_up = true;
+	animation_player.play("spawn")
+	GameData.meat += 1;
 	pass
 
 var hovered = false;

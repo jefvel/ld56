@@ -36,6 +36,11 @@ func find_target():
 	var closest_sq = 1600 * 1600;
 	var closest: Friendly = null;
 	
+	if attack_target == GameData.game.sword:
+		var dist_to_sword = GameData.game.global_position.distance_squared_to(pos)
+		if dist_to_sword < 350 * 350:
+			return;
+	
 	for f in GameData.game.friendlies:
 		if !is_instance_valid(f):
 			return
@@ -82,7 +87,7 @@ func process_attack(delta:float):
 func _physics_process(delta: float) -> void:
 	until_find_target -= delta;
 	if until_find_target < 0:
-		until_find_target = randf_range(3.0, 20.0);
+		until_find_target = randf_range(0.5, 1.0);
 		find_target()
 			
 	

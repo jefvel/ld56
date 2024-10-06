@@ -36,7 +36,7 @@ func refresh():
 		lvl_text.text = "MAX"
 		costtxt.text = "";
 	else:
-		lvl_text.text = "LVL %s" % (level + 1)
+		lvl_text.text = "Lv %s" % (level + 1)
 		pass
 	pass
 

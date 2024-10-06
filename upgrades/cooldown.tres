@@ -7,5 +7,5 @@ script = ExtResource("1_ry8y0")
 id = "attack_speed"
 name = "Atk Speed"
 desc = "Reduce cooldown between swings"
-costs = Array[int]([20, 100, 200, 500])
+costs = Array[int]([15, 25, 30, 40])
 values = []

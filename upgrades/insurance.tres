@@ -7,5 +7,5 @@ script = ExtResource("1_qj4xf")
 id = "insurance"
 name = "Insurance"
 desc = "Get some meat from your friends even if your sword breaks"
-costs = Array[int]([25])
+costs = Array[int]([10])
 values = []

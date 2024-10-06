@@ -35,15 +35,23 @@ func do_poof():
 
 var meat_counts = [1, 3, 9, 12, 24, 32]
 func spawn_meat():
+	
 	var tospawn = 1;
 	if level >= meat_counts.size():
 		tospawn = 32;
 	else:
 		tospawn = meat_counts[level]
+	var autopickup = false;
+	if GameData.game.sword.life.dead:
+		tospawn = int(tospawn * 0.5)
+		tospawn = max(tospawn, 1)
+		autopickup = true;
 	for r in range(tospawn):
 		var meat = MEAT.instantiate()
 		get_parent().add_child(meat)
 		meat.global_position = global_position
+		if autopickup:
+			meat.force_pickup()
 	pass
 
 func _on_life_component_on_died() -> void:

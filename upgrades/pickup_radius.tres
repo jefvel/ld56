@@ -7,5 +7,5 @@ script = ExtResource("1_wckvs")
 id = "pickup_radius"
 name = "Loot Range"
 desc = "Pick up items from further away"
-costs = Array[int]([20, 100, 200])
+costs = Array[int]([20, 50, 60])
 values = []

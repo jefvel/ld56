@@ -32,6 +32,7 @@ func _ready() -> void:
 func _on_sword_on_died() -> void:
 	flash.visible = true;
 	if game_over: return;
+	
 	do_game_over();
 
 func out_of_friendlies():
@@ -41,7 +42,7 @@ func out_of_friendlies():
 
 func do_game_over():
 	game_over = true;
-	
+	GameData.rounds_played += 1;
 	# sword.active = false;
 	pass
 	
@@ -107,4 +108,7 @@ func _on_store_on_open() -> void:
 
 func _on_sword_on_died_complete() -> void:
 	on_sword_exploded.emit();
+	if GameData.get_upgrade_level("insurance") > 0:
+		for f in friendlies:
+			f.life.hurt(100)
 	pass # Replace with function body.

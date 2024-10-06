@@ -7,5 +7,5 @@ script = ExtResource("1_4d5uu")
 id = "initial_friends"
 name = "Friends"
 desc = "Start with more pals"
-costs = Array[int]([1, 20, 100, 300, 500])
+costs = Array[int]([1, 10, 20, 40, 50])
 values = []

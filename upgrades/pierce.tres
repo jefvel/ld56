@@ -7,5 +7,5 @@ script = ExtResource("1_wnvvp")
 id = "pierce"
 name = "Pierce"
 desc = "Amount of targets you can hit per swing"
-costs = Array[int]([5, 20, 60, 100, 200])
+costs = Array[int]([5, 20, 50, 60, 100])
 values = [2, 3, 4, 5, 6]

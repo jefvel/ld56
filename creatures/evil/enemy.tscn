@@ -23,7 +23,7 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_laty6"]
+[sub_resource type="Animation" id="Animation_j3x3d"]
 length = 0.1
 loop_mode = 1
 tracks/0/type = "value"
@@ -42,7 +42,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uleyf"]
 _data = {
 &"idle": SubResource("Animation_gdrg4"),
-&"attack": SubResource("Animation_laty6")
+&"attack": SubResource("Animation_j3x3d")
 }
 
 [node name="Enemy" type="RigidBody2D" node_paths=PackedStringArray("life") groups=["Enemies"]]

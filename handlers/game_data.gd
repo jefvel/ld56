@@ -2,7 +2,7 @@ extends Node
 
 var game: Game;
 
-var meat_bank: int = 3330;
+var meat_bank: int = 0;
 var meat: int = 0;
 
 signal on_upgrade_done(upgrade: UpgradeResource, level: int)
@@ -26,6 +26,7 @@ var upgrade_levels = {
 	"pickup_radius": 0,
 	"attack_speed": 0,
 	"insurance": 0,
+	"life": 0,
 }
 
 func get_upgrade_level(id: String):
