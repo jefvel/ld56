@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://ccld7aj3ft675"]
+[gd_scene load_steps=5 format=3 uid="uid://ccld7aj3ft675"]
 
 [ext_resource type="PackedScene" uid="uid://c1u01ibmha2qn" path="res://creatures/evil/enemy.tscn" id="1_robxm"]
+[ext_resource type="Texture2D" uid="uid://c7wj8k3mscwd5" path="res://creatures/evil/lil_evil.png" id="2_5iy4a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rxomn"]
 size = Vector2(12, 12)
@@ -17,6 +18,31 @@ max_health = 2
 max_speed = 20.0
 step_interval = 0.601
 step_duration = 0.46
+
+[node name="Sprite" parent="." index="3"]
+texture_filter = 1
+position = Vector2(0, -1)
+texture = ExtResource("2_5iy4a")
+offset = Vector2(0, -15)
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": true,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": true,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://creatures/evil/lil_evil.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": true,
+"layer_section": true,
+"output_section": false,
+"slice_section": true
+}
+metadata/_aseprite_wizard_source_file_hash_ = "11b7e20fdad860e32b9ec1e9266c6013"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Hitbox" index="0"]
 position = Vector2(0, -10)

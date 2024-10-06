@@ -18,6 +18,8 @@ signal on_friendlies_dead();
 
 @onready var sword: Sword = $Sword
 
+var friendlies: Array[Friendly] = [];
+
 func _ready() -> void:
 	GameData.game = self;
 	start()
@@ -38,6 +40,7 @@ func do_game_over():
 @onready var ambiance_sfx: AudioStreamPlayer = $ambiance_sfx
 
 func start():
+	friendlies = []
 	wave_spawner.spawn_wave();
 	friendly_spawner.init()
 	ambiance_sfx.play(randf() * 5.0)
@@ -57,15 +60,17 @@ func _physics_process(_delta: float) -> void:
 func process_game(_delta: float):
 	var objects = things.get_children();
 	var enemies: Array[Enemy] = []
-	var friendlies: Array[Friendly] = [];
+	var new_friendlies: Array[Friendly] = [];
 	
 	for o in objects:
 		if o is Enemy:
 			enemies.push_back(o)
 		if o is Friendly:
-			friendlies.push_back(o)
+			new_friendlies.push_back(o)
 	
-	if friendlies.size() == 0:
+	friendlies = new_friendlies;
+	
+	if new_friendlies.size() == 0:
 		out_of_friendlies()
 
 

@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bia4rphm0iwnp"]
+
+[ext_resource type="Shader" path="res://shader/flash.gdshader" id="1_jmw50"]
+
+[resource]
+shader = ExtResource("1_jmw50")
+shader_parameter/flash_power = 1.0

@@ -1,32 +1,29 @@
-[gd_scene load_steps=10 format=3 uid="uid://c1u01ibmha2qn"]
+[gd_scene load_steps=11 format=3 uid="uid://c1u01ibmha2qn"]
 
 [ext_resource type="Script" path="res://components/enemy.gd" id="1_lec84"]
 [ext_resource type="Script" path="res://components/life_component.gd" id="2_ln68x"]
 [ext_resource type="Script" path="res://components/walker.gd" id="3_3l0mg"]
-[ext_resource type="Script" path="res://creatures/evil/target_finder.gd" id="3_5dhbi"]
-[ext_resource type="Texture2D" uid="uid://c7wj8k3mscwd5" path="res://creatures/evil/lil_evil.png" id="3_xfalr"]
 [ext_resource type="Script" path="res://components/hitbox.gd" id="4_8h3iv"]
+[ext_resource type="Script" path="res://creatures/evil/attack_component.gd" id="4_viu77"]
 [ext_resource type="PackedScene" uid="uid://bqua2j1eo345d" path="res://creatures/shadow.tscn" id="5_mrnxm"]
 
-[sub_resource type="Animation" id="Animation_lr2c4"]
+[sub_resource type="Animation" id="Animation_gdrg4"]
 length = 0.1
 loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
+
+[sub_resource type="Animation" id="Animation_laty6"]
+length = 0.1
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_qlcha"]
+length = 0.1
+loop_mode = 1
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uleyf"]
 _data = {
-&"default": SubResource("Animation_lr2c4")
+&"attack": SubResource("Animation_laty6"),
+&"idle": SubResource("Animation_gdrg4"),
+&"default": SubResource("Animation_qlcha")
 }
 
 [node name="Enemy" type="RigidBody2D" node_paths=PackedStringArray("life") groups=["Enemies"]]
@@ -39,40 +36,27 @@ linear_damp = 10.0
 script = ExtResource("1_lec84")
 life = NodePath("LifeComponent")
 
-[node name="LifeComponent" type="Node" parent="."]
+[node name="LifeComponent" type="Node" parent="." node_paths=PackedStringArray("hit_flash")]
 script = ExtResource("2_ln68x")
 max_health = 1
+hit_flash = NodePath("../Sprite")
 
-[node name="TargetFinder" type="Node" parent="." node_paths=PackedStringArray("walker")]
-script = ExtResource("3_5dhbi")
+[node name="AttackComponent" type="Node" parent="." node_paths=PackedStringArray("anim", "sprite", "enemy", "walker")]
+script = ExtResource("4_viu77")
+anim = NodePath("../AnimationPlayer")
+sprite = NodePath("../Sprite")
+enemy = NodePath("..")
 walker = NodePath("../WalkerComponent")
 
-[node name="WalkerComponent" type="Node" parent="." node_paths=PackedStringArray("parent_node", "sprite_node")]
+[node name="WalkerComponent" type="Node" parent="." node_paths=PackedStringArray("parent_node", "sprite_node", "attack_component")]
 script = ExtResource("3_3l0mg")
 parent_node = NodePath("..")
 sprite_node = NodePath("../Sprite")
+attack_component = NodePath("../AttackComponent")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(0, -1)
-texture = ExtResource("3_xfalr")
-offset = Vector2(0, -15)
-metadata/_aseprite_wizard_config_ = {
-"i_mode": -1,
-"keep_anim_length": false,
-"layer": "",
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": false,
-"player": "AnimationPlayer",
-"slice": "",
-"source": "res://creatures/evil/lil_evil.aseprite"
-}
-metadata/_aseprite_wizard_source_file_hash_ = "11b7e20fdad860e32b9ec1e9266c6013"
 
 [node name="Hitbox" type="Area2D" parent="Sprite" node_paths=PackedStringArray("life")]
-position = Vector2(0, 1)
 script = ExtResource("4_8h3iv")
 life = NodePath("../../LifeComponent")
 
@@ -83,3 +67,6 @@ libraries = {
 
 [node name="Shadow" parent="." instance=ExtResource("5_mrnxm")]
 scale = Vector2(0.5625, 0.625)
+
+[connection signal="on_hurt" from="LifeComponent" to="AttackComponent" method="_on_life_component_on_hurt"]
+[connection signal="on_hurt" from="LifeComponent" to="WalkerComponent" method="_on_life_component_on_hurt"]

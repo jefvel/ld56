@@ -10,6 +10,8 @@ class_name WalkerComponent
 
 @export_range(10.0, 60.0) var range_satisfaction = 16.0;
 
+@export var attack_component: AttackComponent;
+
 var cur_step_time = 0.0;
 
 var target_position: Vector2;
@@ -24,11 +26,23 @@ func _ready() -> void:
 	cur_step_time = randf() * step_interval;
 	pass
 	
+var shake = .0;
 var stime = 0.0;
 func _physics_process(delta: float) -> void:
 	if !stepping:
 		stime *= 0.98;
+	var aggro_scale = 1.0;
 	
+	bonk_s *= 0.8;
+	
+
+	if attack_component:
+		if attack_component.attacking:
+			return;
+		if attack_component.aggro:
+			aggro_scale *= 2;
+			shake += delta * 100.0;
+		
 	var vel = parent_node.linear_velocity.length()
 	var cvel = (clamp(vel, 0, max_speed) / max_speed);
 	stime += delta * cvel * 50;
@@ -37,10 +51,15 @@ func _physics_process(delta: float) -> void:
 	
 	sprite_node.rotation = sin(stime) * 0.1 * pwr;
 	sprite_node.position.y = start_pos.y - abs(cos(stime * 0.4) * 4) * pwr
-	sprite_node.flip_h = parent_node.linear_velocity.x < 0;
+	sprite_node.rotation += sin(shake * 10) * 0.05;
+	sprite_node.position.x = sin(bonk_s) * 4.5;
 	
+	if stepping and abs(vel) > 1:
+		sprite_node.flip_h = parent_node.linear_velocity.x < 0;
+		pass
+		
 	if cur_step_time <= step_interval:
-		cur_step_time += delta;
+		cur_step_time += delta * aggro_scale;
 		step_t = step_duration;
 		return
 	else:
@@ -51,14 +70,21 @@ func _physics_process(delta: float) -> void:
 		if d.length_squared() < range_satisfaction * range_satisfaction:
 			step_t = 0.0;
 			return;
+		
 		d = d.normalized();
 		d *= 2000.0 * parent_node.mass;
 		
-		if parent_node.linear_velocity.length_squared() < max_speed * max_speed:
-			parent_node.apply_central_force(d)
+		var max_spd = max_speed * aggro_scale;
+		if parent_node.linear_velocity.length_squared() < max_spd * max_spd:
+			parent_node.apply_central_force(d * aggro_scale)
 		step_t -= delta;
 	else:
 		stepping = false;
 		cur_step_time -= step_interval * randf_range(0.96, 1.02)
 	pass
 	
+
+var bonk_s = .0
+func _on_life_component_on_hurt(damage: int) -> void:
+	bonk_s = 1.0;
+	pass # Replace with function body.

@@ -229,6 +229,7 @@ text = "MEAT MARKET"
 [node name="MeatTex2" type="TextureRect" parent="Content/Control"]
 modulate = Color(0, 0, 0, 1)
 texture_filter = 1
+layout_mode = 0
 offset_left = -15.0
 offset_top = 4.0
 offset_right = 25.0
@@ -237,6 +238,7 @@ texture = ExtResource("5_wbf18")
 
 [node name="MeatTex" type="TextureRect" parent="Content/Control"]
 texture_filter = 1
+layout_mode = 0
 offset_left = -15.0
 offset_top = 2.0
 offset_right = 25.0
@@ -244,6 +246,7 @@ offset_bottom = 42.0
 texture = ExtResource("5_wbf18")
 
 [node name="Meat Text" parent="Content/Control" instance=ExtResource("3_jagy8")]
+layout_mode = 0
 offset_left = 18.0
 offset_top = 15.0
 offset_right = 90.0

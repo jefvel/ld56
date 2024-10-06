@@ -21,8 +21,11 @@ step_duration = 0.886
 range_satisfaction = 18.951
 
 [node name="Sprite" parent="." index="3"]
-position = Vector2(0, -17)
+texture_filter = 1
+position = Vector2(0, -16)
 texture = ExtResource("2_7vhv1")
+offset = Vector2(0, -16)
+hframes = 2
 metadata/_aseprite_wizard_config_ = {
 "i_mode": -1,
 "keep_anim_length": false,
@@ -35,7 +38,11 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "res://creatures/evil/big_evil.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "8ecf4c49c0a09bb0656b5a2272904ab1"
+metadata/_aseprite_wizard_source_file_hash_ = "27fb4f935ec55c4564fec3eaa08835da"
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": false,
+"slice_section": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Hitbox" index="0"]
 position = Vector2(0, -3)

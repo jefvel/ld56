@@ -22,12 +22,14 @@ lock_rotation = true
 linear_damp = 10.0
 script = ExtResource("1_hvtbp")
 
-[node name="LifeComponent" type="Node" parent="."]
+[node name="LifeComponent" type="Node" parent="." node_paths=PackedStringArray("hit_flash")]
 script = ExtResource("1_oiidv")
 max_health = 1
+hit_flash = NodePath("../Sprite")
 
-[node name="Meanderer" type="Node" parent="."]
+[node name="Meanderer" type="Node" parent="." node_paths=PackedStringArray("walker")]
 script = ExtResource("3_2qvk0")
+walker = NodePath("../WalkerComponent")
 
 [node name="WalkerComponent" type="Node" parent="." node_paths=PackedStringArray("parent_node", "sprite_node")]
 script = ExtResource("3_a3rn0")
