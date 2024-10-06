@@ -1,45 +1,211 @@
-[gd_scene load_steps=10 format=3 uid="uid://d3l567heoxfa4"]
+[gd_scene load_steps=27 format=3 uid="uid://d3l567heoxfa4"]
 
-[ext_resource type="PackedScene" uid="uid://yug8ko00mj8s" path="res://creatures/friendly/creature.tscn" id="1_dcljv"]
 [ext_resource type="Script" path="res://handlers/wave_spawner.gd" id="1_gduc8"]
+[ext_resource type="Script" path="res://game.gd" id="1_wrl8j"]
 [ext_resource type="PackedScene" uid="uid://3cjnfl08b7sy" path="res://items/sword.tscn" id="2_unyij"]
+[ext_resource type="Script" path="res://handlers/friendly_spawner.gd" id="2_xj1mk"]
+[ext_resource type="Texture2D" uid="uid://dknmngbe8uc7w" path="res://objects/grass.png" id="3_uvhrn"]
 [ext_resource type="Shader" path="res://shader/retro.gdshader" id="4_n7cbo"]
-[ext_resource type="FontFile" uid="uid://dwhlu5b31ggjn" path="res://fonts/ChevyRay - Magic Book.ttf" id="6_qujij"]
+[ext_resource type="PackedScene" uid="uid://llwek383t4xh" path="res://objects/tree.tscn" id="4_px8yo"]
 [ext_resource type="Script" path="res://ui.gd" id="6_vv5b1"]
-[ext_resource type="FontFile" uid="uid://dymwvvl70vs3e" path="res://fonts/FutilePro.ttf" id="7_shc5a"]
+[ext_resource type="Texture2D" uid="uid://mrqaoiny38mi" path="res://items/meat.png" id="8_4lv1i"]
+[ext_resource type="PackedScene" uid="uid://b8dg18ml7hxym" path="res://ui/fancy_label.tscn" id="9_2xtet"]
+[ext_resource type="PackedScene" uid="uid://f6owbn2h37lf" path="res://ui/store.tscn" id="10_p05hj"]
+[ext_resource type="Texture2D" uid="uid://duiw1d6ae2y0i" path="res://shader/whitesquare.png" id="11_5i4fi"]
+[ext_resource type="AudioStream" uid="uid://dwtey8msqmwfm" path="res://sfx/ambiance.wav" id="13_exmnp"]
+
+[sub_resource type="Curve2D" id="Curve2D_dn8b0"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -17, 113, 0, 0, 0, 0, -4, -25, 0, 0, 0, 0, 520, -21, 0, 0, 0, 0, 527, 339, 0, 0, 0, 0, -10, 330, 0, 0, 0, 0, -17, 142)
+}
+point_count = 6
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_16lfl"]
 size = Vector2(512, 310)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ydh7"]
+size = Vector2(242, 126)
+
+[sub_resource type="Animation" id="Animation_1fvpb"]
+resource_name = "show_top"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ki42j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pyris"]
+_data = {
+&"show_top": SubResource("Animation_1fvpb"),
+&"RESET": SubResource("Animation_ki42j")
+}
+
+[sub_resource type="Animation" id="Animation_l2xvi"]
+resource_name = "show"
+length = 3.33334
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../Store")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.33333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"show_store"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_o5ffe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jnk2a"]
+_data = {
+&"RESET": SubResource("Animation_o5ffe"),
+&"show": SubResource("Animation_l2xvi")
+}
+
+[sub_resource type="Animation" id="Animation_5308r"]
+resource_name = "fadein"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("InitialFade:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("InitialFade:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.129412, 0.141176, 0.137255, 1), Color(0.126256, 0.137884, 0.134001, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_xlk2m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("InitialFade:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("InitialFade:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.129412, 0.141176, 0.137255, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5jbh6"]
+_data = {
+&"fadein": SubResource("Animation_5308r"),
+&"RESET": SubResource("Animation_xlk2m")
+}
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qw32a"]
 shader = ExtResource("4_n7cbo")
-shader_parameter/resolution = Vector2(512, 310)
-shader_parameter/scan_line_amount = 0.0
+shader_parameter/resolution = Vector2(512, 320)
+shader_parameter/scan_line_amount = 0.04
 shader_parameter/warp_amount = 0.0
-shader_parameter/noise_amount = 0.018
+shader_parameter/noise_amount = 0.01
 shader_parameter/interference_amount = 0.0
 shader_parameter/grille_amount = 0.0
 shader_parameter/grille_size = 1.0
 shader_parameter/vignette_amount = 0.0
 shader_parameter/vignette_intensity = 0.0
-shader_parameter/aberation_amount = 0.0
+shader_parameter/aberation_amount = 0.173
 shader_parameter/roll_line_amount = 0.0
 shader_parameter/roll_speed = 3.8e-07
 shader_parameter/scan_line_strength = -1.0
-shader_parameter/pixel_strength = 0.0
+shader_parameter/pixel_strength = -4.0
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_wrl8j")
+
+[node name="FriendlySpawner" type="Node" parent="."]
+script = ExtResource("2_xj1mk")
 
 [node name="WaveSpawner" type="Node" parent="."]
 script = ExtResource("1_gduc8")
 
-[node name="World" type="Node2D" parent="."]
-y_sort_enabled = true
+[node name="SpawnPath" type="Path2D" parent="WaveSpawner"]
+curve = SubResource("Curve2D_dn8b0")
 
-[node name="Creature4" parent="World" instance=ExtResource("1_dcljv")]
-position = Vector2(256, 155)
+[node name="World" type="Node2D" parent="."]
 
 [node name="Boundaries" type="Area2D" parent="World"]
+visible = false
 collision_layer = 0
 collision_mask = 0
 metadata/_edit_lock_ = true
@@ -48,6 +214,133 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Boundaries"]
 position = Vector2(256, 155)
 shape = SubResource("RectangleShape2D_16lfl")
+
+[node name="Grass" type="Sprite2D" parent="World"]
+z_index = -1
+texture_filter = 1
+position = Vector2(256, 155)
+texture = ExtResource("3_uvhrn")
+
+[node name="FriendlySpawn" type="Area2D" parent="World/Grass"]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Grass/FriendlySpawn"]
+position = Vector2(-2, 1)
+shape = SubResource("RectangleShape2D_1ydh7")
+
+[node name="Things" type="Node2D" parent="World"]
+y_sort_enabled = true
+
+[node name="Tree" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(-6, 40)
+
+[node name="Tree2" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(-1, 87)
+
+[node name="Tree22" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(516, 289)
+
+[node name="Tree23" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(510, 230)
+
+[node name="Tree24" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(514, 155)
+
+[node name="Tree25" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(509, 88)
+
+[node name="Tree26" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(499, 10)
+
+[node name="Tree27" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(458, 18)
+
+[node name="Tree28" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(426, 9)
+
+[node name="Tree29" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(373, 15)
+
+[node name="Tree30" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(324, 18)
+
+[node name="Tree31" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(275, 13)
+
+[node name="Tree32" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(225, 18)
+
+[node name="Tree33" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(177, 15)
+
+[node name="Tree34" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(134, 22)
+
+[node name="Tree35" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(95, 12)
+
+[node name="Tree36" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(60, 21)
+
+[node name="Tree37" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(24, 6)
+
+[node name="Tree3" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(-5, 163)
+
+[node name="Tree4" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(-16, 228)
+
+[node name="Tree5" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(-6, 278)
+
+[node name="Tree6" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(-14, 348)
+
+[node name="Tree21" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(2, 376)
+
+[node name="Tree7" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(32, 387)
+
+[node name="Tree8" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(73, 381)
+
+[node name="Tree9" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(110, 369)
+
+[node name="Tree10" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(141, 385)
+
+[node name="Tree11" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(167, 374)
+
+[node name="Tree12" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(203, 367)
+
+[node name="Tree13" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(241, 379)
+
+[node name="Tree14" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(280, 368)
+
+[node name="Tree15" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(317, 380)
+
+[node name="Tree16" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(353, 369)
+
+[node name="Tree17" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(391, 383)
+
+[node name="Tree18" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(429, 367)
+
+[node name="Tree19" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(468, 367)
+
+[node name="Tree20" parent="World/Things" instance=ExtResource("4_px8yo")]
+position = Vector2(512, 353)
 
 [node name="Sword" parent="." instance=ExtResource("2_unyij")]
 position = Vector2(352, 175)
@@ -78,54 +371,99 @@ theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 32
 
 [node name="TopTexts" type="Control" parent="UILayer/UI/MarginContainer"]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="UILayer/UI/MarginContainer/TopTexts"]
+[node name="MeatTex2" type="TextureRect" parent="UILayer/UI/MarginContainer/TopTexts"]
+modulate = Color(0, 0, 0, 1)
 texture_filter = 1
 layout_mode = 1
-offset_right = 25.0
-offset_bottom = 12.0
-theme_override_fonts/font = ExtResource("6_qujij")
-theme_override_font_sizes/font_size = 12
-text = "MEAT"
-metadata/_edit_group_ = true
-
-[node name="Label" type="Label" parent="UILayer/UI/MarginContainer/TopTexts/Label2"]
-modulate = Color(0.162353, 0.162353, 0.162353, 1)
-z_index = -1
-texture_filter = 1
-layout_mode = 0
-offset_left = 1.0
-offset_top = 1.0
+offset_left = -14.0
+offset_top = -12.0
 offset_right = 26.0
-offset_bottom = 13.0
-theme_override_fonts/font = ExtResource("6_qujij")
-theme_override_font_sizes/font_size = 12
-text = "MEAT"
+offset_bottom = 28.0
+texture = ExtResource("8_4lv1i")
 
-[node name="Meat Text" type="Label" parent="UILayer/UI/MarginContainer/TopTexts"]
+[node name="MeatTex" type="TextureRect" parent="UILayer/UI/MarginContainer/TopTexts"]
 texture_filter = 1
-layout_mode = 0
-offset_top = 12.0
-offset_right = 40.0
+layout_mode = 1
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 26.0
 offset_bottom = 26.0
-theme_override_fonts/font = ExtResource("7_shc5a")
-theme_override_font_sizes/font_size = 16
-text = "0"
-metadata/_edit_group_ = true
+texture = ExtResource("8_4lv1i")
 
-[node name="Label" type="Label" parent="UILayer/UI/MarginContainer/TopTexts/Meat Text"]
-modulate = Color(0.162353, 0.162353, 0.162353, 1)
-z_index = -1
-texture_filter = 1
+[node name="Meat Text" parent="UILayer/UI/MarginContainer/TopTexts" instance=ExtResource("9_2xtet")]
 layout_mode = 0
-offset_left = 1.0
-offset_top = 1.0
-offset_right = 26.0
-offset_bottom = 13.0
-theme_override_fonts/font = ExtResource("7_shc5a")
-theme_override_font_sizes/font_size = 16
+offset_left = 17.0
+offset_top = -1.0
+offset_right = 89.0
+offset_bottom = 22.0
 text = "0"
+horizontal_alignment = 0
+vertical_alignment = 0
+
+[node name="tanim" type="AnimationPlayer" parent="UILayer/UI/MarginContainer/TopTexts"]
+libraries = {
+&"": SubResource("AnimationLibrary_pyris")
+}
+
+[node name="GameOver" type="Control" parent="UILayer/UI/MarginContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="UILayer/UI/MarginContainer/GameOver"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -48.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OutOfFriendlies" parent="UILayer/UI/MarginContainer/GameOver/Control" instance=ExtResource("9_2xtet")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -7.5
+offset_right = 75.0
+offset_bottom = 7.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "OUT OF FRIENDLIES"
+
+[node name="gameoveranim" type="AnimationPlayer" parent="UILayer/UI/MarginContainer/GameOver"]
+libraries = {
+&"": SubResource("AnimationLibrary_jnk2a")
+}
+
+[node name="Store" parent="UILayer/UI" instance=ExtResource("10_p05hj")]
+visible = false
+layout_mode = 1
+
+[node name="InitialFade" type="TextureRect" parent="UILayer/UI"]
+visible = false
+modulate = Color(0.129412, 0.141176, 0.137255, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("11_5i4fi")
+
+[node name="uianim" type="AnimationPlayer" parent="UILayer/UI"]
+libraries = {
+&"": SubResource("AnimationLibrary_5jbh6")
+}
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 visible = false
@@ -137,3 +475,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ambiance_sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_exmnp")
+
+[connection signal="on_friendlies_dead" from="." to="UILayer/UI" method="_on_game_on_friendlies_dead"]
+[connection signal="on_close" from="UILayer/UI/Store" to="Sword" method="_on_store_on_close"]
+[connection signal="on_closed" from="UILayer/UI/Store" to="." method="_on_store_on_closed"]
+[connection signal="on_open" from="UILayer/UI/Store" to="." method="_on_store_on_open"]
+[connection signal="on_open" from="UILayer/UI/Store" to="Sword" method="_on_store_on_open"]

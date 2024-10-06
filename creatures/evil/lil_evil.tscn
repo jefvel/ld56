@@ -10,6 +10,14 @@ radius = 6.0
 
 [node name="Enemy" instance=ExtResource("1_robxm")]
 
+[node name="LifeComponent" parent="." index="0"]
+max_health = 2
+
+[node name="WalkerComponent" parent="." index="2"]
+max_speed = 20.0
+step_interval = 0.601
+step_duration = 0.46
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Hitbox" index="0"]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_rxomn")

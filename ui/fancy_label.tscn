@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8dg18ml7hxym"]
+
+[ext_resource type="FontFile" uid="uid://dymwvvl70vs3e" path="res://fonts/FutilePro.ttf" id="1_qr3i0"]
+[ext_resource type="Script" path="res://ui/fancy_label.gd" id="2_tnabs"]
+
+[node name="FancyLabel" type="Label"]
+texture_filter = 1
+offset_right = 94.0
+offset_bottom = 14.0
+theme_override_fonts/font = ExtResource("1_qr3i0")
+theme_override_font_sizes/font_size = 16
+text = "SWORD OWIE"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_tnabs")
+metadata/_edit_group_ = true
+
+[node name="Bg" type="Label" parent="."]
+modulate = Color(0.0189402, 0.0189402, 0.0189402, 0.8)
+z_index = -1
+texture_filter = 1
+layout_mode = 1
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 96.0
+offset_bottom = 16.0
+theme_override_fonts/font = ExtResource("1_qr3i0")
+theme_override_font_sizes/font_size = 16
+text = "SWORD OWIE"
+horizontal_alignment = 1
+vertical_alignment = 1

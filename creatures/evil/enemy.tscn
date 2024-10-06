@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://c1u01ibmha2qn"]
+[gd_scene load_steps=10 format=3 uid="uid://c1u01ibmha2qn"]
 
-[ext_resource type="Script" path="res://components/evil.gd" id="1_lec84"]
+[ext_resource type="Script" path="res://components/enemy.gd" id="1_lec84"]
 [ext_resource type="Script" path="res://components/life_component.gd" id="2_ln68x"]
 [ext_resource type="Script" path="res://components/walker.gd" id="3_3l0mg"]
+[ext_resource type="Script" path="res://creatures/evil/target_finder.gd" id="3_5dhbi"]
 [ext_resource type="Texture2D" uid="uid://c7wj8k3mscwd5" path="res://creatures/evil/lil_evil.png" id="3_xfalr"]
 [ext_resource type="Script" path="res://components/hitbox.gd" id="4_8h3iv"]
 [ext_resource type="PackedScene" uid="uid://bqua2j1eo345d" path="res://creatures/shadow.tscn" id="5_mrnxm"]
@@ -31,8 +32,10 @@ _data = {
 [node name="Enemy" type="RigidBody2D" node_paths=PackedStringArray("life") groups=["Enemies"]]
 collision_layer = 2
 collision_mask = 2
+mass = 5.0
 gravity_scale = 0.0
 lock_rotation = true
+linear_damp = 10.0
 script = ExtResource("1_lec84")
 life = NodePath("LifeComponent")
 
@@ -40,8 +43,13 @@ life = NodePath("LifeComponent")
 script = ExtResource("2_ln68x")
 max_health = 1
 
-[node name="WalkerComponent" type="Node" parent="." node_paths=PackedStringArray("sprite_node")]
+[node name="TargetFinder" type="Node" parent="." node_paths=PackedStringArray("walker")]
+script = ExtResource("3_5dhbi")
+walker = NodePath("../WalkerComponent")
+
+[node name="WalkerComponent" type="Node" parent="." node_paths=PackedStringArray("parent_node", "sprite_node")]
 script = ExtResource("3_3l0mg")
+parent_node = NodePath("..")
 sprite_node = NodePath("../Sprite")
 
 [node name="Sprite" type="Sprite2D" parent="."]

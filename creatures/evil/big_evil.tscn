@@ -14,7 +14,13 @@ radius = 14.1421
 [node name="LifeComponent" parent="." index="0"]
 max_health = 5
 
-[node name="Sprite" parent="." index="2"]
+[node name="WalkerComponent" parent="." index="2"]
+max_speed = 15.918
+step_interval = 2.112
+step_duration = 0.886
+range_satisfaction = 18.951
+
+[node name="Sprite" parent="." index="3"]
 position = Vector2(0, -17)
 texture = ExtResource("2_7vhv1")
 metadata/_aseprite_wizard_config_ = {
@@ -35,10 +41,10 @@ metadata/_aseprite_wizard_source_file_hash_ = "8ecf4c49c0a09bb0656b5a2272904ab1"
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_cuqnm")
 
-[node name="Shadow" parent="." index="4"]
-scale = Vector2(1.75, 0.75)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="5"]
 position = Vector2(0, -2)
 rotation = -1.57079
 shape = SubResource("CircleShape2D_82kel")
+
+[node name="Shadow" parent="." index="6"]
+scale = Vector2(1.75, 0.75)

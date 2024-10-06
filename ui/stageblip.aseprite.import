@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b5ans0h1r23vb"
+path="res://.godot/imported/stageblip.aseprite-ce8a6618c5035407f0a08a7e8611b153.res"
+
+[deps]
+
+source_file="res://ui/stageblip.aseprite"
+dest_files=["res://.godot/imported/stageblip.aseprite-ce8a6618c5035407f0a08a7e8611b153.res"]
+
+[params]
+

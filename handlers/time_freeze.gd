@@ -7,7 +7,7 @@ func freeze(frames: int = 1):
 	frozen_frames = frames;
 	frozen = true;
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if frozen:
 		frozen_frames -= 1;
 		if frozen_frames <= 0:

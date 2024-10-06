@@ -1,0 +1,256 @@
+[gd_scene load_steps=11 format=3 uid="uid://f6owbn2h37lf"]
+
+[ext_resource type="Script" path="res://ui/store.gd" id="1_r1xyf"]
+[ext_resource type="Texture2D" uid="uid://ud2icaivdue" path="res://ui/bg_gradient.tres" id="2_71cel"]
+[ext_resource type="PackedScene" uid="uid://b8dg18ml7hxym" path="res://ui/fancy_label.tscn" id="3_jagy8"]
+[ext_resource type="FontFile" uid="uid://dwhlu5b31ggjn" path="res://fonts/ChevyRay - Magic Book.ttf" id="4_3jxgh"]
+[ext_resource type="Texture2D" uid="uid://mrqaoiny38mi" path="res://items/meat.png" id="5_wbf18"]
+[ext_resource type="AudioStream" uid="uid://dxgau6ok3bu6u" path="res://music/shop.ogg" id="5_wio0f"]
+
+[sub_resource type="Animation" id="Animation_lao1y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Content:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("music:volume_db")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_jl3aj"]
+resource_name = "show"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 666), Vector2(0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"deposit"
+}, {
+"args": [],
+"method": &"_on_open_ready"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("music")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.366667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/path = NodePath("music:volume_db")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.366667),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-3.0]
+}
+
+[sub_resource type="Animation" id="Animation_itkul"]
+resource_name = "hide"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.566667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 666)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Content:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_on_closed"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("music:volume_db")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.166667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -80.0]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("music")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.233333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"stop"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0nygd"]
+_data = {
+&"RESET": SubResource("Animation_lao1y"),
+&"show": SubResource("Animation_jl3aj"),
+&"hide": SubResource("Animation_itkul")
+}
+
+[node name="Store" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r1xyf")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -139.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_71cel")
+
+[node name="anim" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_0nygd")
+}
+
+[node name="Content" type="MarginContainer" parent="."]
+z_index = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 32
+
+[node name="Control" type="Control" parent="Content"]
+layout_mode = 2
+
+[node name="FancyLabel" parent="Content/Control" instance=ExtResource("3_jagy8")]
+layout_mode = 1
+offset_right = 65.0
+offset_bottom = 12.0
+theme_override_fonts/font = ExtResource("4_3jxgh")
+theme_override_font_sizes/font_size = 12
+text = "MEAT MARKET"
+
+[node name="MeatTex2" type="TextureRect" parent="Content/Control"]
+modulate = Color(0, 0, 0, 1)
+texture_filter = 1
+offset_left = -15.0
+offset_top = 4.0
+offset_right = 25.0
+offset_bottom = 44.0
+texture = ExtResource("5_wbf18")
+
+[node name="MeatTex" type="TextureRect" parent="Content/Control"]
+texture_filter = 1
+offset_left = -15.0
+offset_top = 2.0
+offset_right = 25.0
+offset_bottom = 42.0
+texture = ExtResource("5_wbf18")
+
+[node name="Meat Text" parent="Content/Control" instance=ExtResource("3_jagy8")]
+offset_left = 18.0
+offset_top = 15.0
+offset_right = 90.0
+offset_bottom = 38.0
+text = "0"
+horizontal_alignment = 0
+vertical_alignment = 0
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_wio0f")

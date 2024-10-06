@@ -1,8 +1,24 @@
-[gd_scene load_steps=9 format=3 uid="uid://cymahh0uiiltn"]
+[gd_scene load_steps=11 format=3 uid="uid://cymahh0uiiltn"]
 
 [ext_resource type="Texture2D" uid="uid://mrqaoiny38mi" path="res://items/meat.png" id="1_7wuch"]
 [ext_resource type="Script" path="res://items/meat.gd" id="1_xy25e"]
 [ext_resource type="Texture2D" uid="uid://yuw00ygg8rth" path="res://items/shadow_small.png" id="3_36ers"]
+[ext_resource type="AudioStream" uid="uid://bmhgyrqccg0i4" path="res://sfx/pickup.wav" id="4_xlbor"]
+
+[sub_resource type="Animation" id="Animation_2ojlm"]
+resource_name = "bounce"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.166667, 0.266667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -7), Vector2(0, -3), Vector2(0, -5), Vector2(0, -4)]
+}
 
 [sub_resource type="Animation" id="Animation_q6ira"]
 length = 0.001
@@ -82,21 +98,6 @@ tracks/2/keys = {
 "values": [Color(1, 1, 1, 0.372549), Color(1, 1, 1, 0.372549), Color(1, 1, 1, 0.168627), Color(1, 1, 1, 0.137255), Color(1, 1, 1, 0.0313726), Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_2ojlm"]
-resource_name = "bounce"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.166667, 0.266667),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, -7), Vector2(0, -3), Vector2(0, -5), Vector2(0, -4)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wk8kg"]
 _data = {
 &"bounce": SubResource("Animation_2ojlm"),
@@ -106,6 +107,11 @@ _data = {
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g4hkg"]
 radius = 8.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lmykq"]
+random_pitch = 1.02
+streams_count = 1
+stream_0/stream = ExtResource("4_xlbor")
 
 [node name="Meat" type="Area2D"]
 collision_layer = 16
@@ -136,7 +142,7 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "res://items/meat.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "40daac1104542618bb1578b29646c92b"
+metadata/_aseprite_wizard_source_file_hash_ = "6efb5c58667cfe8aba2d51ea53184bfa"
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
 "output_section": true,
@@ -152,6 +158,10 @@ libraries = {
 position = Vector2(0, -3)
 shape = SubResource("CircleShape2D_g4hkg")
 metadata/_edit_lock_ = true
+
+[node name="pickup_sfx" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_lmykq")
+volume_db = 12.0
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]

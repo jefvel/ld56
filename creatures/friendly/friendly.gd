@@ -3,6 +3,9 @@ class_name Friendly
 
 const MEAT = preload("res://items/meat.tscn")
 
+func _ready() -> void:
+	GameData.game.on_friendly_spawn.emit(self);
+
 func _on_life_component_on_died() -> void:
 	queue_free()
 	var meat = MEAT.instantiate()
