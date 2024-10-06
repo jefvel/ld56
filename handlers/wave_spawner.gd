@@ -13,12 +13,14 @@ var max_waves = 20;
 var lil_spawns = 2;
 var fast_spawns = 0;
 var big_spawns = 0;
+var bigass_spawns = 0;
 
 @onready var world: Node2D = $"../World/Things"
 
 const BIG_EVIL = preload("res://creatures/evil/big_evil.tscn")
 const LIL_EVIL = preload("res://creatures/evil/lil_evil.tscn")
 const FAST_EVIL = preload("res://creatures/evil/fast_evil.tscn")
+const BIGASS = preload("res://creatures/evil/bigass.tscn")
 
 
 func _ready() -> void:
@@ -42,9 +44,25 @@ func spawn_enemy(e: PackedScene, pos: Vector2):
 	var b = e.instantiate()
 	b.position = pos;
 	world.add_child(b)
-
+	
+var done = false;
+signal on_last_wave;
+signal on_completed_all;
 func spawn_wave():
+	if done: return;
+	
 	wave += 1;
+	
+	if wave > max_waves:
+		print("done")
+		on_wave_spawned.emit();
+		done = true;
+		on_completed_all.emit();
+		return;
+		
+	if wave == max_waves:
+		on_last_wave.emit();
+		print("last wave")
 	
 	for i in range(lil_spawns):
 		spawn_enemy(LIL_EVIL, get_rand_p())
@@ -52,7 +70,8 @@ func spawn_wave():
 		spawn_enemy(BIG_EVIL, get_rand_p())
 	for i in range(fast_spawns):
 		spawn_enemy(FAST_EVIL, get_rand_p())
-
+	for i in range(bigass_spawns):
+		spawn_enemy(BIGASS, get_rand_p())
 	print("running wave ", wave)
 	
 	if wave < 5:

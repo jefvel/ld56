@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://fd71gypmsqi2"]
+
+[ext_resource type="PackedScene" uid="uid://cxyak3novvjyf" path="res://creatures/attacks/attack.tscn" id="1_omhmq"]
+[ext_resource type="Script" path="res://creatures/attacks/swoosh.gd" id="2_lgm0q"]
+[ext_resource type="Texture2D" uid="uid://bpk51f2gvuxid" path="res://creatures/attacks/attack_swoosh.png" id="3_q31av"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3te53"]
+radius = 4.36364
+
+[node name="Attack" instance=ExtResource("1_omhmq")]
+
+[node name="Swoosh" type="Node" parent="." index="0" node_paths=PackedStringArray("sprite", "attack")]
+script = ExtResource("2_lgm0q")
+sprite = NodePath("../Sprite")
+attack = NodePath("..")
+initial_vel = 7.0
+
+[node name="Sprite" parent="." index="1"]
+texture_filter = 1
+position = Vector2(-10, 0)
+scale = Vector2(1.375, 4.25)
+texture = ExtResource("3_q31av")
+
+[node name="coll" type="CollisionShape2D" parent="Sprite/HitArea" index="0"]
+position = Vector2(4.36364, 0)
+shape = SubResource("CircleShape2D_3te53")
+
+[connection signal="on_hit" from="." to="Swoosh" method="_on_attack_on_hit"]

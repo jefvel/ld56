@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c1u01ibmha2qn"]
+[gd_scene load_steps=11 format=3 uid="uid://c1u01ibmha2qn"]
 
 [ext_resource type="Script" path="res://components/enemy.gd" id="1_lec84"]
 [ext_resource type="Script" path="res://components/life_component.gd" id="2_ln68x"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://components/hitbox.gd" id="4_8h3iv"]
 [ext_resource type="Script" path="res://creatures/evil/attack_component.gd" id="4_viu77"]
 [ext_resource type="PackedScene" uid="uid://bqua2j1eo345d" path="res://creatures/shadow.tscn" id="5_mrnxm"]
+[ext_resource type="Texture2D" uid="uid://duiw1d6ae2y0i" path="res://shader/whitesquare.png" id="7_qf8p5"]
 
 [sub_resource type="Animation" id="Animation_gdrg4"]
 length = 0.1
@@ -93,5 +94,13 @@ libraries = {
 [node name="Shadow" parent="." instance=ExtResource("5_mrnxm")]
 scale = Vector2(0.5625, 0.625)
 
+[node name="hpbar" type="Sprite2D" parent="."]
+modulate = Color(0.592157, 0.254902, 0.2, 1)
+position = Vector2(-8, 5)
+scale = Vector2(2, 0.25)
+texture = ExtResource("7_qf8p5")
+offset = Vector2(4, 0)
+
+[connection signal="on_hurt" from="LifeComponent" to="." method="_on_life_component_on_hurt"]
 [connection signal="on_hurt" from="LifeComponent" to="AttackComponent" method="_on_life_component_on_hurt"]
 [connection signal="on_hurt" from="LifeComponent" to="WalkerComponent" method="_on_life_component_on_hurt"]

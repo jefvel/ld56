@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://d3l567heoxfa4"]
+[gd_scene load_steps=36 format=3 uid="uid://d3l567heoxfa4"]
 
 [ext_resource type="Script" path="res://handlers/wave_spawner.gd" id="1_gduc8"]
 [ext_resource type="Script" path="res://game.gd" id="1_wrl8j"]
@@ -8,6 +8,7 @@
 [ext_resource type="Shader" path="res://shader/retro.gdshader" id="4_n7cbo"]
 [ext_resource type="PackedScene" uid="uid://llwek383t4xh" path="res://objects/tree.tscn" id="4_px8yo"]
 [ext_resource type="Script" path="res://ui.gd" id="6_vv5b1"]
+[ext_resource type="Texture2D" uid="uid://diatulj4hm0fy" path="res://logo.png" id="7_w0b77"]
 [ext_resource type="Texture2D" uid="uid://mrqaoiny38mi" path="res://items/meat.png" id="8_4lv1i"]
 [ext_resource type="PackedScene" uid="uid://b8dg18ml7hxym" path="res://ui/fancy_label.tscn" id="9_2xtet"]
 [ext_resource type="Script" path="res://stage_container.gd" id="9_n5xlt"]
@@ -16,6 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://duiw1d6ae2y0i" path="res://shader/whitesquare.png" id="11_5i4fi"]
 [ext_resource type="AudioStream" uid="uid://biwdir42v4rao" path="res://sfx/gameoverending.wav" id="12_0v3cn"]
 [ext_resource type="AudioStream" uid="uid://dwtey8msqmwfm" path="res://sfx/ambiance.wav" id="13_exmnp"]
+[ext_resource type="AudioStream" uid="uid://p3ge28taydoc" path="res://music/music.ogg" id="17_w54n3"]
+[ext_resource type="AudioStream" uid="uid://cbhb1ceq40eii" path="res://music/music2.ogg" id="18_n0ehf"]
 
 [sub_resource type="Curve2D" id="Curve2D_dn8b0"]
 _data = {
@@ -128,6 +131,43 @@ tracks/2/keys = {
 _data = {
 &"RESET": SubResource("Animation_o5ffe"),
 &"show": SubResource("Animation_l2xvi")
+}
+
+[sub_resource type="Animation" id="Animation_cglex"]
+resource_name = "show"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.9),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_goodt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fnre7"]
+_data = {
+&"RESET": SubResource("Animation_goodt"),
+&"show": SubResource("Animation_cglex")
 }
 
 [sub_resource type="Animation" id="Animation_xlk2m"]
@@ -367,6 +407,34 @@ rotation = 0.00081617
 scale = Vector2(100, 100)
 texture = ExtResource("11_5i4fi")
 
+[node name="FirstScreen" type="Node2D" parent="."]
+visible = false
+
+[node name="bg" type="Sprite2D" parent="FirstScreen"]
+modulate = Color(0.164706, 0.129412, 0.227451, 1)
+position = Vector2(248, 238)
+scale = Vector2(65.75, 65.75)
+texture = ExtResource("11_5i4fi")
+
+[node name="Sprite2D" type="Sprite2D" parent="FirstScreen"]
+texture_filter = 1
+position = Vector2(256, 91)
+scale = Vector2(2, 2)
+texture = ExtResource("7_w0b77")
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"slice": "",
+"source": "res://logo.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "62de753c63ded161676f197f36e8ba13"
+
 [node name="Sword" parent="." instance=ExtResource("2_unyij")]
 position = Vector2(352, 175)
 
@@ -488,6 +556,44 @@ libraries = {
 stream = ExtResource("12_0v3cn")
 volume_db = 5.424
 
+[node name="Win" type="Control" parent="UILayer/UI/MarginContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="UILayer/UI/MarginContainer/Win"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -48.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WinText" parent="UILayer/UI/MarginContainer/Win/Control" instance=ExtResource("9_2xtet")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -7.5
+offset_right = 75.0
+offset_bottom = 7.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "YOU DEFEATED EVIL
+THERE IS PEACE IN THE WOODS
+WELL DONE"
+
+[node name="winanim" type="AnimationPlayer" parent="UILayer/UI/MarginContainer/Win"]
+libraries = {
+&"": SubResource("AnimationLibrary_fnre7")
+}
+
 [node name="Store" parent="UILayer/UI" instance=ExtResource("10_p05hj")]
 visible = false
 layout_mode = 1
@@ -523,10 +629,19 @@ grow_vertical = 2
 [node name="ambiance_sfx" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_exmnp")
 
+[node name="muisic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_w54n3")
+volume_db = -0.472
+
+[node name="music2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_n0ehf")
+volume_db = -0.472
+
 [connection signal="on_friendlies_dead" from="." to="UILayer/UI" method="_on_game_on_friendlies_dead"]
 [connection signal="on_sword_exploded" from="." to="UILayer/UI" method="_on_game_on_sword_exploded"]
 [connection signal="on_wave_cleared" from="." to="FriendlySpawner" method="_on_game_on_wave_cleared"]
 [connection signal="on_wave_cleared" from="." to="UILayer/UI/MarginContainer/StageContainer" method="_on_game_on_wave_cleared"]
+[connection signal="on_completed_all" from="WaveSpawner" to="." method="_on_wave_spawner_on_completed_all"]
 [connection signal="on_wave_spawned" from="WaveSpawner" to="FriendlySpawner" method="_on_wave_spawner_on_wave_spawned"]
 [connection signal="on_wave_spawned" from="WaveSpawner" to="UILayer/UI/MarginContainer/StageContainer" method="_on_wave_spawner_on_wave_spawned"]
 [connection signal="on_died" from="Sword" to="." method="_on_sword_on_died"]

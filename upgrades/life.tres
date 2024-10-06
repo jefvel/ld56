@@ -7,5 +7,5 @@ script = ExtResource("1_hyeh7")
 id = "life"
 name = "Life"
 desc = "Grants some protection"
-costs = Array[int]([20, 50])
+costs = Array[int]([20, 75, 100])
 values = [2, 3, 4, 5, 6]

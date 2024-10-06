@@ -23,9 +23,26 @@ signal on_wave_cleared;
 var friendlies: Array[Friendly] = [];
 var enemies: Array[Enemy] = []
 
+var first_start = false;
 
 func _ready() -> void:
+	first_start = GameData.first_start;
 	GameData.game = self;
+	sword.active = false;
+	sword.position.x = (512 >> 1) - 12;
+	sword.position.y = (320 >> 1);
+	if first_start:
+		$UILayer/UI.visible = false;
+		$FirstScreen.visible =true
+		
+		GameData.first_start = false;
+		return;
+	else:
+		$FirstScreen.queue_free()
+		pass
+		
+	
+	
 	start()
 	
 @onready var flash: Sprite2D = $Flash
@@ -41,19 +58,43 @@ func out_of_friendlies():
 	do_game_over()
 
 func do_game_over():
+	muisic.stop()
+	music_2.stop();
 	game_over = true;
 	GameData.rounds_played += 1;
 	# sword.active = false;
+	$UILayer/UI/MarginContainer/Win/Control.visible = false;
 	pass
 	
 @onready var ambiance_sfx: AudioStreamPlayer = $ambiance_sfx
+@onready var muisic: AudioStreamPlayer = $muisic
+@onready var music_2: AudioStreamPlayer = $music2
+
+
+var started = false;
 
 func start():
+	if started: return;
+	$UILayer/UI.visible = true;
+	sword.active = true;
+	started = true;
+	GameData.meat = 0;
 	friendlies = []
 	wave_spawner.init();
 	friendly_spawner.init()
 	ambiance_sfx.play(randf() * 5.0)
+	muisic.play();
+	music_2.play();
+	music_2.volume_db = -80;
 	pass
+
+var faded = false
+func fade2():
+	if faded: return
+	faded = true;
+	music_2.volume_db = muisic.volume_db;
+	muisic.stop();
+	
 
 func reset():
 	get_tree().reload_current_scene()
@@ -63,6 +104,12 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("reset"):
 		GameData.reset()
 		reset()
+	if !started: 
+		if Input.is_action_just_pressed("attack"):
+			var tw = get_tree().create_tween().tween_property($FirstScreen, "modulate:a", 0.0, 0.3)
+			
+			start()
+		return
 	if !game_over:
 		process_game(_delta);
 
@@ -87,9 +134,14 @@ func process_game(_delta: float):
 		out_of_friendlies()
 
 func on_wave_clear():
+	if wave_spawner.done:
+		return;
 	for f in friendlies:
 		if is_instance_valid(f):
 			f.lvlup()
+	if wave_spawner.wave >= wave_spawner.max_waves >> 1:
+		fade2();
+		pass
 	on_wave_cleared.emit()
 	wave_spawner.spawn_wave();
 
@@ -111,4 +163,19 @@ func _on_sword_on_died_complete() -> void:
 	if GameData.get_upgrade_level("insurance") > 0:
 		for f in friendlies:
 			f.life.hurt(100)
+	pass # Replace with function body.
+
+
+@onready var win_text: Label = $UILayer/UI/MarginContainer/Win/Control/WinText
+
+
+func win_game():
+	muisic.stop();
+	music_2.stop();
+	win_text.text += "\nYOU WON IN %s ROUNDS." % GameData.rounds_played;
+	winanim.play("show")
+@onready var winanim: AnimationPlayer = $UILayer/UI/MarginContainer/Win/winanim
+
+func _on_wave_spawner_on_completed_all() -> void:
+	win_game()
 	pass # Replace with function body.

@@ -45,7 +45,7 @@ var damage_levels = [1,2,3,4,5,6]
 var max_speeds = [5.0, 8.0, 12.0, 20.0, 35.0];
 var cooldown_speeds = [1.5, 1.2, 0.9, 0.7, 0.4];
 var pu_rads = [5.0, 10.0, 15.0, 25.0]
-var lives = [1, 2, 3];
+var lives = [1, 2, 3, 4];
 func _ready():
 	max_pierce = pierce_levels[GameData.get_upgrade_level("pierce")]
 	cur_damage = damage_levels[GameData.get_upgrade_level("damage")]
@@ -92,7 +92,10 @@ func _physics_process(_delta: float) -> void:
 	sprite.rotation = clamp(sprite.rotation, -max_rotation, max_rotation)
 	
 	attack_press_coyote_time -= _delta;
-	
+	if life.health > 1:
+		hpbip.frame = life.health - 2
+	else:
+		hpbip.visible = false;
 	if active and !is_away_from_cursor:
 		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
 	else:
@@ -126,6 +129,8 @@ func process_attack(_d: float):
 			if b is Hitbox:
 				hit_target(b)
 	pass
+
+@onready var hpbip: Sprite2D = $Holder/hpbip
 
 func attack():
 	if attacking or cooling_down: 
@@ -183,7 +188,9 @@ func _on_store_on_close() -> void:
 
 func _on_life_component_on_hurt(damage: int) -> void:
 	TimeFreeze.freeze(20)
+	shield_sfx.play();
 
+@onready var shield_sfx: AudioStreamPlayer = $shield_sfx
 @onready var death_crack: Node2D = $DeathCrack
 
 @onready var c1: Sprite2D = $DeathCrack/Sprite2D

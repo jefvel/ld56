@@ -2,7 +2,7 @@ extends Node
 @export var sprite: Sprite2D;
 @export var attack: Attack;
 
-var initial_vel = 5.0;
+@export var initial_vel = 5.0;
 var dir: Vector2;
 
 @onready var vel = initial_vel;

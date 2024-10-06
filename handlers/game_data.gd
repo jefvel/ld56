@@ -8,7 +8,7 @@ var meat: int = 0;
 signal on_upgrade_done(upgrade: UpgradeResource, level: int)
 
 var rounds_played = 0;
-
+var first_start = true;
 #region friendlies
 var initial_friendlies: int = 1;
 #endregion

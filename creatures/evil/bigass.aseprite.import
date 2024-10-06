@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c65j74cnh1hge"
+path="res://.godot/imported/bigass.aseprite-3c1a406753c34c6be837376014f27078.res"
+
+[deps]
+
+source_file="res://creatures/evil/bigass.aseprite"
+dest_files=["res://.godot/imported/bigass.aseprite-3c1a406753c34c6be837376014f27078.res"]
+
+[params]
+

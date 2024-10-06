@@ -9,13 +9,17 @@ class_name Enemy
 
 var max_speed = .0;
 
+@onready var hpbar: Sprite2D = $hpbar
+
 func _ready() -> void:
+	hpbar.visible = false;
 	life.on_died.connect(died);
 	if GameData.game and is_instance_valid(GameData.game):
 		GameData.game.on_enemy_spawn.emit(self);
 	max_speed = walker_component.max_speed;
 	
 func died():
+	hpbar.visible = false;
 	if GameData.game:
 		GameData.game.on_enemy_die.emit(self);
 	if get_parent():
@@ -25,3 +29,11 @@ func died():
 	queue_free();
 	
 const EXPLOSION = preload("res://items/explosion.tscn")
+
+
+func _on_life_component_on_hurt(damage: int) -> void:
+	hpbar.visible = true;
+	print(life.max_health, life.health)
+	hpbar.scale.x = (float(life.health) / life.max_health) * 2
+	print(hpbar.scale.x)
+	pass # Replace with function body.

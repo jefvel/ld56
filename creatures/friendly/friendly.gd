@@ -35,7 +35,6 @@ func do_poof():
 
 var meat_counts = [1, 3, 9, 12, 24, 32]
 func spawn_meat():
-	
 	var tospawn = 1;
 	if level >= meat_counts.size():
 		tospawn = 32;
