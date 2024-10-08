@@ -111,8 +111,9 @@ func _physics_process(_delta: float) -> void:
 
 
 func process_cooldown(d:float):
+	sword_progress_sprite.visible = !attacking
 	sword_progress_sprite.scale.y = clamp(attack_cooldown / attack_cooldown_duration, 0.0, 1.0)
-	if !cooling_down:return
+	if !cooling_down: return
 	attack_cooldown -= d;
 	if attack_cooldown <= 0:
 		cooling_down = false;

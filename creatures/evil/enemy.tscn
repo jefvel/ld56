@@ -8,22 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://bqua2j1eo345d" path="res://creatures/shadow.tscn" id="5_mrnxm"]
 [ext_resource type="Texture2D" uid="uid://duiw1d6ae2y0i" path="res://shader/whitesquare.png" id="7_qf8p5"]
 
-[sub_resource type="Animation" id="Animation_gdrg4"]
-length = 0.1
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="Animation" id="Animation_j3x3d"]
 length = 0.1
 loop_mode = 1
@@ -38,6 +22,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_gdrg4"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uleyf"]

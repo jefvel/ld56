@@ -46,6 +46,46 @@ _data = {
 &"default": SubResource("Animation_5mdk5")
 }
 
+[sub_resource type="Animation" id="Animation_8s2ww"]
+resource_name = "ready"
+length = 0.100003
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Holder/Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.125, 1.125), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Holder/Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(20, 20), Vector2(20.375, 20.375), Vector2(20, 20)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Holder/Sprite:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.226893, 0.0]
+}
+
 [sub_resource type="Animation" id="Animation_p41r7"]
 length = 0.001
 tracks/0/type = "value"
@@ -109,46 +149,6 @@ tracks/4/keys = {
 "values": [0.0]
 }
 
-[sub_resource type="Animation" id="Animation_8s2ww"]
-resource_name = "ready"
-length = 0.100003
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Holder/Sprite:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1.125, 1.125), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Holder/Sprite:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(20, 20), Vector2(20.375, 20.375), Vector2(20, 20)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Holder/Sprite:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.0, 0.226893, 0.0]
-}
-
 [sub_resource type="Animation" id="Animation_737b3"]
 resource_name = "stab"
 length = 0.300003
@@ -193,9 +193,9 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xfr3r"]
 _data = {
+&"stab": SubResource("Animation_737b3"),
 &"RESET": SubResource("Animation_p41r7"),
-&"ready": SubResource("Animation_8s2ww"),
-&"stab": SubResource("Animation_737b3")
+&"ready": SubResource("Animation_8s2ww")
 }
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rs56g"]
@@ -341,10 +341,12 @@ libraries = {
 }
 
 [node name="swipe_sfx" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = SubResource("AudioStreamRandomizer_rs56g")
 volume_db = 2.0
 
 [node name="hit_sfx" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = SubResource("AudioStreamRandomizer_udfo8")
 volume_db = 3.0
 
@@ -367,13 +369,16 @@ offset = Vector2(-1, -1)
 script = ExtResource("10_ura4q")
 
 [node name="dead_sfx" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("12_tw0qp")
 
 [node name="crack_sfx" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("13_s7nog")
 volume_db = 5.424
 
 [node name="shield_sfx" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = SubResource("AudioStreamRandomizer_8d1hw")
 volume_db = 3.0
 

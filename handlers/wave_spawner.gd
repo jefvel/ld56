@@ -8,10 +8,10 @@ signal on_wave_spawned;
 @onready var sp: Path2D = $SpawnPath
 
 var wave: int = 0;
-var max_waves = 20;
+var max_waves = 10;
 
 var lil_spawns = 2;
-var fast_spawns = 0;
+var fast_spawns = 1;
 var big_spawns = 0;
 var bigass_spawns = 0;
 
@@ -62,6 +62,7 @@ func spawn_wave():
 		
 	if wave == max_waves:
 		on_last_wave.emit();
+		bigass_spawns = 1;
 		print("last wave")
 	
 	for i in range(lil_spawns):
@@ -78,10 +79,10 @@ func spawn_wave():
 		lil_spawns += 2;
 	else:
 		lil_spawns += 1;
-	if wave == 5 or (wave > 5 and wave % 2 == 0):
+	if wave == 4 or (wave > 5 and wave % 2 == 0):
 		big_spawns += 1;
 		
-	if wave >= 8 && wave % 4 == 0:
+	if wave >= 3 && wave % 3 == 0:
 		fast_spawns += 2;
 		
 	on_wave_spawned.emit();

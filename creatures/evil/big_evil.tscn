@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://fd71gypmsqi2" path="res://creatures/attacks/big_swoosh.tscn" id="2_ejcpc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cuqnm"]
-size = Vector2(38, 20)
+size = Vector2(54, 34)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_82kel"]
 radius = 14.1421
@@ -54,7 +54,7 @@ metadata/_aseprite_wizard_interface_config_ = {
 position = Vector2(13, -2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Hitbox" index="0"]
-position = Vector2(0, -3)
+position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_cuqnm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="5"]

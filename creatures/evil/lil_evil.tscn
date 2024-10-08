@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c7wj8k3mscwd5" path="res://creatures/evil/lil_evil.png" id="2_5iy4a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rxomn"]
-size = Vector2(12, 12)
+size = Vector2(20, 22)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_goihv"]
 radius = 6.0

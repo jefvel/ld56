@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bckl10padhsp6"]
+[gd_scene load_steps=4 format=3 uid="uid://bckl10padhsp6"]
 
 [ext_resource type="Script" path="res://ui/upgrade_item.gd" id="1_ssvd2"]
-[ext_resource type="Resource" uid="uid://yn0grmcr5ih" path="res://upgrades/pierce.tres" id="2_5w0x7"]
 [ext_resource type="PackedScene" uid="uid://b8dg18ml7hxym" path="res://ui/fancy_label.tscn" id="2_6lrh6"]
 [ext_resource type="FontFile" uid="uid://dwhlu5b31ggjn" path="res://fonts/ChevyRay - Magic Book.ttf" id="3_la68f"]
 
@@ -13,9 +12,10 @@ offset_right = -0.0960083
 offset_bottom = 0.191998
 mouse_default_cursor_shape = 2
 script = ExtResource("1_ssvd2")
-upgrade = ExtResource("2_5w0x7")
+maxed_color = Color(0.519074, 0.285935, 0.570261, 1)
 
 [node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(0.678431, 0.792157, 0.603922, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,7 +23,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-color = Color(0.592157, 0.254902, 0.2, 1)
 
 [node name="ColorRect" type="ColorRect" parent="ColorRect"]
 z_index = -1
@@ -37,12 +36,13 @@ offset_bottom = 2.688
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-color = Color(0.345098, 0.176471, 0.152941, 1)
+color = Color(0.587966, 0.587966, 0.587966, 1)
 
 [node name="Name" parent="." instance=ExtResource("2_6lrh6")]
 layout_mode = 0
-offset_left = 6.0
+offset_left = 7.0
 offset_top = 1.0
+offset_right = 95.0
 offset_bottom = 24.0
 mouse_filter = 1
 text = "Pierce"
@@ -53,9 +53,9 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -45.72
+offset_left = -44.72
 offset_top = 1.0
-offset_right = -7.71997
+offset_right = -6.71997
 offset_bottom = 24.0
 grow_horizontal = 0
 mouse_filter = 1
@@ -68,9 +68,9 @@ anchors_preset = -1
 anchor_top = 0.361
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 6.0
+offset_left = 7.0
 offset_top = -3.02164
-offset_right = -5.71999
+offset_right = -19.72
 offset_bottom = -10.312
 mouse_filter = 1
 theme_override_fonts/font = ExtResource("3_la68f")

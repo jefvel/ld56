@@ -1,6 +1,9 @@
-extends Node2D
+extends Area2D
+class_name Pickup
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var shadow_small: Sprite2D = $ShadowSmall
+@onready var pickup_sfx: AudioStreamPlayer = $pickup_sfx
 
 var vel: Vector2;
 
@@ -17,7 +20,6 @@ func _physics_process(delta: float) -> void:
 	until_can_pick_up -= delta;
 	check_pickup()
 	pass
-@onready var pickup_sfx: AudioStreamPlayer = $pickup_sfx
 
 var picked_up = false;
 func check_pickup():

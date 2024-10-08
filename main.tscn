@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://d3l567heoxfa4"]
+[gd_scene load_steps=35 format=3 uid="uid://d3l567heoxfa4"]
 
 [ext_resource type="Script" path="res://handlers/wave_spawner.gd" id="1_gduc8"]
 [ext_resource type="Script" path="res://game.gd" id="1_wrl8j"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://mrqaoiny38mi" path="res://items/meat.png" id="8_4lv1i"]
 [ext_resource type="PackedScene" uid="uid://b8dg18ml7hxym" path="res://ui/fancy_label.tscn" id="9_2xtet"]
 [ext_resource type="Script" path="res://stage_container.gd" id="9_n5xlt"]
-[ext_resource type="PackedScene" uid="uid://bgud3no7pdagh" path="res://ui/stage_blip.tscn" id="10_jy1nn"]
 [ext_resource type="PackedScene" uid="uid://f6owbn2h37lf" path="res://ui/store.tscn" id="10_p05hj"]
 [ext_resource type="Texture2D" uid="uid://duiw1d6ae2y0i" path="res://shader/whitesquare.png" id="11_5i4fi"]
 [ext_resource type="AudioStream" uid="uid://biwdir42v4rao" path="res://sfx/gameoverending.wav" id="12_0v3cn"]
@@ -64,8 +63,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pyris"]
 _data = {
-&"RESET": SubResource("Animation_ki42j"),
-&"show_top": SubResource("Animation_1fvpb")
+&"show_top": SubResource("Animation_1fvpb"),
+&"RESET": SubResource("Animation_ki42j")
 }
 
 [sub_resource type="Animation" id="Animation_o5ffe"]
@@ -100,7 +99,7 @@ tracks/0/keys = {
 }
 tracks/1/type = "method"
 tracks/1/imported = false
-tracks/1/enabled = true
+tracks/1/enabled = false
 tracks/1/path = NodePath("../../Store")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
@@ -126,11 +125,40 @@ tracks/2/keys = {
 "method": &"play"
 }]
 }
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../../../..")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2.33333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"open_store"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jnk2a"]
 _data = {
 &"RESET": SubResource("Animation_o5ffe"),
 &"show": SubResource("Animation_l2xvi")
+}
+
+[sub_resource type="Animation" id="Animation_goodt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_cglex"]
@@ -147,21 +175,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_goodt"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Control:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fnre7"]
@@ -226,8 +239,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5jbh6"]
 _data = {
-&"RESET": SubResource("Animation_xlk2m"),
-&"fadein": SubResource("Animation_5308r")
+&"fadein": SubResource("Animation_5308r"),
+&"RESET": SubResource("Animation_xlk2m")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qw32a"]
@@ -476,8 +489,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="StageBlip" parent="UILayer/UI/MarginContainer/StageContainer/Control" instance=ExtResource("10_jy1nn")]
-
 [node name="TopTexts" type="Control" parent="UILayer/UI/MarginContainer"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
@@ -627,13 +638,16 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ambiance_sfx" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("13_exmnp")
 
 [node name="muisic" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("17_w54n3")
 volume_db = -0.472
 
 [node name="music2" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("18_n0ehf")
 volume_db = -0.472
 
@@ -646,6 +660,7 @@ volume_db = -0.472
 [connection signal="on_wave_spawned" from="WaveSpawner" to="UILayer/UI/MarginContainer/StageContainer" method="_on_wave_spawner_on_wave_spawned"]
 [connection signal="on_died" from="Sword" to="." method="_on_sword_on_died"]
 [connection signal="on_died_complete" from="Sword" to="." method="_on_sword_on_died_complete"]
+[connection signal="resized" from="UILayer/UI/MarginContainer/StageContainer/Control" to="UILayer/UI/MarginContainer/StageContainer" method="_on_control_resized"]
 [connection signal="on_close" from="UILayer/UI/Store" to="Sword" method="_on_store_on_close"]
 [connection signal="on_closed" from="UILayer/UI/Store" to="." method="_on_store_on_closed"]
 [connection signal="on_open" from="UILayer/UI/Store" to="." method="_on_store_on_open"]

@@ -1,4 +1,5 @@
 extends Control
+class_name MeatStore
 
 @onready var anim: AnimationPlayer = $anim
 @onready var meat_text: Label = $"Content/Control/Meat Text"
@@ -35,9 +36,9 @@ func show_items():
 	
 	pass
 	
-func deposit():
-	GameData.meat_bank += GameData.meat;
-	GameData.meat = 0;
+#func deposit():
+#	GameData.meat_bank += GameData.meat;
+#	GameData.meat = 0;
 	
 func _physics_process(delta: float) -> void:
 	meat_text.text = "%s" % GameData.meat_bank

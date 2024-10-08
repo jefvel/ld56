@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://p8u62mgg0v6h" path="res://creatures/evil/fast_evil.png" id="2_h7whj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rxomn"]
-size = Vector2(18, 15)
+size = Vector2(36, 17)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_goihv"]
 radius = 6.0
@@ -18,8 +18,8 @@ max_health = 4
 attack_prepare_time = 0.507
 
 [node name="WalkerComponent" parent="." index="2"]
-max_speed = 42.469
-step_interval = 0.395
+max_speed = 60.0
+step_interval = 0.25
 step_duration = 0.3
 
 [node name="Sprite" parent="." index="3"]

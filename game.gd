@@ -26,6 +26,7 @@ var enemies: Array[Enemy] = []
 var first_start = false;
 
 func _ready() -> void:
+	TimeFreeze.node_to_freeze = self
 	first_start = GameData.first_start;
 	GameData.game = self;
 	sword.active = false;
@@ -56,12 +57,24 @@ func out_of_friendlies():
 	if game_over: return
 	on_friendlies_dead.emit()
 	do_game_over()
+	
+@onready var store: MeatStore = $UILayer/UI/Store
+
+func open_store():
+	GameData.meat_bank += GameData.meat
+	GameData.meat = 0;
+	
+	store.show_store()
+	pass
 
 func do_game_over():
+	
 	muisic.stop()
 	music_2.stop();
 	game_over = true;
 	GameData.rounds_played += 1;
+
+	
 	# sword.active = false;
 	$UILayer/UI/MarginContainer/Win/Control.visible = false;
 	pass
@@ -93,6 +106,7 @@ func fade2():
 	if faded: return
 	faded = true;
 	music_2.volume_db = muisic.volume_db;
+	music_2.play()
 	muisic.stop();
 	
 
@@ -139,7 +153,7 @@ func on_wave_clear():
 	for f in friendlies:
 		if is_instance_valid(f):
 			f.lvlup()
-	if wave_spawner.wave >= wave_spawner.max_waves >> 1:
+	if wave_spawner.wave >= 2: #wave_spawner.max_waves - 3:
 		fade2();
 		pass
 	on_wave_cleared.emit()

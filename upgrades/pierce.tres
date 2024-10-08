@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="UpgradeResource" load_steps=2 format=3 uid="uid://yn0grmcr5ih"]
+[gd_resource type="Resource" script_class="UpgradeResource" load_steps=2 format=3 uid="uid://brmu7t3whfttc"]
 
-[ext_resource type="Script" path="res://upgrades/upgrade.gd" id="1_wnvvp"]
+[ext_resource type="Script" path="res://upgrades/upgrade.gd" id="1_dgns1"]
 
 [resource]
-script = ExtResource("1_wnvvp")
+script = ExtResource("1_dgns1")
 id = "pierce"
 name = "Pierce"
 desc = "Amount of targets you can hit per swing"
-costs = Array[int]([5, 20, 50, 60, 100])
-values = [2, 3, 4, 5, 6]
+costs = Array[int]([57, 20, 50, 60, 100])
+values = []

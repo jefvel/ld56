@@ -33,7 +33,4 @@ const EXPLOSION = preload("res://items/explosion.tscn")
 
 func _on_life_component_on_hurt(damage: int) -> void:
 	hpbar.visible = true;
-	print(life.max_health, life.health)
 	hpbar.scale.x = (float(life.health) / life.max_health) * 2
-	print(hpbar.scale.x)
-	pass # Replace with function body.
