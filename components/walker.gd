@@ -55,7 +55,7 @@ func _physics_process(delta: float) -> void:
 	sprite_node.position.x = sin(bonk_s) * 4.5;
 	
 	if stepping and abs(vel) > 1:
-		sprite_node.flip_h = parent_node.linear_velocity.x < 0;
+		sprite_node.scale.x = sign(parent_node.linear_velocity.x);
 		pass
 		
 	if cur_step_time <= step_interval:

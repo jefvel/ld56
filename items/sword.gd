@@ -5,6 +5,8 @@ var vel: Vector2;
 var dx: float = 0.0;
 var ax: float = 0.0;
 
+@export var game: Game;
+
 @export var life: LifeComponent;
 @export var hitbox: Hitbox;
 
@@ -15,6 +17,8 @@ var ax: float = 0.0;
 
 @onready var area: Area2D = $Holder/Sprite/Area2D
 @onready var sword_progress_sprite: Node2D = $Holder/Sprite/Sprite2/SwordProgress
+
+var freeze_time = 0.4;
 
 signal on_weapon_ready();
 
@@ -72,20 +76,8 @@ func _physics_process(_delta: float) -> void:
 			dcomplete = true;
 			on_died_complete.emit();
 			GameData.game.flash.visible = false;
-	var is_away_from_cursor = false;
-	if active:
-		var vp = get_viewport()
-		var unclamped_pos = vp.get_mouse_position()
-		var p = 16;
-		var pos = unclamped_pos.clamp(Vector2(p,p), Vector2(512 - p, 320 - p))
-		var d = (pos - position);
-		
-		d = d.limit_length(max_speed)
-		
-		position += d * 0.5
-		dx += d.x * 0.03;
-		dx *= 0.4;
-		is_away_from_cursor = unclamped_pos.distance_to(position) > 3
+	
+	process_move(_delta);
 		
 	sprite.rotation = dx;
 	var max_rotation = 0.5;
@@ -109,6 +101,30 @@ func _physics_process(_delta: float) -> void:
 		attack()
 	if attacking: process_attack(_delta)
 
+var is_away_from_cursor: bool;
+func process_move(_delta: float):
+	
+	is_away_from_cursor = true;
+	
+	if !active: return
+	
+	if freeze_time > 0:
+		freeze_time -= _delta;
+		return;
+
+	var vp = get_viewport()
+	var unclamped_pos = vp.get_mouse_position()
+	var p = 16;
+	var pos = unclamped_pos.clamp(Vector2(p,p), Vector2(512 - p, 320 - p))
+	var d = (pos - position);
+	
+	d = d.limit_length(max_speed)
+	
+	position += d * 0.5
+	dx += d.x * 0.03;
+	dx *= 0.4;
+	is_away_from_cursor = unclamped_pos.distance_to(position) > 3
+	pass
 
 func process_cooldown(d:float):
 	sword_progress_sprite.visible = !attacking
@@ -128,13 +144,15 @@ func process_attack(_d: float):
 	if attacking:
 		for b in area.get_overlapping_areas():
 			if b is Hitbox:
+				if b.friendly_immune:
+					continue
 				hit_target(b)
 	pass
 
 @onready var hpbip: Sprite2D = $Holder/hpbip
 
-func attack():
-	if attacking or cooling_down: 
+func attack(force = false):
+	if !force and (attacking or cooling_down): 
 		attack_press_coyote_time = 0.2;
 		return
 	
@@ -158,11 +176,19 @@ func hit_target(e: Hitbox):
 	
 	e.hit(cur_damage, self)
 	cur_pierce += 1;
-	TimeFreeze.freeze(3);
+	TimeFreeze.freeze(4);
+	game.camera.shake()
+	
+	var spark = SPARK.instantiate();
+	get_parent().add_child(spark)
+	spark.global_position = tip.global_position;
+	
 	hit_sfx.play()
 	if cur_pierce >= max_pierce:
 		finish_attack();
 	
+const SPARK = preload("res://particles/spark.tscn")
+@onready var tip: Node2D = $Holder/tip
 
 func finish_attack():
 	attacking = false;

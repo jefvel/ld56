@@ -13,11 +13,12 @@ radius = 14.1421
 [node name="BigEvil" instance=ExtResource("1_26yy7")]
 
 [node name="LifeComponent" parent="." index="0"]
-max_health = 5
+max_health = 6
 
 [node name="AttackComponent" parent="." index="1"]
-attack_interval = 6.0
-attack_range = 41.565
+stagger_damage = 4
+attack_interval = 2.0
+attack_range = 45.0
 attack_type = ExtResource("2_ejcpc")
 
 [node name="WalkerComponent" parent="." index="2"]

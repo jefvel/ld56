@@ -13,6 +13,12 @@ func _ready() -> void:
 	pass
 @onready var lbl: Label = $MarginContainer/GameOver/Control/OutOfFriendlies
 
+func hide_ingame_ui():
+	$MarginContainer/StageContainer.visible = false;
+	$MarginContainer/TopTexts.visible = false;
+	$MarginContainer/Win.visible = false;
+	pass
+
 func _physics_process(_delta: float) -> void:
 	if !top_shown and GameData.meat > 0:
 		tanim.play("show_top")

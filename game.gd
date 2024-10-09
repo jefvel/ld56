@@ -29,26 +29,30 @@ func _ready() -> void:
 	TimeFreeze.node_to_freeze = self
 	first_start = GameData.first_start;
 	GameData.game = self;
+	
 	sword.active = false;
-	sword.position.x = (512 >> 1) - 12;
-	sword.position.y = (320 >> 1);
+	sword.position.x = (512 >> 1) - 10;
+	sword.position.y = (320 >> 1) - 11;
+	
 	if first_start:
 		$UILayer/UI.visible = false;
-		$FirstScreen.visible =true
+		$FirstScreen.visible = true
+		$FirstScreen/intro_screen_anim.play("fade_in")
+		#sword.modulate.a = 0.;
+		#var tw = get_tree().create_tween().tween_property(sword, "modulate:a", 1.0, 0.8);
 		
 		GameData.first_start = false;
 		return;
 	else:
+		sword.freeze_time = 0.1;
 		$FirstScreen.queue_free()
-		pass
-		
+		start()
 	
-	
-	start()
 	
 @onready var flash: Sprite2D = $Flash
 func _on_sword_on_died() -> void:
 	flash.visible = true;
+	
 	if game_over: return;
 	
 	do_game_over();
@@ -57,6 +61,8 @@ func out_of_friendlies():
 	if game_over: return
 	on_friendlies_dead.emit()
 	do_game_over()
+	
+	
 	
 @onready var store: MeatStore = $UILayer/UI/Store
 
@@ -68,27 +74,37 @@ func open_store():
 	pass
 
 func do_game_over():
-	
+	if game_over: return
 	muisic.stop()
 	music_2.stop();
 	game_over = true;
 	GameData.rounds_played += 1;
-
 	
-	# sword.active = false;
-	$UILayer/UI/MarginContainer/Win/Control.visible = false;
+	$UILayer/UI.hide_ingame_ui();
 	pass
 	
 @onready var ambiance_sfx: AudioStreamPlayer = $ambiance_sfx
 @onready var muisic: AudioStreamPlayer = $muisic
 @onready var music_2: AudioStreamPlayer = $music2
 
+@onready var camera: Camera2D = $Camera
 
 var started = false;
 
+var _pressed_start = false;
+func start_pressed():
+	if _pressed_start or started: return
+	_pressed_start = true;
+	sword.attack(true)
+	$FirstScreen/intro_screen_anim.play("fade_out");
+	pass
+
 func start():
 	if started: return;
-	$UILayer/UI.visible = true;
+	
+	if !is_instance_valid($FirstScreen):
+		$UILayer/UI.visible = true;
+		
 	sword.active = true;
 	started = true;
 	GameData.meat = 0;
@@ -97,8 +113,6 @@ func start():
 	friendly_spawner.init()
 	ambiance_sfx.play(randf() * 5.0)
 	muisic.play();
-	music_2.play();
-	music_2.volume_db = -80;
 	pass
 
 var faded = false
@@ -120,9 +134,7 @@ func _physics_process(_delta: float) -> void:
 		reset()
 	if !started: 
 		if Input.is_action_just_pressed("attack"):
-			var tw = get_tree().create_tween().tween_property($FirstScreen, "modulate:a", 0.0, 0.3)
-			
-			start()
+			start_pressed()
 		return
 	if !game_over:
 		process_game(_delta);
@@ -181,6 +193,7 @@ func _on_sword_on_died_complete() -> void:
 
 
 @onready var win_text: Label = $UILayer/UI/MarginContainer/Win/Control/WinText
+@onready var winanim: AnimationPlayer = $UILayer/UI/MarginContainer/Win/winanim
 
 
 func win_game():
@@ -188,7 +201,6 @@ func win_game():
 	music_2.stop();
 	win_text.text += "\nYOU WON IN %s ROUNDS." % GameData.rounds_played;
 	winanim.play("show")
-@onready var winanim: AnimationPlayer = $UILayer/UI/MarginContainer/Win/winanim
 
 func _on_wave_spawner_on_completed_all() -> void:
 	win_game()

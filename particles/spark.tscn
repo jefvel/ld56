@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://cuxpqvu12hhuw"]
+
+[ext_resource type="Script" path="res://particles/spark.gd" id="1_07fwp"]
+[ext_resource type="Texture2D" uid="uid://besd4mlsxo3px" path="res://particles/strike.png" id="2_313ij"]
+
+[sub_resource type="Curve" id="Curve_c40rb"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 119.544), 0.0, 0.0, 0, 0, Vector2(1, -200), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_s0ebf"]
+max_value = 100.0
+_data = [Vector2(0, 55.676), 0.0, 0.0, 0, 0, Vector2(1, 20.0631), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Spark" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_07fwp")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+process_mode = 3
+z_index = 1
+amount = 16
+lifetime = 0.2
+explosiveness = 1.0
+randomness = 0.28
+lifetime_randomness = 0.59
+fract_delta = false
+emission_shape = 1
+emission_sphere_radius = 4.0
+direction = Vector2(-1, -1)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 347.69
+initial_velocity_max = 562.92
+angular_velocity_max = 224.11
+linear_accel_max = 5.96
+linear_accel_curve = SubResource("Curve_c40rb")
+radial_accel_min = -7.28
+radial_accel_max = 76.82
+tangential_accel_min = -2.65
+tangential_accel_max = 37.09
+damping_min = 58.609
+damping_max = 100.0
+damping_curve = SubResource("Curve_s0ebf")
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+
+[node name="sprite" type="Sprite2D" parent="."]
+position = Vector2(-8, -8)
+texture = ExtResource("2_313ij")
+offset = Vector2(-6, -7)
+hframes = 2
+vframes = 2
+
+[connection signal="finished" from="CPUParticles2D" to="." method="done"]

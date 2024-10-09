@@ -12,10 +12,8 @@ func _ready() -> void:
 
 func _on_attack_on_target_get(a: Attack) -> void:
 	if attack.target and attack.target.hitbox:
-		dir = attack.target.hitbox.global_position - attack.position
-		pass
-	
-	pass
+		dir = attack.target_dir
+
 
 func _physics_process(delta: float) -> void:
 	if TimeFreeze.frozen: return
@@ -24,8 +22,8 @@ func _physics_process(delta: float) -> void:
 	d = d.normalized();
 	vel *= 0.9;
 	attack.position += d * vel;
-	sprite.scale.x = vel / initial_vel;
-	sprite.rotation = d.angle()
+	attack.scale.x = vel / initial_vel;
+	attack.rotation = d.angle()
 	if vel < 0.1:
 		attack.queue_free();
 	pass
@@ -34,7 +32,7 @@ func _physics_process(delta: float) -> void:
 var has_hit = false;
 func _on_attack_on_hit(h: Hitbox) -> void:
 	if has_hit: return;
-	if vel < 2:
+	if vel < 1:
 		return;
 	
 	var res = false

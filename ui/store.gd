@@ -29,16 +29,10 @@ func _ready() -> void:
 	#show_store()
 
 func refresh():
-	
 	pass
 
 func show_items():
-	
 	pass
-	
-#func deposit():
-#	GameData.meat_bank += GameData.meat;
-#	GameData.meat = 0;
 	
 func _physics_process(delta: float) -> void:
 	meat_text.text = "%s" % GameData.meat_bank

@@ -40,9 +40,6 @@ var hovered = false;
 func _on_area_entered(_area: Area2D) -> void:
 	hovered = true;
 	check_pickup();
-	pass # Replace with function body.
-
 
 func _on_area_exited(_area: Area2D) -> void:
 	hovered = false;
-	pass # Replace with function body.

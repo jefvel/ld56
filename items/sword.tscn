@@ -1,10 +1,11 @@
-[gd_scene load_steps=28 format=3 uid="uid://3cjnfl08b7sy"]
+[gd_scene load_steps=29 format=3 uid="uid://3cjnfl08b7sy"]
 
 [ext_resource type="Script" path="res://items/sword.gd" id="1_y3nuo"]
 [ext_resource type="Script" path="res://components/life_component.gd" id="2_o1lhk"]
 [ext_resource type="Texture2D" uid="uid://duiw1d6ae2y0i" path="res://shader/whitesquare.png" id="3_12ybh"]
-[ext_resource type="Texture2D" uid="uid://ux2b5mxf1vel" path="res://items/sword.png" id="3_qv6ly"]
 [ext_resource type="Script" path="res://components/hitbox.gd" id="4_5mk3s"]
+[ext_resource type="Texture2D" uid="uid://ux2b5mxf1vel" path="res://items/sword.png" id="4_dtekn"]
+[ext_resource type="Texture2D" uid="uid://ux2b5mxf1vel" path="res://items/sword.png" id="4_phg8a"]
 [ext_resource type="AudioStream" uid="uid://b122wy05jhw8o" path="res://sfx/swipe.wav" id="5_aaacn"]
 [ext_resource type="AudioStream" uid="uid://damg1ep6busqs" path="res://sfx/hit.wav" id="5_veeqw"]
 [ext_resource type="AudioStream" uid="uid://b2ijt7a4a8448" path="res://sfx/swipe2.wav" id="6_y4mi2"]
@@ -193,9 +194,9 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xfr3r"]
 _data = {
-&"stab": SubResource("Animation_737b3"),
 &"RESET": SubResource("Animation_p41r7"),
-&"ready": SubResource("Animation_8s2ww")
+&"ready": SubResource("Animation_8s2ww"),
+&"stab": SubResource("Animation_737b3")
 }
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rs56g"]
@@ -233,7 +234,7 @@ metadata/_edit_group_ = true
 [node name="Sprite" type="Sprite2D" parent="Holder"]
 texture_filter = 1
 position = Vector2(20, 20)
-texture = ExtResource("3_qv6ly")
+texture = ExtResource("4_dtekn")
 offset = Vector2(-4, -4)
 metadata/_aseprite_wizard_config_ = {
 "i_mode": -1,
@@ -247,7 +248,7 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "res://items/sword.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "a06d0cdab11ff12c2ff3d4afd9dfc138"
+metadata/_aseprite_wizard_source_file_hash_ = "f4342587ef4b847306e1ceb56e741753"
 
 [node name="Area2D" type="Area2D" parent="Holder/Sprite"]
 position = Vector2(-20, -20)
@@ -260,7 +261,7 @@ shape = SubResource("RectangleShape2D_5sqb6")
 [node name="Sprite2" type="Sprite2D" parent="Holder/Sprite"]
 clip_children = 1
 texture_filter = 1
-texture = ExtResource("3_qv6ly")
+texture = ExtResource("4_phg8a")
 offset = Vector2(-4, -4)
 metadata/_aseprite_wizard_config_ = {
 "i_mode": -1,
@@ -278,13 +279,13 @@ metadata/_aseprite_wizard_source_file_hash_ = "11a6fae0c17aae78fb2e608051ad4f8a"
 
 [node name="SwordProgress" type="Node2D" parent="Holder/Sprite/Sprite2"]
 modulate = Color(0.0627451, 0.0431373, 0.164706, 1)
-position = Vector2(5, 5)
+position = Vector2(6, 6)
 rotation = -0.785398
-scale = Vector2(1, 1e-05)
+scale = Vector2(1, -0.005)
 
 [node name="Sprite2D" type="Sprite2D" parent="Holder/Sprite/Sprite2/SwordProgress"]
-position = Vector2(0, -18)
-scale = Vector2(1.872, 4.5)
+position = Vector2(0, -18.5156)
+scale = Vector2(1.872, 4.6289)
 texture = ExtResource("3_12ybh")
 
 [node name="PickUpper" type="Area2D" parent="Holder"]
@@ -329,6 +330,8 @@ metadata/_aseprite_wizard_interface_config_ = {
 "output_section": false,
 "slice_section": false
 }
+
+[node name="tip" type="Node2D" parent="Holder"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

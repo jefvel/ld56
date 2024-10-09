@@ -132,24 +132,6 @@ texture = ExtResource("2_7upg7")
 texture_filter = 1
 position = Vector2(0, -5)
 texture = SubResource("PlaceholderTexture2D_otikq")
-metadata/_aseprite_wizard_config_ = {
-"i_mode": 1,
-"keep_anim_length": false,
-"layer": "",
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": true,
-"player": "",
-"slice": "",
-"source": "res://items/meat.aseprite"
-}
-metadata/_aseprite_wizard_source_file_hash_ = "6efb5c58667cfe8aba2d51ea53184bfa"
-metadata/_aseprite_wizard_interface_config_ = {
-"layer_section": true,
-"output_section": true,
-"slice_section": true
-}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

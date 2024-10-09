@@ -55,7 +55,7 @@ func spawn_meat():
 
 func _on_life_component_on_died() -> void:
 	#if life_component.last_hitter is Sword:
-	spawn_meat()
+	call_deferred("spawn_meat")
 	do_poof()
 	pass # Replace with function body.
 	

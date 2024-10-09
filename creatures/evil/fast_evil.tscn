@@ -15,12 +15,14 @@ radius = 6.0
 max_health = 4
 
 [node name="AttackComponent" parent="." index="1"]
-attack_prepare_time = 0.507
+attack_interval = 0.1
+attack_prepare_time = 0.4
 
 [node name="WalkerComponent" parent="." index="2"]
 max_speed = 60.0
 step_interval = 0.25
 step_duration = 0.3
+range_satisfaction = 30.0
 
 [node name="Sprite" parent="." index="3"]
 texture_filter = 1
@@ -49,7 +51,7 @@ metadata/_aseprite_wizard_interface_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "b5b19870feb2aa8b3e33f35b09bca9e5"
 
 [node name="AttackPos" parent="Sprite" index="0"]
-position = Vector2(9, -19)
+position = Vector2(13, -11)
 
 [node name="Hitbox" parent="Sprite" index="1"]
 position = Vector2(0, -7)

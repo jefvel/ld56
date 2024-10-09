@@ -6,10 +6,16 @@ class_name AttackComponent
 
 @export var walker: WalkerComponent;
 
+## Will cancel attack and stagger if being dealt this amount of damage 
+@export_range(1, 100) var stagger_damage: int = 1;
+
 @export var attack_pos: Node2D;
 
-@export_range(0.5, 10.0) var attack_interval = 3.0;
+## The cooldown between starting attacks
+@export_range(0.05, 10.0) var attack_interval = 3.0;
 @export_range(1, 10) var damage = 1;
+
+var attack_cooldown: float = .0;
 
 @export_range(0.0, 100.0) var attack_range = 30.0;
 @export_range(0.2, 1.0) var attack_prepare_time = 1.0;
@@ -53,29 +59,48 @@ func find_target():
 	
 	if closest:
 		attack_target = closest;
-	
 	pass
 	
 
 var attacking: bool = false;
 var attack_time = .0;
 var target_position: Vector2;
+var attack_direction: Vector2;
 
 func start_attack():
 	attacking = true;
 	attack_time = 0.0;
-	target_position = attack_target.global_position;
+	
+	attack_cooldown = attack_interval;
+	
+	target_position = attack_target.hitbox.global_position;
+	attack_direction = (target_position - attack_pos.global_position).normalized();
+
 	anim.play("attack")
 	pass
 
-func do_attack():
-	attacking = false;
+func reset_anim():
 	anim.play("idle")
+
+func stagger():
+	cancel_attack();
+	attack_cooldown = max(attack_interval * 2.0, attack_cooldown)
+
+func cancel_attack():
+	if !attacking: return
+	attacking = false;
+	reset_anim()
+	pass
+
+func do_attack():
+	if !attacking: return
+	reset_anim()
+	attacking = false;
 	var a = attack_type.instantiate() as Attack
 	enemy.get_parent().add_child(a)
 	a.attackee = enemy;
 	a.global_position = attack_pos.global_position
-	a.set_target(attack_target, target_position)
+	a.set_target(attack_target, target_position, attack_direction)
 	pass
 	
 func process_attack(delta:float):
@@ -89,9 +114,9 @@ func _physics_process(delta: float) -> void:
 	if until_find_target < 0:
 		until_find_target = randf_range(0.5, 1.0);
 		find_target()
-			
 	
 	if !walker.stepping and is_instance_valid(attack_target):
+
 		if attack_target.life and attack_target.life.dead:
 			aggro = false;
 			attack_target = null;
@@ -99,8 +124,9 @@ func _physics_process(delta: float) -> void:
 			return
 			
 		if !attacking:
-			sprite.flip_h = attack_target.position.x < enemy.position.x;
-			walker.target_position = attack_target.global_position;
+			attack_cooldown -= delta;
+			sprite.scale.x = sign(attack_target.position.x - enemy.position.x);
+			walker.target_position = attack_target.hitbox.global_position;
 		
 		var d = attack_target.position - enemy.position;
 		var dist = d.length()
@@ -108,8 +134,9 @@ func _physics_process(delta: float) -> void:
 		if attacking:
 			process_attack(delta)
 			return
+				
 		
-		if dist < attack_range:
+		if dist < attack_range and attack_cooldown <= 0:
 			start_attack();
 			pass
 		pass
@@ -118,5 +145,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_life_component_on_hurt(damage: int) -> void:
 	aggro = true;
+	if damage >= stagger_damage:
+		stagger()
 	find_target()
-	pass # Replace with function body.
+	pass
