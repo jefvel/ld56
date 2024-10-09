@@ -16,7 +16,7 @@ radius = 19.0263
 max_health = 50
 
 [node name="AttackComponent" parent="." index="1"]
-attack_interval = 7.228
+attack_interval = 2.0
 attack_range = 50.0
 attack_type = ExtResource("2_dh4x1")
 

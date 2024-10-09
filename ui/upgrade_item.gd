@@ -47,7 +47,7 @@ func refresh():
 	var cc = available_color;
 	if level < costs.size():
 		var c = costs[level];
-		print(c);
+	#	print(c);
 		if GameData.meat_bank < c:
 			#print("set cc to ", unavailable_color)
 			cc = unavailable_color;

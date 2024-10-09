@@ -614,7 +614,7 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "res://logo.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "d75f5f2d1aa50816a8e933d690d04271"
+metadata/_aseprite_wizard_source_file_hash_ = "4d2e958edff513c8097e2a87b0cb5aeb"
 
 [node name="intro_screen_anim" type="AnimationPlayer" parent="FirstScreen"]
 libraries = {

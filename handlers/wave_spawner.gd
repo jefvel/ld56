@@ -11,7 +11,7 @@ var wave: int = 0;
 var max_waves = 10;
 
 var lil_spawns = 2;
-var fast_spawns = 1;
+var fast_spawns = 0;
 var big_spawns = 0;
 var bigass_spawns = 0;
 

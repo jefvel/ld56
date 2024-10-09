@@ -50,6 +50,9 @@ var max_speeds = [5.0, 8.0, 12.0, 20.0, 35.0];
 var cooldown_speeds = [1.5, 1.2, 0.9, 0.7, 0.4];
 var pu_rads = [5.0, 10.0, 15.0, 25.0]
 var lives = [1, 2, 3, 4];
+
+@onready var pick_upper: PickUpper = $Holder/PickUpper
+
 func _ready():
 	max_pierce = pierce_levels[GameData.get_upgrade_level("pierce")]
 	cur_damage = damage_levels[GameData.get_upgrade_level("damage")]
@@ -60,7 +63,7 @@ func _ready():
 	life.health = life.max_health
 	
 	var rad = pu_rads[GameData.get_upgrade_level("pickup_radius")]
-	pick_up_rad.scale = Vector2(rad, rad)
+	pick_upper.pickup_radius = rad;
 	print("set pierce: ", max_pierce, ", dmg: ", cur_damage, ", rad: ", rad)
 	pass
 

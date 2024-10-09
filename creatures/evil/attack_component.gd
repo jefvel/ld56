@@ -43,18 +43,18 @@ func find_target():
 	var closest: Friendly = null;
 	
 	if attack_target == GameData.game.sword:
-		var dist_to_sword = GameData.game.global_position.distance_squared_to(pos)
-		if dist_to_sword < 350 * 350:
+		var dist_to_sword = GameData.game.sword.global_position.distance_squared_to(pos)
+		if dist_to_sword < 120 * 120:
 			return;
 	
 	for f in GameData.game.friendlies:
 		if !is_instance_valid(f):
-			return
+			continue
 		var d_sq = f.global_position.distance_squared_to(pos)
 		if d_sq < closest_sq:
 			closest = f;
 			closest_sq = d_sq;
-			if randf() > 0.8: break;
+			if randf() > 0.9: break;
 		pass
 	
 	if closest:

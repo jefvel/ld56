@@ -111,7 +111,7 @@ _data = {
 radius = 8.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lmykq"]
-random_pitch = 1.05
+random_pitch = 1.1
 streams_count = 1
 stream_0/stream = ExtResource("4_yl0n7")
 

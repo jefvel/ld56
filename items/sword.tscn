@@ -1,13 +1,14 @@
-[gd_scene load_steps=29 format=3 uid="uid://3cjnfl08b7sy"]
+[gd_scene load_steps=30 format=3 uid="uid://3cjnfl08b7sy"]
 
 [ext_resource type="Script" path="res://items/sword.gd" id="1_y3nuo"]
 [ext_resource type="Script" path="res://components/life_component.gd" id="2_o1lhk"]
 [ext_resource type="Texture2D" uid="uid://duiw1d6ae2y0i" path="res://shader/whitesquare.png" id="3_12ybh"]
 [ext_resource type="Script" path="res://components/hitbox.gd" id="4_5mk3s"]
-[ext_resource type="Texture2D" uid="uid://ux2b5mxf1vel" path="res://items/sword.png" id="4_dtekn"]
-[ext_resource type="Texture2D" uid="uid://ux2b5mxf1vel" path="res://items/sword.png" id="4_phg8a"]
+[ext_resource type="Texture2D" uid="uid://ux2b5mxf1vel" path="res://items/sword.png" id="4_iuebp"]
+[ext_resource type="Texture2D" uid="uid://ux2b5mxf1vel" path="res://items/sword.png" id="4_scif3"]
 [ext_resource type="AudioStream" uid="uid://b122wy05jhw8o" path="res://sfx/swipe.wav" id="5_aaacn"]
 [ext_resource type="AudioStream" uid="uid://damg1ep6busqs" path="res://sfx/hit.wav" id="5_veeqw"]
+[ext_resource type="Script" path="res://items/pick_upper.gd" id="6_33nu0"]
 [ext_resource type="AudioStream" uid="uid://b2ijt7a4a8448" path="res://sfx/swipe2.wav" id="6_y4mi2"]
 [ext_resource type="Texture2D" uid="uid://dqxphjdk82roi" path="res://creatures/evil/hpbip.png" id="6_yj0ib"]
 [ext_resource type="Texture2D" uid="uid://1861ld0fphb2" path="res://items/sword_break1.png" id="9_4f44n"]
@@ -49,18 +50,18 @@ _data = {
 
 [sub_resource type="Animation" id="Animation_8s2ww"]
 resource_name = "ready"
-length = 0.100003
+length = 0.16667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("Holder/Sprite:scale")
-tracks/0/interp = 1
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.1),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.0333333, 0.1, 0.166667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(1, 1), Vector2(1.125, 1.125), Vector2(1, 1)]
+"values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(0.96, 0.96), Vector2(1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -76,12 +77,12 @@ tracks/1/keys = {
 }
 tracks/2/type = "value"
 tracks/2/imported = false
-tracks/2/enabled = true
+tracks/2/enabled = false
 tracks/2/path = NodePath("Holder/Sprite:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.1),
+"times": PackedFloat32Array(0, 0.0666667, 0.166667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.226893, 0.0]
@@ -234,7 +235,7 @@ metadata/_edit_group_ = true
 [node name="Sprite" type="Sprite2D" parent="Holder"]
 texture_filter = 1
 position = Vector2(20, 20)
-texture = ExtResource("4_dtekn")
+texture = ExtResource("4_iuebp")
 offset = Vector2(-4, -4)
 metadata/_aseprite_wizard_config_ = {
 "i_mode": -1,
@@ -261,7 +262,7 @@ shape = SubResource("RectangleShape2D_5sqb6")
 [node name="Sprite2" type="Sprite2D" parent="Holder/Sprite"]
 clip_children = 1
 texture_filter = 1
-texture = ExtResource("4_phg8a")
+texture = ExtResource("4_scif3")
 offset = Vector2(-4, -4)
 metadata/_aseprite_wizard_config_ = {
 "i_mode": -1,
@@ -291,10 +292,10 @@ texture = ExtResource("3_12ybh")
 [node name="PickUpper" type="Area2D" parent="Holder"]
 collision_layer = 16
 collision_mask = 16
+script = ExtResource("6_33nu0")
 
 [node name="PickUpRad" type="CollisionShape2D" parent="Holder/PickUpper"]
 position = Vector2(2, 2)
-scale = Vector2(5, 5)
 shape = SubResource("CircleShape2D_q7scf")
 
 [node name="Hitbox" type="Area2D" parent="Holder" node_paths=PackedStringArray("life")]
@@ -389,3 +390,4 @@ volume_db = 3.0
 [connection signal="on_died" from="LifeComponent" to="." method="_on_life_component_on_died"]
 [connection signal="on_hurt" from="LifeComponent" to="." method="_on_life_component_on_hurt"]
 [connection signal="area_entered" from="Holder/Sprite/Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="Holder/PickUpper" to="Holder/PickUpper" method="_on_area_entered"]

@@ -180,15 +180,18 @@ func _on_store_on_closed() -> void:
 
 func _on_store_on_open() -> void:
 	var tw = get_tree().create_tween().tween_property(ambiance_sfx, "volume_db", -80, 2.0)
-	
 	pass # Replace with function body.
 
 
 func _on_sword_on_died_complete() -> void:
 	on_sword_exploded.emit();
-	if GameData.get_upgrade_level("insurance") > 0:
-		for f in friendlies:
-			f.life.hurt(100)
+	#if GameData.get_upgrade_level("insurance") > 0:
+	for f in friendlies:
+		f.life.hurt(100)
+	for i in things.get_children():
+		if i is Pickup:
+			i.force_pickup()
+			
 	pass # Replace with function body.
 
 

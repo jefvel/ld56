@@ -67,6 +67,8 @@ close={
 [layer_names]
 
 2d_physics/layer_1="Hitboxes"
+2d_physics/layer_2="Physics Collisions"
+2d_physics/layer_5="Pickups"
 
 [rendering]
 
