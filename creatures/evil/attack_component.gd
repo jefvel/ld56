@@ -22,13 +22,18 @@ var attack_cooldown: float = .0;
 
 @export var attack_type: PackedScene = preload("res://creatures/attacks/base_swoosh.tscn");
 
+## The time of an attack where the enemy is extra vulnerable right before committing  
+@export_range(0.0, 1.0) var crit_time = 0.3;
+
 signal on_do_attack(atk: AttackComponent);
+signal on_vulnerable;
 
 var attack_target: Node2D;
 
 var until_find_target = 0.0;
 
 var aggro = false;
+var vulnerable = false;
 
 func find_target():
 	if !GameData.game.sword.life.dead:
@@ -81,6 +86,7 @@ func start_attack():
 
 func reset_anim():
 	anim.play("idle")
+	vulnerable = false;
 
 func stagger():
 	cancel_attack();
@@ -89,6 +95,7 @@ func stagger():
 func cancel_attack():
 	if !attacking: return
 	attacking = false;
+	vulnerable = false;
 	reset_anim()
 	pass
 
@@ -102,9 +109,18 @@ func do_attack():
 	a.global_position = attack_pos.global_position
 	a.set_target(attack_target, target_position, attack_direction)
 	pass
+
+func make_vulnerable():
+	if vulnerable: return;
+	vulnerable = true;
+	on_vulnerable.emit();
 	
 func process_attack(delta:float):
 	attack_time += delta;
+	if !vulnerable:
+		if crit_time > 0 and attack_prepare_time - attack_time < crit_time:
+			make_vulnerable();
+			pass
 	if attack_time > attack_prepare_time:
 		do_attack()
 	pass
@@ -142,10 +158,9 @@ func _physics_process(delta: float) -> void:
 		pass
 	
 
-
 func _on_life_component_on_hurt(damage: int) -> void:
 	aggro = true;
-	if damage >= stagger_damage:
+	if damage >= stagger_damage or vulnerable:
 		stagger()
 	find_target()
 	pass

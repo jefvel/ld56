@@ -13,7 +13,7 @@ config_version=5
 config/name="FOREST CLEARING"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-boot_splash/bg_color=Color(0.164706, 0.129412, 0.227451, 1)
+boot_splash/bg_color=Color(0.0627451, 0.0431373, 0.164706, 1)
 boot_splash/image="res://icon.png"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
@@ -76,3 +76,10 @@ textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 environment/defaults/default_clear_color=Color(0.192157, 0.278431, 0.262745, 1)
+
+[shader_globals]
+
+noise_tex={
+"type": "sampler2D",
+"value": "res://shader/noise_tex.tres"
+}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c1u01ibmha2qn"]
+[gd_scene load_steps=14 format=3 uid="uid://c1u01ibmha2qn"]
 
 [ext_resource type="Script" path="res://components/enemy.gd" id="1_lec84"]
 [ext_resource type="Script" path="res://components/life_component.gd" id="2_ln68x"]
@@ -7,22 +7,8 @@
 [ext_resource type="Script" path="res://creatures/evil/attack_component.gd" id="4_viu77"]
 [ext_resource type="PackedScene" uid="uid://bqua2j1eo345d" path="res://creatures/shadow.tscn" id="5_mrnxm"]
 [ext_resource type="Texture2D" uid="uid://duiw1d6ae2y0i" path="res://shader/whitesquare.png" id="7_qf8p5"]
-
-[sub_resource type="Animation" id="Animation_j3x3d"]
-length = 0.1
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
+[ext_resource type="AudioStream" uid="uid://cc88foqsw2rxq" path="res://sfx/crit_time.wav" id="8_0ghtk"]
+[ext_resource type="Script" path="res://components/crit_timer.gd" id="8_gu0hc"]
 
 [sub_resource type="Animation" id="Animation_gdrg4"]
 length = 0.1
@@ -40,11 +26,32 @@ tracks/0/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_j3x3d"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uleyf"]
 _data = {
-&"idle": SubResource("Animation_gdrg4"),
-&"attack": SubResource("Animation_j3x3d")
+&"attack": SubResource("Animation_j3x3d"),
+&"idle": SubResource("Animation_gdrg4")
 }
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_skfd1"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("8_0ghtk")
 
 [node name="Enemy" type="RigidBody2D" node_paths=PackedStringArray("life") groups=["Enemies"]]
 collision_layer = 2
@@ -56,11 +63,12 @@ linear_damp = 10.0
 script = ExtResource("1_lec84")
 life = NodePath("LifeComponent")
 
-[node name="LifeComponent" type="Node" parent="." node_paths=PackedStringArray("hit_flash")]
+[node name="LifeComponent" type="Node" parent="." node_paths=PackedStringArray("hit_flash", "attack_component")]
 script = ExtResource("2_ln68x")
 max_health = 1
 invulnerability_time = 0.2
 hit_flash = NodePath("../Sprite")
+attack_component = NodePath("../AttackComponent")
 
 [node name="AttackComponent" type="Node" parent="." node_paths=PackedStringArray("anim", "sprite", "enemy", "walker", "attack_pos")]
 script = ExtResource("4_viu77")
@@ -101,6 +109,16 @@ scale = Vector2(2, 0.25)
 texture = ExtResource("7_qf8p5")
 offset = Vector2(4, 0)
 
+[node name="CritTime" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("8_gu0hc")
+sprite = NodePath("../Sprite")
+
+[node name="CritSnd" type="AudioStreamPlayer2D" parent="CritTime"]
+stream = SubResource("AudioStreamRandomizer_skfd1")
+max_distance = 200.0
+attenuation = 0.297302
+
 [connection signal="on_hurt" from="LifeComponent" to="." method="_on_life_component_on_hurt"]
 [connection signal="on_hurt" from="LifeComponent" to="AttackComponent" method="_on_life_component_on_hurt"]
 [connection signal="on_hurt" from="LifeComponent" to="WalkerComponent" method="_on_life_component_on_hurt"]
+[connection signal="on_vulnerable" from="AttackComponent" to="CritTime" method="on_crit_time"]

@@ -8,12 +8,12 @@ class_name Hitbox
 
 signal on_hit(damage: int, attacker: Node2D);
 
-func hit(damage: int, attacker: Node2D) -> bool:
+func hit(damage: int, attacker: Node2D):
 	if attacker is Enemy and enemy_immune: return false;
 	on_hit.emit(damage, attacker)
 	if life: return life.hurt(damage, attacker)
 	
-	return false;
+	return null;
 
 var enabled: bool:
 	set(e):

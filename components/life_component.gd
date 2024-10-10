@@ -6,6 +6,8 @@ class_name LifeComponent
 
 @export var hit_flash: Sprite2D;
 
+@export var attack_component: AttackComponent;
+
 var _invuln_time = 0.0;
 
 var is_invulnerable: bool:
@@ -49,16 +51,27 @@ func make_invulnerable(duration: float = 0.4):
 	_invuln_time = duration;
 
 # Returns true when hurt hits
-func hurt(amount: int = 1, hurter: Node2D = null) -> bool:
-	if _invuln_time > 0: return false;
+func hurt(amount: int = 1, hurter: Node2D = null) -> HitData:
+	if _invuln_time > 0: return null;
+	
+	var dmg = amount;
+	var crit_hit = false;
+	if attack_component and attack_component.vulnerable:
+		dmg *= 2;
+		crit_hit = true;
 	
 	_invuln_time = invulnerability_time;
 	last_hitter = hurter;
-	health -= amount;
+	health -= dmg;
 	if health > 0:
-		on_hurt.emit(amount)
+		on_hurt.emit(dmg)
 		flash()
 	else:
 		die()
-	return true;
+	var data = HitData.new()
+	data.critical_hit = crit_hit
+	return data;
 	
+class HitData:
+	var critical_hit: bool;
+	pass

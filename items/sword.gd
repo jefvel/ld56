@@ -177,27 +177,38 @@ func hit_target(e: Hitbox):
 	
 	hit_targets.push_back(e)
 	
-	e.hit(cur_damage, self)
+	var res = e.hit(cur_damage, self)
+	if res and res.critical_hit:
+		crit_hit.play();
+		TimeFreeze.freeze(7);
+		game.camera.shake(2)
+		pass
+	else:
+		game.camera.shake()
+		TimeFreeze.freeze(4)
+		
 	cur_pierce += 1;
-	TimeFreeze.freeze(4);
-	game.camera.shake()
+
 	
-	var spark = SPARK.instantiate();
+	
+	var spark = SPARK.instantiate(); 
 	get_parent().add_child(spark)
 	spark.global_position = tip.global_position;
-	
+	if res.critical_hit:
+		spark.do_crit()
 	hit_sfx.play()
+	
 	if cur_pierce >= max_pierce:
 		finish_attack();
-	
+
+@onready var crit_hit: AudioStreamPlayer = $crit_hit
+
 const SPARK = preload("res://particles/spark.tscn")
 @onready var tip: Node2D = $Holder/tip
 
 func finish_attack():
 	attacking = false;
 	cooling_down = true;
-	attack_cooldown = attack_cooldown_duration;
-
 
 func _on_on_weapon_ready() -> void:
 	attack_animations.play("ready")

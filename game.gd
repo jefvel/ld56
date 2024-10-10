@@ -96,6 +96,7 @@ func start_pressed():
 	if _pressed_start or started: return
 	_pressed_start = true;
 	sword.attack(true)
+	sword.attack_cooldown = 0.0;
 	$FirstScreen/intro_screen_anim.play("fade_out");
 	pass
 

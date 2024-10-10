@@ -8,8 +8,8 @@ var goal_pos: Vector2;
 func _ready() -> void:
 	goal_pos = position;
 
-func shake(v : Vector2 = Vector2.from_angle(randf() * TAU)):
-	acc += v * 2;
+func shake(force = 1.0):
+	acc += Vector2.from_angle(randf() * TAU) * force * 2;
 	t = 0
 	pass
 

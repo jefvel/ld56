@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://d3l567heoxfa4"]
+[gd_scene load_steps=43 format=3 uid="uid://d3l567heoxfa4"]
 
 [ext_resource type="Script" path="res://handlers/wave_spawner.gd" id="1_gduc8"]
 [ext_resource type="Script" path="res://game.gd" id="1_wrl8j"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://mrqaoiny38mi" path="res://items/meat.png" id="8_4lv1i"]
 [ext_resource type="PackedScene" uid="uid://b8dg18ml7hxym" path="res://ui/fancy_label.tscn" id="9_2xtet"]
 [ext_resource type="Script" path="res://stage_container.gd" id="9_n5xlt"]
+[ext_resource type="Texture2D" uid="uid://birdpojwyyo0q" path="res://logo_outline.png" id="9_ylofp"]
 [ext_resource type="PackedScene" uid="uid://f6owbn2h37lf" path="res://ui/store.tscn" id="10_p05hj"]
 [ext_resource type="Texture2D" uid="uid://duiw1d6ae2y0i" path="res://shader/whitesquare.png" id="11_5i4fi"]
 [ext_resource type="AudioStream" uid="uid://biwdir42v4rao" path="res://sfx/gameoverending.wav" id="12_0v3cn"]
@@ -33,8 +34,35 @@ size = Vector2(512, 310)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ydh7"]
 size = Vector2(242, 126)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rd0us"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7sakh"]
 shader = ExtResource("7_0eq5e")
+
+[sub_resource type="Animation" id="Animation_n3s5a"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TitleSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.233333, 0.633333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TitleSprite:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.233333, 0.3, 0.433333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(256, 83), Vector2(256, 79), Vector2(256, 80)]
+}
 
 [sub_resource type="Animation" id="Animation_ae6ko"]
 resource_name = "fade_out"
@@ -57,10 +85,10 @@ tracks/1/path = NodePath("bg:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.533333, 0.766667),
+"times": PackedFloat32Array(0, 0.666667, 0.766667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(0.164706, 0.129412, 0.227451, 1), Color(0.164706, 0.129412, 0.227451, 1), Color(0.167731, 0.131113, 0.231729, 0)]
+"values": [Color(0.0627451, 0.0431373, 0.164706, 1), Color(0.0627451, 0.0431373, 0.164706, 1), Color(0.0623264, 0.0425644, 0.163624, 0)]
 }
 tracks/2/type = "method"
 tracks/2/imported = false
@@ -90,7 +118,7 @@ tracks/3/keys = {
 }
 tracks/4/type = "value"
 tracks/4/imported = false
-tracks/4/enabled = true
+tracks/4/enabled = false
 tracks/4/path = NodePath("TitleSprite:position")
 tracks/4/interp = 2
 tracks/4/loop_wrap = true
@@ -107,7 +135,7 @@ tracks/5/path = NodePath("..")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.333333),
+"times": PackedFloat32Array(0.466667),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -127,7 +155,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -139,7 +167,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0.164706, 0.129412, 0.227451, 1)]
+"values": [Color(0.0627451, 0.0431373, 0.164706, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -166,37 +194,10 @@ tracks/3/keys = {
 "values": [Vector2(256, 80)]
 }
 
-[sub_resource type="Animation" id="Animation_n3s5a"]
-resource_name = "fade_in"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TitleSprite:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("TitleSprite:position")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(256, 83), Vector2(256, 79), Vector2(256, 80)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jujbn"]
 _data = {
-&"fade_in": SubResource("Animation_n3s5a"),
 &"fade_out": SubResource("Animation_ae6ko"),
+&"fade_in": SubResource("Animation_n3s5a"),
 &"RESET": SubResource("Animation_gv1dm")
 }
 
@@ -592,14 +593,15 @@ texture = ExtResource("11_5i4fi")
 [node name="FirstScreen" type="Node2D" parent="."]
 
 [node name="bg" type="Sprite2D" parent="FirstScreen"]
-modulate = Color(0.164706, 0.129412, 0.227451, 1)
+modulate = Color(0.0627451, 0.0431373, 0.164706, 1)
 position = Vector2(256, 160)
 scale = Vector2(100, 100)
 texture = ExtResource("11_5i4fi")
 
 [node name="TitleSprite" type="Sprite2D" parent="FirstScreen"]
+modulate = Color(1, 1, 1, 0)
 texture_filter = 1
-material = SubResource("ShaderMaterial_rd0us")
+material = SubResource("ShaderMaterial_7sakh")
 position = Vector2(256, 80)
 texture = ExtResource("7_w0b77")
 metadata/_aseprite_wizard_config_ = {
@@ -614,7 +616,28 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "res://logo.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "4d2e958edff513c8097e2a87b0cb5aeb"
+metadata/_aseprite_wizard_source_file_hash_ = "5fdded7b26a723e17977beb2d1efbad8"
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="FirstScreen/TitleSprite"]
+texture_filter = 1
+texture = ExtResource("9_ylofp")
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": true,
+"player": "",
+"slice": "",
+"source": "res://logo_outline.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "287c1673d6092c2cfac54598c90313fe"
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true
+}
 
 [node name="intro_screen_anim" type="AnimationPlayer" parent="FirstScreen"]
 libraries = {
