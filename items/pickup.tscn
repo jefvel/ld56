@@ -99,12 +99,26 @@ tracks/2/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0.372549), Color(1, 1, 1, 0.372549), Color(1, 1, 1, 0.168627), Color(1, 1, 1, 0.137255), Color(1, 1, 1, 0.0313726), Color(1, 1, 1, 0)]
 }
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.966667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wk8kg"]
 _data = {
-&"bounce": SubResource("Animation_2ojlm"),
+&"spawn": SubResource("Animation_lvhu4"),
 &"RESET": SubResource("Animation_q6ira"),
-&"spawn": SubResource("Animation_lvhu4")
+&"bounce": SubResource("Animation_2ojlm")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g4hkg"]

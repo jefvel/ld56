@@ -1,4 +1,5 @@
 shader_type canvas_item;
+uniform sampler2D gradient_tex;
 global uniform sampler2D noise_tex;
 void vertex() {
 	// Called for every vertex the material is visible on.
@@ -24,21 +25,23 @@ vec3 hsv2rgb(vec3 c)
 
 void fragment() {
 	// Called for every pixel the material is visible on.
+	vec4 original_color = COLOR;
 	float t = TIME * 0.02;
 	vec2 pos = SCREEN_UV.xy;
 	vec4 n = texture(noise_tex, mod(pos + vec2(t), vec2(1.0, 1.0)));
-
-	vec4 n2 = texture(noise_tex, mod(-pos * 2.0 + vec2(t * 2.6, t * 0.2), vec2(1.0, 1.0)));
+	vec4 n2 = texture(noise_tex, mod(-pos * 2.0 + vec2(sin(t * 2.6) * 0.2, t * 0.2), vec2(1.0, 1.0)));
 	//vec4 offs = texture(noise_tex, mod(n.gb * 0.1, vec2(1.0)));
-	COLOR *= n;//texture(TEXTURE, UV + n.rg * 0.05);
-	vec3 c = rgb2hsv(COLOR.rgb);
-	c.g *= 1.12;
-	c.b *= 1.7;
-	c.g *= 0.3 + n2.b * 0.8;
-	c.g = clamp(c.r, 0.0, 1.0);
-
+	//COLOR *= n;//texture(TEXTURE, UV + n.rg * 0.05);
+	vec3 c = rgb2hsv(texture(gradient_tex, vec2(n.xy * 0.5 + n2.xy)).rgb);
+	c.g *= 2.0;
+	c.b *= 2.2;
+	//c.g *= 0.3 + n2.b * .8;
+	c.g = clamp(c.g * c.r, 0.0, 1.0);
+	vec3 aberr = n2.rgb * 10.0;
+	aberr = clamp(hsv2rgb(aberr), 0.0, 1.0);
 	c = hsv2rgb(c);
-	COLOR.rgb = c;
+	COLOR.rgb *= c;
+	COLOR.rgb *= (1.0 - aberr.r * 0.15 * original_color.r);
 	//COLOR.rgb = mix(COLOR.rgb, vec3(1.0), 0.1);
 
 	//COLOR = n;

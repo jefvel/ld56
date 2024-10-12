@@ -14,7 +14,7 @@ signal on_sword_exploded;
 signal on_wave_cleared;
 
 @onready var things: Node2D = $World/Things
-@onready var wave_spawner: Node = $WaveSpawner
+@onready var wave_spawner: WaveSpawner = $WaveSpawner
 
 @onready var friendly_spawner: Node = $FriendlySpawner
 
@@ -75,18 +75,16 @@ func open_store():
 
 func do_game_over():
 	if game_over: return
-	muisic.stop()
-	music_2.stop();
+	stop_music()
 	game_over = true;
 	GameData.rounds_played += 1;
 	
 	$UILayer/UI.hide_ingame_ui();
 	pass
 	
+@onready var music: AudioStreamPlayer = $music
+@onready var music_clips: AudioStreamPlaybackInteractive;
 @onready var ambiance_sfx: AudioStreamPlayer = $ambiance_sfx
-@onready var muisic: AudioStreamPlayer = $muisic
-@onready var music_2: AudioStreamPlayer = $music2
-
 @onready var camera: Camera2D = $Camera
 
 var started = false;
@@ -113,17 +111,25 @@ func start():
 	wave_spawner.init();
 	friendly_spawner.init()
 	ambiance_sfx.play(randf() * 5.0)
-	muisic.play();
+	music.play()
+	music_clips = music.get_stream_playback();
+
 	pass
+
+
 
 var faded = false
 func fade2():
 	if faded: return
 	faded = true;
-	music_2.volume_db = muisic.volume_db;
-	music_2.play()
-	muisic.stop();
-	
+	music_clips.switch_to_clip_by_name("Music2")
+
+var faded3 = false
+func fade3():
+	if faded3: return
+	faded3 = true;
+	music_clips.switch_to_clip_by_name("Music3")
+		
 
 func reset():
 	get_tree().reload_current_scene()
@@ -166,9 +172,11 @@ func on_wave_clear():
 	for f in friendlies:
 		if is_instance_valid(f):
 			f.lvlup()
-	if wave_spawner.wave >= 2: #wave_spawner.max_waves - 3:
+	if wave_spawner.wave >= 3: #wave_spawner.max_waves - 3:
 		fade2();
 		pass
+	if wave_spawner.wave >= 6:
+		fade3();
 	on_wave_cleared.emit()
 	wave_spawner.spawn_wave();
 
@@ -199,10 +207,12 @@ func _on_sword_on_died_complete() -> void:
 @onready var win_text: Label = $UILayer/UI/MarginContainer/Win/Control/WinText
 @onready var winanim: AnimationPlayer = $UILayer/UI/MarginContainer/Win/winanim
 
+func stop_music():
+	music.stop();
+	pass
 
 func win_game():
-	muisic.stop();
-	music_2.stop();
+	stop_music()
 	win_text.text += "\nYOU WON IN %s ROUNDS." % GameData.rounds_played;
 	winanim.play("show")
 

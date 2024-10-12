@@ -15,8 +15,11 @@ var ax: float = 0.0;
 
 @onready var attack_animations: AnimationPlayer = $AttackAnimations
 
-@onready var area: Area2D = $Holder/Sprite/Area2D
+@onready var area: Area2D = $Holder/Sprite/SwordPoint
 @onready var sword_progress_sprite: Node2D = $Holder/Sprite/Sprite2/SwordProgress
+
+## 1.0 = completely moved by user input, 0 = only by higher powers
+var control_power:float = 1.0;
 
 var freeze_time = 0.4;
 
@@ -91,11 +94,9 @@ func _physics_process(_delta: float) -> void:
 		hpbip.frame = life.health - 2
 	else:
 		hpbip.visible = false;
-	if active and !is_away_from_cursor:
-		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
-	else:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
 	
+	InputHandler.cursor_visible = !active or is_away_from_cursor
+
 	process_cooldown(_delta)
 	
 	if !active: return
@@ -103,11 +104,17 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("attack"):
 		attack()
 	if attacking: process_attack(_delta)
-
-var is_away_from_cursor: bool;
-func process_move(_delta: float):
 	
+	
+@onready var auto_aim: AutoAim = $AutoAim
+
+var using_mouse = false;
+var is_away_from_cursor: bool;
+
+func process_move(_delta: float):
 	is_away_from_cursor = true;
+	
+	using_mouse = InputHandler.is_using_mouse()
 	
 	if !active: return
 	
@@ -117,16 +124,29 @@ func process_move(_delta: float):
 
 	var vp = get_viewport()
 	var unclamped_pos = vp.get_mouse_position()
+	if !using_mouse:
+		var mult = 1.0;
+		if Input.is_action_pressed("precision_move"):
+			mult = 0.2;
+		unclamped_pos = position + mult * 10 * Input.get_vector("move_left","move_right","move_up","move_down")
 	var p = 16;
+	
+	if attacking and is_instance_valid(auto_aim.closest_target):
+		unclamped_pos += (auto_aim.closest_target.global_position -unclamped_pos) * 0.8;
+		pass
+	
 	var pos = unclamped_pos.clamp(Vector2(p,p), Vector2(512 - p, 320 - p))
 	var d = (pos - position);
 	
 	d = d.limit_length(max_speed)
 	
+	vel = d * 0.5;
 	position += d * 0.5
 	dx += d.x * 0.03;
 	dx *= 0.4;
 	is_away_from_cursor = unclamped_pos.distance_to(position) > 3
+	
+	auto_aim.position = (vel * 5.0).limit_length(30.0);
 	pass
 
 func process_cooldown(d:float):

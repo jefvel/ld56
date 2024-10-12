@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://3cjnfl08b7sy"]
+[gd_scene load_steps=33 format=3 uid="uid://3cjnfl08b7sy"]
 
 [ext_resource type="Script" path="res://items/sword.gd" id="1_y3nuo"]
 [ext_resource type="Script" path="res://components/life_component.gd" id="2_o1lhk"]
@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://bnau7ffgwgscn" path="res://sfx/crackk.wav" id="13_s7nog"]
 [ext_resource type="AudioStream" uid="uid://dy40lk23vb8wq" path="res://sfx/shield.wav" id="15_40xtw"]
 [ext_resource type="AudioStream" uid="uid://o4lotkqp4tk5" path="res://sfx/crit_hit.wav" id="17_pdgct"]
+[ext_resource type="Script" path="res://items/auto_aim.gd" id="18_ltt1d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5sqb6"]
 size = Vector2(6.42086, 5.70644)
@@ -46,6 +47,46 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yy1vx"]
 _data = {
 &"default": SubResource("Animation_5mdk5")
+}
+
+[sub_resource type="Animation" id="Animation_8s2ww"]
+resource_name = "ready"
+length = 0.16667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Holder/Sprite:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.1, 0.166667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(0.96, 0.96), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Holder/Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(20, 20), Vector2(20.375, 20.375), Vector2(20, 20)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("Holder/Sprite:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.166667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.226893, 0.0]
 }
 
 [sub_resource type="Animation" id="Animation_p41r7"]
@@ -111,46 +152,6 @@ tracks/4/keys = {
 "values": [0.0]
 }
 
-[sub_resource type="Animation" id="Animation_8s2ww"]
-resource_name = "ready"
-length = 0.16667
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Holder/Sprite:scale")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.1, 0.166667),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(0.96, 0.96), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Holder/Sprite:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(20, 20), Vector2(20.375, 20.375), Vector2(20, 20)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = false
-tracks/2/path = NodePath("Holder/Sprite:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.166667),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.0, 0.226893, 0.0]
-}
-
 [sub_resource type="Animation" id="Animation_737b3"]
 resource_name = "stab"
 length = 0.300003
@@ -213,6 +214,9 @@ random_pitch = 1.02
 streams_count = 1
 stream_0/stream = ExtResource("5_veeqw")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_qefvo"]
+radius = 24.0
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8d1hw"]
 random_pitch = 1.05
 streams_count = 1
@@ -259,10 +263,11 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "f4342587ef4b847306e1ceb56e741753"
 
-[node name="Area2D" type="Area2D" parent="Holder/Sprite"]
+[node name="SwordPoint" type="Area2D" parent="Holder/Sprite"]
 position = Vector2(-20, -20)
+collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Holder/Sprite/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Holder/Sprite/SwordPoint"]
 position = Vector2(1.53764, 1.49741)
 rotation = -0.785398
 shape = SubResource("RectangleShape2D_5sqb6")
@@ -362,6 +367,14 @@ process_mode = 3
 stream = SubResource("AudioStreamRandomizer_udfo8")
 volume_db = 3.0
 
+[node name="AutoAim" type="Area2D" parent="."]
+position = Vector2(-2, -2)
+collision_layer = 0
+script = ExtResource("18_ltt1d")
+
+[node name="AutoAimColl" type="CollisionShape2D" parent="AutoAim"]
+shape = SubResource("CircleShape2D_qefvo")
+
 [node name="DeathCrack" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="DeathCrack"]
@@ -402,5 +415,5 @@ volume_db = -2.0
 [connection signal="on_weapon_ready" from="." to="." method="_on_on_weapon_ready"]
 [connection signal="on_died" from="LifeComponent" to="." method="_on_life_component_on_died"]
 [connection signal="on_hurt" from="LifeComponent" to="." method="_on_life_component_on_hurt"]
-[connection signal="area_entered" from="Holder/Sprite/Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="Holder/Sprite/SwordPoint" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_entered" from="Holder/PickUpper" to="Holder/PickUpper" method="_on_area_entered"]

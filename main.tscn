@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://d3l567heoxfa4"]
+[gd_scene load_steps=48 format=3 uid="uid://d3l567heoxfa4"]
 
 [ext_resource type="Script" path="res://handlers/wave_spawner.gd" id="1_gduc8"]
 [ext_resource type="Script" path="res://game.gd" id="1_wrl8j"]
@@ -21,6 +21,8 @@
 [ext_resource type="AudioStream" uid="uid://p3ge28taydoc" path="res://music/music.ogg" id="17_w54n3"]
 [ext_resource type="AudioStream" uid="uid://cbhb1ceq40eii" path="res://music/music2.ogg" id="18_n0ehf"]
 [ext_resource type="Script" path="res://objects/camera.gd" id="20_wa0fw"]
+[ext_resource type="AudioStream" uid="uid://17vvam7xe06m" path="res://music/music_3.ogg" id="21_s46g4"]
+[ext_resource type="AudioStream" uid="uid://dcodyf5lvd146" path="res://music/intermission.ogg" id="22_hiy1u"]
 
 [sub_resource type="Curve2D" id="Curve2D_dn8b0"]
 _data = {
@@ -34,8 +36,67 @@ size = Vector2(512, 310)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ydh7"]
 size = Vector2(242, 126)
 
+[sub_resource type="Gradient" id="Gradient_d2juv"]
+offsets = PackedFloat32Array(0.179134, 0.570866, 1)
+colors = PackedColorArray(0.304108, 0.263977, 0.372651, 1, 0.678606, 0.927182, 0.620498, 1, 0.328784, 0.354275, 0.407037, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_myi78"]
+gradient = SubResource("Gradient_d2juv")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7sakh"]
 shader = ExtResource("7_0eq5e")
+shader_parameter/gradient_tex = SubResource("GradientTexture2D_myi78")
+
+[sub_resource type="Animation" id="Animation_gv1dm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TitleSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("bg:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.0627451, 0.0431373, 0.164706, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../UILayer/UI:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TitleSprite:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(256, 80)]
+}
 
 [sub_resource type="Animation" id="Animation_n3s5a"]
 resource_name = "fade_in"
@@ -143,62 +204,11 @@ tracks/5/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_gv1dm"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TitleSprite:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("bg:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.0627451, 0.0431373, 0.164706, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../UILayer/UI:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("TitleSprite:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(256, 80)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jujbn"]
 _data = {
-&"fade_out": SubResource("Animation_ae6ko"),
+&"RESET": SubResource("Animation_gv1dm"),
 &"fade_in": SubResource("Animation_n3s5a"),
-&"RESET": SubResource("Animation_gv1dm")
+&"fade_out": SubResource("Animation_ae6ko")
 }
 
 [sub_resource type="Animation" id="Animation_ki42j"]
@@ -312,8 +322,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jnk2a"]
 _data = {
-&"RESET": SubResource("Animation_o5ffe"),
-&"show": SubResource("Animation_l2xvi")
+&"show": SubResource("Animation_l2xvi"),
+&"RESET": SubResource("Animation_o5ffe")
 }
 
 [sub_resource type="Animation" id="Animation_goodt"]
@@ -349,8 +359,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fnre7"]
 _data = {
-&"RESET": SubResource("Animation_goodt"),
-&"show": SubResource("Animation_cglex")
+&"show": SubResource("Animation_cglex"),
+&"RESET": SubResource("Animation_goodt")
 }
 
 [sub_resource type="Animation" id="Animation_xlk2m"]
@@ -430,6 +440,29 @@ shader_parameter/roll_speed = 3.8e-07
 shader_parameter/scan_line_strength = -1.0
 shader_parameter/pixel_strength = -4.0
 
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_p6wof"]
+clip_count = 4
+clip_0/name = &"Music1"
+clip_0/stream = ExtResource("17_w54n3")
+clip_0/auto_advance = 0
+clip_1/name = &"Music2"
+clip_1/stream = ExtResource("18_n0ehf")
+clip_1/auto_advance = 0
+clip_2/name = &"Music3"
+clip_2/stream = ExtResource("21_s46g4")
+clip_2/auto_advance = 0
+clip_3/name = &"intermission"
+clip_3/stream = ExtResource("22_hiy1u")
+clip_3/auto_advance = 0
+_transitions = {
+Vector2i(-1, -1): {
+"fade_beats": 2,
+"fade_mode": 0,
+"from_time": 2,
+"to_time": 0
+}
+}
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_wrl8j")
 
@@ -461,6 +494,8 @@ position = Vector2(256, 155)
 texture = ExtResource("3_uvhrn")
 
 [node name="FriendlySpawn" type="Area2D" parent="World/Grass"]
+collision_layer = 0
+collision_mask = 0
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Grass/FriendlySpawn"]
@@ -616,10 +651,11 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "res://logo.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "5fdded7b26a723e17977beb2d1efbad8"
+metadata/_aseprite_wizard_source_file_hash_ = "1117b0134d35ef7af002b41052ba5169"
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="FirstScreen/TitleSprite"]
+visible = false
 texture_filter = 1
 texture = ExtResource("9_ylofp")
 metadata/_aseprite_wizard_config_ = {
@@ -838,15 +874,11 @@ grow_vertical = 2
 process_mode = 3
 stream = ExtResource("13_exmnp")
 
-[node name="muisic" type="AudioStreamPlayer" parent="."]
+[node name="music" type="AudioStreamPlayer" parent="."]
 process_mode = 3
-stream = ExtResource("17_w54n3")
-volume_db = -0.472
-
-[node name="music2" type="AudioStreamPlayer" parent="."]
-process_mode = 3
-stream = ExtResource("18_n0ehf")
-volume_db = -0.472
+stream = SubResource("AudioStreamInteractive_p6wof")
+volume_db = -0.4
+bus = &"Music"
 
 [node name="Camera" type="Camera2D" parent="."]
 process_mode = 3

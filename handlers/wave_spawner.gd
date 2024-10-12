@@ -1,4 +1,5 @@
 extends Node
+class_name WaveSpawner
 
 var enemies: Array[Enemy] = [];
 var friendlies: Array[Friendly] = [];
@@ -46,8 +47,10 @@ func spawn_enemy(e: PackedScene, pos: Vector2):
 	world.add_child(b)
 	
 var done = false;
+
 signal on_last_wave;
 signal on_completed_all;
+
 func spawn_wave():
 	if done: return;
 	
