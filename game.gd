@@ -134,8 +134,20 @@ func fade3():
 func reset():
 	get_tree().reload_current_scene()
 	pass
-
+	
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		if Input.is_key_pressed(KEY_1):
+			music_clips.switch_to_clip(0);
+		if Input.is_key_pressed(KEY_2):
+			faded = false;
+			fade2();
+		if Input.is_key_pressed(KEY_3):
+			faded3 = false;
+			fade3();
 func _physics_process(_delta: float) -> void:
+
+	
 	if Input.is_action_just_pressed("reset"):
 		GameData.reset()
 		reset()
@@ -169,6 +181,7 @@ func process_game(_delta: float):
 func on_wave_clear():
 	if wave_spawner.done:
 		return;
+	print("Cleared wave ", wave_spawner.wave)
 	for f in friendlies:
 		if is_instance_valid(f):
 			f.lvlup()

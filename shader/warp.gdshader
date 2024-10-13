@@ -25,7 +25,8 @@ vec3 hsv2rgb(vec3 c)
 
 void fragment() {
 	// Called for every pixel the material is visible on.
-	vec4 original_color = COLOR;
+	vec4 original_color = texture(TEXTURE, UV);
+	COLOR = original_color;
 	float t = TIME * 0.02;
 	vec2 pos = SCREEN_UV.xy;
 	vec4 n = texture(noise_tex, mod(pos + vec2(t), vec2(1.0, 1.0)));

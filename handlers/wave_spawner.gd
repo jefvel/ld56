@@ -82,7 +82,7 @@ func spawn_wave():
 		lil_spawns += 2;
 	else:
 		lil_spawns += 1;
-	if wave == 4 or (wave > 5 and wave % 2 == 0):
+	if wave == 6 or (wave > 5 and wave % 2 == 0):
 		big_spawns += 1;
 		
 	if wave >= 3 && wave % 3 == 0:

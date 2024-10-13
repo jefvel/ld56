@@ -116,9 +116,9 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wk8kg"]
 _data = {
-&"spawn": SubResource("Animation_lvhu4"),
+&"bounce": SubResource("Animation_2ojlm"),
 &"RESET": SubResource("Animation_q6ira"),
-&"bounce": SubResource("Animation_2ojlm")
+&"spawn": SubResource("Animation_lvhu4")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g4hkg"]

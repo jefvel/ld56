@@ -126,8 +126,6 @@ func process_move(_delta: float):
 	var unclamped_pos = vp.get_mouse_position()
 	if !using_mouse:
 		var mult = 1.0;
-		if Input.is_action_pressed("precision_move"):
-			mult = 0.2;
 		unclamped_pos = position + mult * 10 * Input.get_vector("move_left","move_right","move_up","move_down")
 	var p = 16;
 	
@@ -139,6 +137,8 @@ func process_move(_delta: float):
 	var d = (pos - position);
 	
 	d = d.limit_length(max_speed)
+	if Input.is_action_pressed("precision_move"):
+		d = d.limit_length(2.5)
 	
 	vel = d * 0.5;
 	position += d * 0.5
@@ -198,11 +198,11 @@ func hit_target(e: Hitbox):
 	hit_targets.push_back(e)
 	
 	var res = e.hit(cur_damage, self)
-	if res and res.critical_hit:
+	var is_crit = res and res.critical_hit;
+	if is_crit:
 		crit_hit.play();
 		TimeFreeze.freeze(7);
 		game.camera.shake(2)
-		pass
 	else:
 		game.camera.shake()
 		TimeFreeze.freeze(4)
@@ -214,7 +214,7 @@ func hit_target(e: Hitbox):
 	var spark = SPARK.instantiate(); 
 	get_parent().add_child(spark)
 	spark.global_position = tip.global_position;
-	if res.critical_hit:
+	if is_crit:
 		spark.do_crit()
 	hit_sfx.play()
 	

@@ -39,7 +39,8 @@ func _input(event: InputEvent) -> void:
 				input_type = InputType.Mouse;
 		else:
 			last_mouse_pos = event.position;
-	
+	if event is InputEventJoypadMotion or event is InputEventJoypadButton:
+		input_type = InputType.Controller;
 	if event is InputEventMouseButton:
 		input_type = InputType.Mouse;
 	if event is InputEventKey:

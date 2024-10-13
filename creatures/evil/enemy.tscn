@@ -44,8 +44,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uleyf"]
 _data = {
-&"attack": SubResource("Animation_j3x3d"),
-&"idle": SubResource("Animation_gdrg4")
+&"idle": SubResource("Animation_gdrg4"),
+&"attack": SubResource("Animation_j3x3d")
 }
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_skfd1"]
