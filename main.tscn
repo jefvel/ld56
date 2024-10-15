@@ -48,6 +48,57 @@ fill_to = Vector2(1, 0.846154)
 shader = ExtResource("7_0eq5e")
 shader_parameter/gradient_tex = SubResource("GradientTexture2D_myi78")
 
+[sub_resource type="Animation" id="Animation_gv1dm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TitleSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("bg:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.0627451, 0.0431373, 0.164706, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../UILayer/UI:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TitleSprite:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(256, 80)]
+}
+
 [sub_resource type="Animation" id="Animation_n3s5a"]
 resource_name = "fade_in"
 tracks/0/type = "value"
@@ -154,77 +205,11 @@ tracks/5/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_gv1dm"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TitleSprite:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("bg:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.0627451, 0.0431373, 0.164706, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../UILayer/UI:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("TitleSprite:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(256, 80)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jujbn"]
 _data = {
 &"fade_in": SubResource("Animation_n3s5a"),
 &"fade_out": SubResource("Animation_ae6ko"),
 &"RESET": SubResource("Animation_gv1dm")
-}
-
-[sub_resource type="Animation" id="Animation_1fvpb"]
-resource_name = "show_top"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.166667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_ki42j"]
@@ -242,25 +227,25 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_pyris"]
-_data = {
-&"show_top": SubResource("Animation_1fvpb"),
-&"RESET": SubResource("Animation_ki42j")
-}
-
-[sub_resource type="Animation" id="Animation_o5ffe"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_1fvpb"]
+resource_name = "show_top"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control:visible")
+tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"times": PackedFloat32Array(0, 0.166667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pyris"]
+_data = {
+&"RESET": SubResource("Animation_ki42j"),
+&"show_top": SubResource("Animation_1fvpb")
 }
 
 [sub_resource type="Animation" id="Animation_l2xvi"]
@@ -321,13 +306,7 @@ tracks/3/keys = {
 }]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_jnk2a"]
-_data = {
-&"RESET": SubResource("Animation_o5ffe"),
-&"show": SubResource("Animation_l2xvi")
-}
-
-[sub_resource type="Animation" id="Animation_goodt"]
+[sub_resource type="Animation" id="Animation_o5ffe"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -340,6 +319,12 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jnk2a"]
+_data = {
+&"show": SubResource("Animation_l2xvi"),
+&"RESET": SubResource("Animation_o5ffe")
 }
 
 [sub_resource type="Animation" id="Animation_cglex"]
@@ -358,37 +343,25 @@ tracks/0/keys = {
 "values": [true]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_fnre7"]
-_data = {
-&"RESET": SubResource("Animation_goodt"),
-&"show": SubResource("Animation_cglex")
-}
-
-[sub_resource type="Animation" id="Animation_5308r"]
-resource_name = "fadein"
+[sub_resource type="Animation" id="Animation_goodt"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("InitialFade:visible")
+tracks/0/path = NodePath("Control:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true, false]
+"values": [false]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("InitialFade:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.129412, 0.141176, 0.137255, 1), Color(0.126256, 0.137884, 0.134001, 0)]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fnre7"]
+_data = {
+&"show": SubResource("Animation_cglex"),
+&"RESET": SubResource("Animation_goodt")
 }
 
 [sub_resource type="Animation" id="Animation_xlk2m"]
@@ -418,10 +391,37 @@ tracks/1/keys = {
 "values": [Color(0.129412, 0.141176, 0.137255, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_5308r"]
+resource_name = "fadein"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("InitialFade:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("InitialFade:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.129412, 0.141176, 0.137255, 1), Color(0.126256, 0.137884, 0.134001, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5jbh6"]
 _data = {
-&"fadein": SubResource("Animation_5308r"),
-&"RESET": SubResource("Animation_xlk2m")
+&"RESET": SubResource("Animation_xlk2m"),
+&"fadein": SubResource("Animation_5308r")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qw32a"]
